@@ -12,11 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('rendeles_tetels', function (Blueprint $table) {
-            $table->integer('rendeles');
-            $table->integer('termek');
-            $table->integer('mennyiseg');
             $table->foreignId('rendeles')->references('rendeles_szam')->on('Rendeles');
             $table->foreignId('termek')->references('termek_id')->on('Termek');
+            $table->integer('mennyiseg');
             $table->rememberToken();
             $table->timestamps();
         });
