@@ -6,5 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Termek extends Model
 {
-    //
+    protected $primaryKey = "termek_id";
+
+    protected $fillable = [
+        "modell",
+        "szin",
+        "meret",
+        "keszlet",
+        "ar"
+    ];
 }
