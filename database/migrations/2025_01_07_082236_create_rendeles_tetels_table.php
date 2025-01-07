@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('rendeles_tetels', function (Blueprint $table) {
-            $table->foreignId('rendeles')->references('rendeles_szam')->on('Rendeles');
-            $table->foreignId('termek')->references('termek_id')->on('Termek');
+            $table->foreignId('rendeles')->references('rendeles_szam')->on('rendeles');
+            $table->foreignId('termek')->references('termek_id')->on('termeks');
             $table->integer('mennyiseg');
             $table->rememberToken();
             $table->timestamps();

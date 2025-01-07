@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('kedvenceks', function (Blueprint $table) {
             $table->primary(['felhasznalo', 'termek']);
-            $table->foreignId('felhasznalo')->references('felhasznalo_id')->on('Felhasznalo');
-            $table->foreignId('termek')->references('modell_id')->on('Modell');
+            $table->foreignId('felhasznalo')->references('felhasznalo_id')->on('felhasznalos');
+            $table->foreignId('termek')->references('modell_id')->on('modells');
             $table->rememberToken();
             $table->timestamps();
         });

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('szall__csomags', function (Blueprint $table) {
             $table->id('csomag_id');
-            $table->foreignId('rendeles')->references('rendeles_szam')->on('Rendeles');
+            $table->foreignId('rendeles')->references('rendeles_szam')->on('rendeles');
             $table->char('szallito', 3);
             $table->string('csomag_allapot', 15);
             $table->date('szall_datum');

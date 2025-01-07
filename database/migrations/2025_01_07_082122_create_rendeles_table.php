@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('rendeles', function (Blueprint $table) {
             $table->id('rendeles_szam');
-            $table->foreignId('felhasznalo')->references('felhasznalo_id')->on('Felhasznalo');
+            $table->foreignId('felhasznalo')->references('felhasznalo_id')->on('felhasznalos');
             $table->date('rendeles_datum');
             $table->boolean('fizetve_e');
             $table->timestamps();

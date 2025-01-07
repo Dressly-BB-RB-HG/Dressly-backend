@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('termek_ars', function (Blueprint $table) {
             $table->primary(['termek', 'dtol']);
-            $table->foreignId('termek')->references('termek_id')->on('Termek');
+            $table->foreignId('termek')->references('termek_id')->on('termeks');
             $table->date('dtol');
             $table->integer('uj_ar');
             $table->rememberToken();

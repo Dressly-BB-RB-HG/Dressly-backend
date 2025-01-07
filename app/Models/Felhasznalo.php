@@ -14,6 +14,6 @@ class Felhasznalo extends Model
         'v_nev',
         'email',
         'jelszo',
-        'vendeg_e'
+        'jogosultsag'
     ];
 }
