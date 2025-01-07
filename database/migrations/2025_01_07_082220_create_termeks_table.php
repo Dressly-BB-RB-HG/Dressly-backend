@@ -12,7 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('termeks', function (Blueprint $table) {
-            $table->id();
+            $table->id('termek_id');
+            $table->foreignId('modell')->references('modell_id')->on('Modell');
+            $table->string('szin');
+            $table->char('meret', 3);
+            $table->integer('keszlet');
+            $table->integer('ar');
             $table->timestamps();
         });
     }

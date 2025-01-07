@@ -12,7 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('modells', function (Blueprint $table) {
-            $table->id();
+            $table->id('modell_id');
+            $table->foreignId('kategoria')->references('kategoria_id')->on('Kategoria');
+            $table->char('tipus', 1);
+            $table->string('gyarto');
+            $table->string('kep');
             $table->timestamps();
         });
     }
