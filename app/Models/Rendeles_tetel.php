@@ -6,5 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Rendeles_tetel extends Model
 {
-    //
+
+    protected $fillable = [
+        'rendeles',
+        'termek',
+        'mennyiseg'
+
+    ];
 }
