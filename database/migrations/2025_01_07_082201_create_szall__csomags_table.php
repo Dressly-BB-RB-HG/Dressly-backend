@@ -12,7 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('szall__csomags', function (Blueprint $table) {
-            $table->id();
+            $table->id('csomag_id');
+            $table->foreignId('rendeles')->references('rendeles_szam')->on('Rendeles');
+            $table->char('szallito', 3);
+            $table->string('csomag_allapot', 15);
+            $table->date('szall_datum');
             $table->timestamps();
         });
     }

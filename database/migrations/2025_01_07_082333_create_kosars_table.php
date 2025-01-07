@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('kosars', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('felhasznalo')->references('felhasznalo_id')->on('Felhasznalo');
+            $table->foreignId('termek')->references('termek_id')->on('Termek');
+            $table->integer('mennyiseg');
             $table->timestamps();
         });
     }
