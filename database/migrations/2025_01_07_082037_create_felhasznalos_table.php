@@ -34,6 +34,15 @@ return new class extends Migration
             'jelszo' => Hash::make('admin12345'),
             'jogosultsag' => 1,
         ]);
+
+        Felhasznalo::create([
+            'fel_nev' => 'raktaros',
+            'k_nev' => 'Raktaros',
+            'v_nev' => 'Raktaros',
+            'email' => 'raktaros@raktaros.com',
+            'jelszo' => Hash::make('raktaros12345'),
+            'jogosultsag' => 2,
+        ]);
         
         
 
