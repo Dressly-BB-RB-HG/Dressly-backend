@@ -12,7 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('kedvenceks', function (Blueprint $table) {
-            $table->id();
+            $table->string('felhasznalo');
+            $table->integer('termek');
+            $table->foreignId('felhasznalo')->references('felhasznalo_id')->on('Felhasznalo');
+            $table->foreignId('termek')->references('modell_id')->on('Modell');
+            $table->rememberToken();
             $table->timestamps();
         });
     }
