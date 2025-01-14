@@ -26,17 +26,19 @@ class FelhasznaloController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($felhasznalo_id)
     {
-        //
+        return Felhasznalo::find($felhasznalo_id);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $felhasznalo_id)
     {
-        //
+        $record = $this->show($felhasznalo_id);
+        $record->fill($request->all());
+        $record->save();
     }
 
     /**

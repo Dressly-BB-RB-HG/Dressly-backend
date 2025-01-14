@@ -16,4 +16,16 @@ class Felhasznalo extends Model
         'jelszo',
         'jogosultsag'
     ];
+
+    public function isFelhasznalo(){
+        return $this->jogosultsag === 0;
+    }
+
+    public function isAdmin(){
+        return $this->jogosultsag === 1;
+    }
+
+    public function isRaktaros(){
+        return $this->jogosultsag === 2;
+    }
 }
