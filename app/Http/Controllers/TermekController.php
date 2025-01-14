@@ -31,7 +31,6 @@ class TermekController extends Controller
     public function show($termek_id)
     {
         $termek = Termek::where('termek_id', $termek_id)
-        
         ->get();
         return $termek[0];
     }

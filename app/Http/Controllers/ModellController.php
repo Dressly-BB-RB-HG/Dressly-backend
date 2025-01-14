@@ -28,17 +28,21 @@ class ModellController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($modell_id)
     {
-        //
+        $modell = Modell::where('modell_id', $modell_id)
+        ->get();
+        return $modell[0];
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $modell_id)
     {
-        
+        $record = $this->show($modell_id);
+        $record->fill($request->all());
+        $record->save();
     }
 
     /**
