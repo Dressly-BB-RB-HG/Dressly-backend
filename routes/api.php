@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\FelhasznaloController;
 use App\Http\Controllers\ModellController;
 use App\Http\Controllers\TermekController;
@@ -11,7 +12,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
 });
-
+Route::post('/login',[AuthenticatedSessionController::class, 'store']);
 
 
 Route::middleware(['auth:sanctum', Admin::class])

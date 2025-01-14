@@ -17,6 +17,15 @@ class Felhasznalo extends Model
         'jogosultsag'
     ];
 
+    protected $hidden = [
+        'jelszo', 'remember_token',
+    ];
+
+    public function getAuthPassword()
+    {
+        return $this->jelszo; // A "jelszo" mező használata hitelesítéskor
+    }
+
     public function isFelhasznalo(){
         return $this->jogosultsag === 0;
     }

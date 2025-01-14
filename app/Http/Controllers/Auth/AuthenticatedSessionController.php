@@ -17,9 +17,9 @@ class AuthenticatedSessionController extends Controller
     {
         $request->validate([
             'email' => ['required', 'string', 'email'],
-            'password' => ['required', 'string'],
+            'jelszo' => ['required', 'string'],
             ]);
-        if (!Auth::attempt($request->only('email', 'password'))) {
+        if (!Auth::attempt($request->only('email', 'jelszo'))) {
             return response()->json(['message' => 'Email vagy jelszó nem megfelelő.'], 401);        }
         $user = Auth::user();
         $token = $user->createToken('auth_token')->plainTextToken;
@@ -27,7 +27,7 @@ class AuthenticatedSessionController extends Controller
                 'access_token' => $token,
                 'token_type' => 'Bearer',
                 'user' => $user,
-                'status' => 'Sikeres bejelentkezés',
+                'status' => 'Sikeres bejelentkezés!',
         ]);
     
     }
