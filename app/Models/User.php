@@ -18,9 +18,12 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
-        'name',
+        'fel_nev',
+        'k_nev',
+        'v_nev',
         'email',
-        'password',
+        'jelszo',
+        'jogosultsag'
     ];
 
     /**
@@ -44,5 +47,22 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function getAuthPassword()
+    {
+        return $this->jelszo; // A "jelszo" mező használata hitelesítéskor
+    }
+
+    public function isFelhasznalo(){
+        return $this->jogosultsag === 0;
+    }
+
+    public function isAdmin(){
+        return $this->jogosultsag === 1;
+    }
+
+    public function isRaktaros(){
+        return $this->jogosultsag === 2;
     }
 }
