@@ -63,18 +63,15 @@ class UserController extends Controller
 
     $user = Auth::user();
 
-    if (!$user || !$user instanceof \App\Models\User) {
+    if (!$user) {
         return response()->json(['message' => 'Nem bejelentkezett felhasználó!'], 401);
     }
 
-    // Jelszó frissítése
     $user->password = Hash::make($request->password);
     $user->save();
 
     return response()->json(['message' => 'Jelszó sikeresen frissítve!']);
 }
-
-    
 
 
     public function updateName(Request $request, $id)
