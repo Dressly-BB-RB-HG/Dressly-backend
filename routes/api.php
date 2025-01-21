@@ -16,7 +16,7 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 
 Route::middleware(['auth:sanctum', User::class])
     ->group(function(){
-        Route::patch('update-password/{id}', [UserController::class, 'updatePassword']);
+        Route::patch('update-password', [UserController::class, 'updatePassword']);
     });
 
 
