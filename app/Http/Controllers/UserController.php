@@ -51,7 +51,7 @@ class UserController extends Controller
     }
 
 
-public function updatePassword(Request $request)
+    public function updatePassword(Request $request)
 {
     $validator = Validator::make($request->all(), [
         'password' => 'required|string|min:8|max:50|confirmed',
@@ -63,15 +63,18 @@ public function updatePassword(Request $request)
 
     $user = Auth::user();
 
-    if (!$user) {
+    if (!$user || !$user instanceof \App\Models\User) {
         return response()->json(['message' => 'Nem bejelentkezett felhasználó!'], 401);
     }
 
+    // Jelszó frissítése
     $user->password = Hash::make($request->password);
     $user->save();
 
     return response()->json(['message' => 'Jelszó sikeresen frissítve!']);
 }
+
+    
 
 
     public function updateName(Request $request, $id)
