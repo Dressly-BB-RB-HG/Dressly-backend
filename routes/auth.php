@@ -36,6 +36,6 @@ Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
     ->middleware('auth')
     ->name('logout');
 
-Route::post('/update-password', [AuthenticatedSessionController::class, 'store'])
+Route::post('/update-profile', [AuthenticatedSessionController::class, 'store'])
     ->middleware('auth')
-    ->name('update-password');
+    ->name('updateProfile');
