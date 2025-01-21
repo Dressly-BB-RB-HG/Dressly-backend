@@ -6,6 +6,7 @@ use App\Http\Controllers\TermekController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\Admin;
 use App\Http\Middleware\Raktaros;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -13,6 +14,10 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::middleware(['auth:sanctum', User::class])
+    ->group(function(){
+        Route::patch('update-password/{id}', [UserController::class, 'updatePassword']);
+    });
 
 
 Route::middleware(['auth:sanctum', Admin::class])
@@ -23,6 +28,7 @@ Route::middleware(['auth:sanctum', Admin::class])
         Route::get('admin/modellek', [ModellController::class, 'index']);
         Route::get('admin/termek/{id}', [TermekController::class, 'show']);
         Route::get('admin/modell/{id}', [ModellController::class, 'show']);
+        Route::patch('admin/update-password/{id}', [UserController::class, 'updatePassword']);
         Route::delete('admin/felhasznaloTorles/{id}', [UserController::class, 'destroy']);
     });
 

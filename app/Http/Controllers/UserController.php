@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -46,4 +48,34 @@ class UserController extends Controller
         User::find($id)->delete();
         return "Felhasználó törölve!";
     }
+
+
+    public function updatePassword(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(), [
+            "password" => 'string|min:8|max:50'
+        ]);
+        if ($validator->fails()) {
+            return response()->json(["message" => $validator->errors()->all()], 400);
+        }
+        $user = User::where("id", $id)->update([
+            "password" => Hash::make($request->password),
+        ]);
+        return response()->json(["user" => $user]);
+    }
+
+    public function updateName(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(), [
+            "name" => 'string|min:4|max:30'
+        ]);
+        if ($validator->fails()) {
+            return response()->json(["message" => $validator->errors()->all()], 400);
+        }
+        $user = User::where("id", $id)->update([
+            "name" => $request->name,
+        ]);
+        return response()->json(["user" => $user]);
+    }
+
 }
