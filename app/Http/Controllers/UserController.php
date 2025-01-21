@@ -51,31 +51,51 @@ class UserController extends Controller
     }
 
 
-    public function updatePassword(Request $request)
+    public function updateProfile(Request $request)
 {
+    // Validáljuk a bejövő adatokat
     $validator = Validator::make($request->all(), [
-        'password' => 'required|string|min:8|max:50|confirmed',
+        'name' => 'required|string|max:255',
+        'email' => 'required|email|unique:users,email,' . Auth::id(), // Email egyedi ellenőrzés
+        'old_password' => 'required_with:new_password', // Csak akkor szükséges, ha új jelszót adunk meg
+        'new_password' => 'nullable|min:8|confirmed', // Új jelszó és megerősítés
     ]);
 
+    // Ha a validáció nem sikerült
     if ($validator->fails()) {
-        return response()->json(['message' => $validator->errors()->all()], 400);
+        return response()->json([
+            'message' => 'Hibás adatokat küldtél.',
+            'errors' => $validator->errors()
+        ], 422);
     }
 
+    // Ha a felhasználó új jelszót ad meg, ellenőrizzük a régi jelszót
     $user = Auth::user();
 
-    if (!$user || !$user instanceof \App\Models\User) {
-        return response()->json(['message' => 'Nem bejelentkezett felhasználó!'], 401);
+    if ($request->has('old_password') && !Hash::check($request->old_password, $user->password)) {
+        return response()->json([
+            'message' => 'A régi jelszó nem megfelelő.',
+            'errors' => ['old_password' => ['A régi jelszó nem megfelelő.']]
+        ], 422);
     }
 
-    // Jelszó frissítése
-    $user->password = Hash::make($request->password);
+    // Frissítjük a felhasználó adatait
+    if ($request->has('name')) {
+        $user->name = $request->name;
+    }
+    if ($request->has('email')) {
+        $user->email = $request->email;
+    }
+    if ($request->has('new_password')) {
+        $user->password = Hash::make($request->new_password);
+    }
+
     $user->save();
 
-    return response()->json(['message' => 'Jelszó sikeresen frissítve!']);
+    return response()->json([
+        'message' => 'A profil sikeresen frissítve!',
+    ]);
 }
-
-    
-
 
     public function updateName(Request $request, $id)
     {
