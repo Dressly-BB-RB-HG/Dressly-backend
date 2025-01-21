@@ -20,7 +20,7 @@ Route::middleware(['auth:sanctum', Admin::class])
         Route::get('admin/felhasznalo/{id}', [UserController::class, 'show']);
         Route::get('admin/felhasznalok', [UserController::class, 'index']);
         Route::get('admin/termekek', [TermekController::class, 'index']);
-        Route::get('modellek', [ModellController::class, 'index']);
+        Route::get('admin/modellek', [ModellController::class, 'index']);
         Route::get('admin/termek/{id}', [TermekController::class, 'show']);
         Route::get('admin/modell/{id}', [ModellController::class, 'show']);
         Route::delete('admin/felhasznaloTorles/{id}', [UserController::class, 'destroy']);
