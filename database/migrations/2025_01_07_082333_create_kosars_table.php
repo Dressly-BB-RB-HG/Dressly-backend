@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('kosars', function (Blueprint $table) {
             $table->primary(['felhasznalo', 'termek']);
-            $table->foreignId('felhasznalo')->references('felhasznalo_id')->on('felhasznalos');
+            $table->foreignId('felhasznalo')->references('id')->on('users');
             $table->foreignId('termek')->references('termek_id')->on('termeks');
             $table->integer('mennyiseg');
             $table->timestamps();

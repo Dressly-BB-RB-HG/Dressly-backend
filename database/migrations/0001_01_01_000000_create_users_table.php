@@ -1,7 +1,9 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -13,13 +15,43 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->unique();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
+            $table->string('k_nev');
+            $table->string('v_nev');
             $table->string('password');
+            $table->integer('jogosultsag')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });
+        
+        User::create([
+            'name' => 'admin', // Megadva!
+            'k_nev' => 'Admin',
+            'v_nev' => 'Admin',
+            'email' => 'admin@admin.com',
+            'password' => Hash::make('admin12345'),
+            'jogosultsag' => 1
+        ]);
+        
+    
+        User::create([
+            'name' => 'raktaros',
+            'k_nev' => 'Raktaros',
+            'v_nev' => 'Raktaros',
+            'email' => 'raktaros@raktaros.com',
+            'password' => Hash::make('raktaros12345'),
+            'jogosultsag' => 2
+        ]);
+    
+        User::create([
+            'name' => 'felhasznalo',
+            'k_nev' => 'Felhasznalo',
+            'v_nev' => 'Felhasznalo',
+            'email' => 'felhasznalo@felhasznalo.com',
+            'password' => Hash::make('felhasznalo12345')
+        ]);
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
             $table->string('email')->primary();
@@ -35,7 +67,10 @@ return new class extends Migration
             $table->longText('payload');
             $table->integer('last_activity')->index();
         });
+
     }
+
+    
 
     /**
      * Reverse the migrations.

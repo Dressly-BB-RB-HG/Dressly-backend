@@ -2,17 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Felhasznalo;
+use App\Models\User;
 use Illuminate\Http\Request;
 
-class FelhasznaloController extends Controller
+class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        return Felhasznalo::all();
+        return User::all();
     }
 
     /**
@@ -24,19 +21,19 @@ class FelhasznaloController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display a listing of the resource.
      */
-    public function show($felhasznalo_id)
+    public function show($id)
     {
-        return Felhasznalo::find($felhasznalo_id);
+        return User::find($id);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $felhasznalo_id)
+    public function update(Request $request, $id)
     {
-        $record = $this->show($felhasznalo_id);
+        $record = $this->show($id);
         $record->fill($request->all());
         $record->save();
     }
@@ -46,7 +43,7 @@ class FelhasznaloController extends Controller
      */
     public function destroy(string $id)
     {
-        Felhasznalo::find($id)->delete();
+        User::find($id)->delete();
         return "Felhasználó törölve!";
     }
 }

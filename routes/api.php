@@ -1,9 +1,9 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
-use App\Http\Controllers\FelhasznaloController;
 use App\Http\Controllers\ModellController;
 use App\Http\Controllers\TermekController;
+use App\Http\Controllers\UserController;
 use App\Http\Middleware\Admin;
 use App\Http\Middleware\Raktaros;
 use Illuminate\Http\Request;
@@ -12,18 +12,18 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::post('/login',[AuthenticatedSessionController::class, 'store']);
+
 
 
 Route::middleware(['auth:sanctum', Admin::class])
     ->group(function(){
-        Route::get('admin/felhasznalo/{id}', [FelhasznaloController::class, 'show']);
-        Route::get('admin/felhasznalok', [FelhasznaloController::class, 'index']);
+        Route::get('admin/felhasznalo/{id}', [UserController::class, 'show']);
+        Route::get('admin/felhasznalok', [UserController::class, 'index']);
         Route::get('admin/termekek', [TermekController::class, 'index']);
         Route::get('modellek', [ModellController::class, 'index']);
         Route::get('admin/termek/{id}', [TermekController::class, 'show']);
         Route::get('admin/modell/{id}', [ModellController::class, 'show']);
-        Route::delete('admin/felhasznaloTorles/{id}', [FelhasznaloController::class, 'destroy']);
+        Route::delete('admin/felhasznaloTorles/{id}', [UserController::class, 'destroy']);
     });
 
 Route::middleware(['auth:sanctum', Raktaros::class])
