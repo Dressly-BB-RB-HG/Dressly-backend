@@ -53,15 +53,13 @@ class UserController extends Controller
 
     public function updateProfile(Request $request)
 {
-    // Validáljuk a bejövő adatokat
     $validator = Validator::make($request->all(), [
         'name' => 'required|string|max:255',
-        'email' => 'required|email|unique:users,email,' . Auth::id(), // Email egyedi ellenőrzés
-        'old_password' => 'required_with:new_password', // Csak akkor szükséges, ha új jelszót adunk meg
-        'new_password' => 'nullable|min:8|confirmed', // Új jelszó és megerősítés
+        'email' => 'required|email|unique:users,email,' . Auth::id(), 
+        'old_password' => 'required_with:new_password',
+        'new_password' => 'nullable|min:8|confirmed', 
     ]);
 
-    // Ha a validáció nem sikerült
     if ($validator->fails()) {
         return response()->json([
             'message' => 'Hibás adatokat küldtél.',
@@ -69,7 +67,6 @@ class UserController extends Controller
         ], 422);
     }
 
-    // Ha a felhasználó új jelszót ad meg, ellenőrizzük a régi jelszót
     $user = Auth::user();
 
     if ($request->has('old_password') && !Hash::check($request->old_password, $user->password)) {
@@ -79,7 +76,7 @@ class UserController extends Controller
         ], 422);
     }
 
-    // Frissítjük a felhasználó adatait
+
     if ($request->has('name')) {
         $user->name = $request->name;
     }
