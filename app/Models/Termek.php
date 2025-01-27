@@ -15,4 +15,11 @@ class Termek extends Model
         "keszlet",
         "ar"
     ];
+
+
+    public function modell()
+    {
+        return $this->belongsTo(Modell::class, 'modell');
+    }
+    
 }

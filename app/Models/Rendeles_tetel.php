@@ -13,4 +13,7 @@ class Rendeles_tetel extends Model
         'mennyiseg'
 
     ];
+
+
+    
 }

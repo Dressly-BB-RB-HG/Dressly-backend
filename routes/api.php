@@ -12,6 +12,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('admin/modellek', [ModellController::class, 'index']);
 
+Route::get('uniszex-puloverek', [TermekController::class, 'uniszexPuloverek']);
+Route::get('modellek-kategoriaval', [ModellController::class, 'modellekKategoriaval']);
+
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
 });

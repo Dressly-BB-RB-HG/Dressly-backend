@@ -11,4 +11,10 @@ class Kategoria extends Model
     protected $fillable = [
         "ruhazat_kat"
     ];
+
+
+    public function modellekKategoriaval()
+    {
+        return $this->hasMany(Modell::class, 'kategoria_id', 'kategoria_id');
+    }
 }

@@ -53,4 +53,22 @@ class TermekController extends Controller
         Termek::find($id)->delete();
         return "Termék törölve!";
     }
+
+
+    public function uniszexPuloverek()
+    {
+        $termekek = Termek::with(['modell.kategoria'])
+            ->whereHas('modell.kategoria', function($query) {
+                $query->where('ruhazat_kat', 'Pulóver');
+            })
+            ->whereHas('modell', function($query) {
+                $query->where('tipus', 'U');
+            })
+            ->get();
+
+        return response()->json($termekek);
+    }
+
 }
+
+

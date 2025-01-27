@@ -14,4 +14,15 @@ class Modell extends Model
         "gyarto",
         "kep"
     ];
+
+
+    public function kategoria()
+    {
+        return $this->belongsTo(Kategoria::class, 'kategoria');
+    }
+
+    public function modellekKategoriaval()
+    {
+        return $this->belongsTo(Kategoria::class, 'kategoria_id', 'kategoria_id');
+    }
 }

@@ -53,4 +53,15 @@ class ModellController extends Controller
         Modell::find($id)->delete();
         return "Modell törölve!";
     }
+
+
+    public function modellekKategoriaval()
+{
+    $modellek = Modell::with('kategoria')
+        ->get();
+
+    return response()->json($modellek);
+}
+
+    
 }
