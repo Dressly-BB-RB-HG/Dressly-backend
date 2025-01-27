@@ -22,4 +22,5 @@ class Termek extends Model
         return $this->belongsTo(Modell::class, 'modell');
     }
     
+
 }

@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('k_nev');
             $table->string('v_nev');
             $table->string('password');
-            $table->integer('jogosultsag')->default(0);
+            $table->integer('role')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });
@@ -32,7 +32,7 @@ return new class extends Migration
             'v_nev' => 'Admin',
             'email' => 'admin@admin.com',
             'password' => Hash::make('admin12345'),
-            'jogosultsag' => 1
+            'role' => 1
         ]);
         
     
@@ -42,7 +42,7 @@ return new class extends Migration
             'v_nev' => 'Raktaros',
             'email' => 'raktaros@raktaros.com',
             'password' => Hash::make('raktaros12345'),
-            'jogosultsag' => 2
+            'role' => 2
         ]);
     
         User::create([
