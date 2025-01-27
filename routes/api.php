@@ -14,7 +14,8 @@ Route::get('admin/modellek', [ModellController::class, 'index']);
 Route::get('barna-polok', [TermekController::class, 'barnaPolok']);
 Route::get('nike-ruhak', [TermekController::class, 'nikeRuhak']);
 Route::get('nike-pulcsik', [TermekController::class, 'nikePulcsik']);
-
+Route::get('adidas-ruhak', [TermekController::class, 'adidasRuhak']);
+Route::get('puma-ruhak', [TermekController::class, 'pumaRuhak']);
 Route::get('uniszex-puloverek', [TermekController::class, 'uniszexPuloverek']);
 Route::get('noi-puloverek', [TermekController::class, 'noiPuloverek']);
 Route::get('modellek-kategoriaval', [ModellController::class, 'modellekKategoriaval']);
