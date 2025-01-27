@@ -97,6 +97,24 @@ class TermekController extends Controller
 
         return response()->json($termekek);
     }
+
+    public function adidasRuhak()
+    {
+    $termekek = Termek::join('modells', 'termeks.modell', '=', 'modells.modell_id')
+        ->where('modells.gyarto', 'Adidas')
+        ->get(['termeks.*']);
+    
+    return response()->json($termekek);
+    }   
+
+    public function pumaRuhak()
+    {
+    $termekek = Termek::join('modells', 'termeks.modell', '=', 'modells.modell_id')
+        ->where('modells.gyarto', 'Puma')
+        ->get(['termeks.*']);
+    
+    return response()->json($termekek);
+    }   
 }
 
 
