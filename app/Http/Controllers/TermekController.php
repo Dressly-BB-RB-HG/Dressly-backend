@@ -53,4 +53,33 @@ class TermekController extends Controller
         Termek::find($id)->delete();
         return "Termék törölve!";
     }
+
+    public function barnaPolok()
+    {
+        $termekek = Termek::join('modells', 'termeks.modell', '=', 'modells.modell_id')
+        ->join('kategorias', 'modells.kategoria', '=', 'kategorias.kategoria_id')
+        ->where('termeks.szin', 'barna')
+        ->where('kategorias.ruhazat_kat', 'Rövid ujjú póló')
+        ->get(['termeks.*']);
+        return response()->json($termekek);
+    }
+
+    public function nikeRuhak()
+    {
+    $termekek = Termek::join('modells', 'termeks.modell', '=', 'modells.modell_id')
+        ->where('modells.gyarto', 'Nike')
+        ->get(['termeks.*']);
+    
+    return response()->json($termekek);
+    }   
+
+    public function nikePulcsik(){
+        $termekek = Termek::join('modells', 'termeks.modell', '=', 'modells.modell_id')
+        ->join('kategorias', 'modells.kategoria', '=', 'kategorias.kategoria_id')
+        ->where('kategorias.ruhazat_kat', 'pulóver')
+        ->where('modells.gyarto', 'Nike') 
+        ->get(['termeks.*']);
+
+        return response()->json($termekek);
+    }
 }

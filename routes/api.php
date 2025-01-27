@@ -11,12 +11,17 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::get('admin/modellek', [ModellController::class, 'index']);
+Route::get('barna-polok', [TermekController::class, 'barnaPolok']);
+Route::get('nike-ruhak', [TermekController::class, 'nikeRuhak']);
+Route::get('nike-pulcsik', [TermekController::class, 'nikePulcsik']);
 
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
 });
 
 Route::patch('update-profile', [UserController::class, 'updateProfile']);
+
+
 
 Route::middleware(['auth:sanctum', User::class])
     ->group(function(){
@@ -33,7 +38,7 @@ Route::middleware(['auth:sanctum', Admin::class])
         
         Route::get('admin/termek/{id}', [TermekController::class, 'show']);
         Route::get('admin/modell/{id}', [ModellController::class, 'show']);
-        Route::patch('admin/update-password/{id}', [UserController::class, 'updatePassword']);
+        Route::patch('admin/update-profile', [UserController::class, 'updateProfile']);
         Route::delete('admin/felhasznaloTorles/{id}', [UserController::class, 'destroy']);
     });
 

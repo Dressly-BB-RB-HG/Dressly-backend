@@ -11,7 +11,7 @@ class UserMiddleware
 {
     public function handle(Request $request, Closure $next)
     {
-        if (!Auth::check() || !(Auth::user()->role === 0)) {
+        if (!Auth::check() || !(Auth::user()->role !== 0)) {
             return response()->json(['message' => 'Jogosulatlan hozzáférés'], 403);
         }
         return $next($request);

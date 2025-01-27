@@ -23,7 +23,7 @@ class User extends Authenticatable
         'v_nev',
         'email',
         'password',
-        'jogosultsag'
+        'role'
     ];
 
     /**
@@ -50,14 +50,14 @@ class User extends Authenticatable
     }
 
     public function isFelhasznalo(){
-        return $this->jogosultsag === 0;
+        return $this->role === 0;
     }
 
     public function isAdmin(){
-        return $this->jogosultsag === 1;
+        return $this->role === 1;
     }
 
     public function isRaktaros(){
-        return $this->jogosultsag === 2;
+        return $this->role === 2;
     }
 }
