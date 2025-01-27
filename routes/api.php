@@ -30,7 +30,6 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 Route::patch('update-profile', [UserController::class, 'updateProfile']);
 
 
-
 Route::middleware(['auth:sanctum', User::class])
     ->group(function(){
         
