@@ -140,6 +140,13 @@ class TermekController extends Controller
                 $query->where('ruhazat_kat', 'Rövid ujjú póló');
             })
             ->get();
+}
+    
+    public function pulcsik(){
+        $termekek = Termek::join('modells', 'termeks.modell', '=', 'modells.modell_id')
+        ->join('kategorias', 'modells.kategoria', '=', 'kategorias.kategoria_id')
+        ->where('kategorias.ruhazat_kat', 'pulóver') 
+        ->get(['termeks.*']);
 
         return response()->json($termekek);
     }
