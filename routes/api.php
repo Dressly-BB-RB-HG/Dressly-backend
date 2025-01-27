@@ -19,6 +19,8 @@ Route::get('puma-ruhak', [TermekController::class, 'pumaRuhak']);
 Route::get('uniszex-puloverek', [TermekController::class, 'uniszexPuloverek']);
 Route::get('noi-puloverek', [TermekController::class, 'noiPuloverek']);
 Route::get('modellek-kategoriaval', [ModellController::class, 'modellekKategoriaval']);
+Route::get('pulcsik', [TermekController::class, 'pulcsik']);
+
 
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
