@@ -78,6 +78,7 @@ return new class extends Migration
             'ar' => 9999,
         ]);
         
+        
     }
 
 
