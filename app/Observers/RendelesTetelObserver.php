@@ -3,13 +3,14 @@
 namespace App\Observers;
 
 use App\Models\rendeles_Tetel;
+use App\Models\Termek;
 
 class RendelesTetelObserver
 {
     /**
      * Handle the RendelesTetel "created" event.
      */
-    public function created(RendelesTetel $rendelesTetel): void
+    public function created(rendeles_Tetel $rendelesTetel): void
     {
         {
             // Csökkentsd a készletet a rendelés tétel mennyiségével
