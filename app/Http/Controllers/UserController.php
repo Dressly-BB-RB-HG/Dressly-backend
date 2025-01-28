@@ -108,4 +108,28 @@ class UserController extends Controller
         return response()->json(["user" => $user]);
     }
 
+    public function updateRole(Request $request, $id)
+{
+    // Validáljuk az új szerepet
+    $validator = Validator::make($request->all(), [
+        'role' => 'required|integer|in:1,2,3', // Csak az érvényes szerepek: 1 (Admin), 2 (Raktáros), 3 (Felhasználó)
+    ]);
+
+    if ($validator->fails()) {
+        return response()->json(['message' => 'Hibás szerep!'], 400);
+    }
+
+    // Felhasználó keresése
+    $user = User::find($id);
+    if (!$user) {
+        return response()->json(['message' => 'Felhasználó nem található!'], 404);
+    }
+
+    // Szerep módosítása
+    $user->role = $request->role;
+    $user->save();
+
+    return response()->json(['message' => 'Szerep sikeresen módosítva!'], 200);
+}
+
 }
