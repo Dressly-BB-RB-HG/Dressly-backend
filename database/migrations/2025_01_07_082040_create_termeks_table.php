@@ -45,6 +45,39 @@ return new class extends Migration
             'keszlet' => 20,
             'ar' => 8999,
         ]);
+
+        Termek::create([
+            'modell' => 4,
+            'szin' => 'Fekete',
+            'meret' => 'M',
+            'keszlet' => 40,
+            'ar' => 73999,
+        ]);
+
+        Termek::create([
+            'modell' => 5,
+            'szin' => 'Fehér',
+            'meret' => 'M',
+            'keszlet' => 120,
+            'ar' => 3890,
+        ]);
+
+        Termek::create([
+            'modell' => 6,
+            'szin' => 'Fehér',
+            'meret' => 'M',
+            'keszlet' => 32,
+            'ar' => 30999,
+        ]);
+
+        Termek::create([
+            'modell' => 7,
+            'szin' => 'Fekete',
+            'meret' => 'L',
+            'keszlet' => 20,
+            'ar' => 9999,
+        ]);
+        
         
     }
 
