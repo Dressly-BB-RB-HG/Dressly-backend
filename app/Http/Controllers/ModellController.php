@@ -20,11 +20,24 @@ class ModellController extends Controller
      */
     public function store(Request $request)
     {
-        $record = new Modell();
-        $record->fill($request->all());
-        $record->save();
-    }
+        // Validáljuk a bemeneti adatokat
+        $request->validate([
+            'kategoria' => 'required|string',
+            'tipus' => 'required|string|max:1', // Típus 1 karakter
+            'gyarto' => 'required|string',
+            'kep' => 'required|string', // A kép URL
+        ]);
 
+        // Új modell létrehozása és mentése
+        $modell = new Modell();
+        $modell->kategoria = $request->input('kategoria');
+        $modell->tipus = $request->input('tipus');
+        $modell->gyarto = $request->input('gyarto');
+        $modell->kep = $request->input('kep');
+        $modell->save();
+
+        return response()->json(['message' => 'Új modell sikeresen feltöltve!', 'modell' => $modell], 201);
+    }
     /**
      * Display the specified resource.
      */

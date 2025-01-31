@@ -41,6 +41,7 @@ Route::middleware(['auth:sanctum', Admin::class])
         Route::get('admin/felhasznalo/{id}', [UserController::class, 'show']);
         Route::get('admin/felhasznalok', [UserController::class, 'index']);
         Route::get('admin/termekek', [TermekController::class, 'index']);
+        Route::post('admin/modell', [ModellController::class, 'store']);
 
         
         Route::get('admin/termek/{id}', [TermekController::class, 'show']);
@@ -48,7 +49,10 @@ Route::middleware(['auth:sanctum', Admin::class])
         Route::patch('admin/update-profile', [UserController::class, 'updateProfile']);
         Route::delete('admin/felhasznaloTorles/{id}', [UserController::class, 'destroy']);
         Route::put('admin/felhasznalok/{id}/role', [UserController::class, 'updateRole']);
+
+        
     });
+    
 
 Route::middleware(['auth:sanctum', Raktaros::class])
     ->group(function(){
