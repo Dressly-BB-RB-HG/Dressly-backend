@@ -13,15 +13,13 @@ use Illuminate\Support\Facades\Route;
 Route::get('admin/modellek', [ModellController::class, 'index']);
 Route::get('szinu-ruha/{szin}/{kategoria}', [TermekController::class, 'szinuRuha']);
 Route::get('szinu-minden/{szin}', [TermekController::class, 'szinuMinden']);
-Route::get('nike-ruhak', [TermekController::class, 'nikeRuhak']);
-Route::get('nike-pulcsik', [TermekController::class, 'nikePulcsik']);
-Route::get('adidas-ruhak', [TermekController::class, 'adidasRuhak']);
-Route::get('puma-ruhak', [TermekController::class, 'pumaRuhak']);
+Route::get('marka-ruhak/{marka}', [TermekController::class, 'markaRuhak']);
+Route::get('marka-kategoria/{marka}/{kategoria}', [TermekController::class, 'markaKategoria']);
 Route::get('uniszex-puloverek', [TermekController::class, 'uniszexPuloverek']);
 Route::get('rovid-ujju-polok', [TermekController::class, 'rovidUjjuPolok']);
 Route::get('noi-puloverek', [TermekController::class, 'noiPuloverek']);
 Route::get('modellek-kategoriaval', [ModellController::class, 'modellekKategoriaval']);
-Route::get('pulcsik', [TermekController::class, 'pulcsik']);
+Route::get('kategoria-ruhak/{kategoria}', [TermekController::class, 'kategoriaRuhak']);
 
 
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {

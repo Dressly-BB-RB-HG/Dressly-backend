@@ -102,43 +102,26 @@ class TermekController extends Controller
         return response()->json($termekek);
     }
 
-    public function nikeRuhak()
+    public function markaRuhak(string $marka)
     {
     $termekek = Termek::join('modells', 'termeks.modell', '=', 'modells.modell_id')
-        ->where('modells.gyarto', 'Nike')
+        ->where('modells.gyarto', $marka)
         ->get(['termeks.*']);
     
     return response()->json($termekek);
     }   
 
-    public function nikePulcsik(){
+    public function markaKategoria(string $marka, string $kategoria){
         $termekek = Termek::join('modells', 'termeks.modell', '=', 'modells.modell_id')
         ->join('kategorias', 'modells.kategoria', '=', 'kategorias.kategoria_id')
-        ->where('kategorias.ruhazat_kat', 'pulóver')
-        ->where('modells.gyarto', 'Nike') 
+        ->where('kategorias.ruhazat_kat', $kategoria)
+        ->where('modells.gyarto', $marka) 
         ->get(['termeks.*']);
 
         return response()->json($termekek);
     }
 
-    public function adidasRuhak()
-    {
-    $termekek = Termek::join('modells', 'termeks.modell', '=', 'modells.modell_id')
-        ->where('modells.gyarto', 'Adidas')
-        ->get(['termeks.*']);
-    
-    return response()->json($termekek);
-    }   
-
-    public function pumaRuhak()
-    {
-    $termekek = Termek::join('modells', 'termeks.modell', '=', 'modells.modell_id')
-        ->where('modells.gyarto', 'Puma')
-        ->get(['termeks.*']);
-    
-    return response()->json($termekek);
-    }   
-
+ 
 
 
     public function rovidUjjuPolok()
@@ -150,10 +133,10 @@ class TermekController extends Controller
             ->get();
 }
     
-    public function pulcsik(){
+    public function kategoriaRuhak(string $kategoria){
         $termekek = Termek::join('modells', 'termeks.modell', '=', 'modells.modell_id')
         ->join('kategorias', 'modells.kategoria', '=', 'kategorias.kategoria_id')
-        ->where('kategorias.ruhazat_kat', 'pulóver') 
+        ->where('kategorias.ruhazat_kat', $kategoria) 
         ->get(['termeks.*']);
 
         return response()->json($termekek);
