@@ -115,7 +115,6 @@ class TermekController extends Controller
         $termekek = Termek::join('modells', 'termeks.modell', '=', 'modells.modell_id')
         ->where('termeks.meret', $meret)
         ->get(['termeks.*']);
-
         return response()->json($termekek);
     }
 }
