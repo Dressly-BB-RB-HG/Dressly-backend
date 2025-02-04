@@ -84,12 +84,20 @@ class TermekController extends Controller
         return response()->json($termekek);
     }
 
-    public function barnaPolok()
+    public function szinuRuha(string $szin, string $kategoria)
     {
         $termekek = Termek::join('modells', 'termeks.modell', '=', 'modells.modell_id')
         ->join('kategorias', 'modells.kategoria', '=', 'kategorias.kategoria_id')
-        ->where('termeks.szin', 'barna')
-        ->where('kategorias.ruhazat_kat', 'Rövid ujjú póló')
+        ->where('termeks.szin', $szin)
+        ->where('kategorias.ruhazat_kat', $kategoria)
+        ->get(['termeks.*']);
+        return response()->json($termekek);
+    }
+
+    public function szinuMinden(string $szin)
+    {
+        $termekek = Termek::join('modells', 'termeks.modell', '=', 'modells.modell_id')
+        ->where('termeks.szin', $szin)
         ->get(['termeks.*']);
         return response()->json($termekek);
     }

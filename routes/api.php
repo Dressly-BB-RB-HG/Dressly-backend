@@ -11,7 +11,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::get('admin/modellek', [ModellController::class, 'index']);
-Route::get('barna-polok', [TermekController::class, 'barnaPolok']);
+Route::get('szinu-ruha/{szin}/{kategoria}', [TermekController::class, 'szinuRuha']);
+Route::get('szinu-minden/{szin}', [TermekController::class, 'szinuMinden']);
 Route::get('nike-ruhak', [TermekController::class, 'nikeRuhak']);
 Route::get('nike-pulcsik', [TermekController::class, 'nikePulcsik']);
 Route::get('adidas-ruhak', [TermekController::class, 'adidasRuhak']);
@@ -47,7 +48,7 @@ Route::middleware(['auth:sanctum', Admin::class])
         Route::get('admin/termek/{id}', [TermekController::class, 'show']);
         Route::get('admin/modell/{id}', [ModellController::class, 'show']);
         Route::put('/update-profile', [UserController::class, 'updateProfile']);
-        Route::delete('admin/felhasznaloTorles/{id}', [UserController::class, 'destroy']);
+        Route::delete('admin/felhasznalo-torles/{id}', [UserController::class, 'destroy']);
         Route::put('admin/felhasznalok/{id}/role', [UserController::class, 'updateRole']);
 
         
@@ -60,10 +61,10 @@ Route::middleware(['auth:sanctum', Raktaros::class])
         Route::get('raktaros/termekek', [TermekController::class, 'index']);
         Route::get('raktaros/termek/{id}', [TermekController::class, 'show']);
         Route::get('raktaros/modell/{id}', [ModellController::class, 'show']);
-        Route::post('raktaros/modellHozzaad', [ModellController::class, 'store']);
-        Route::post('raktaros/termekHozzaad', [TermekController::class, 'store']);
-        Route::patch('raktaros/modellModosit', [ModellController::class, 'update']);
-        Route::patch('raktaros/termekModosit', [TermekController::class, 'update']);
-        Route::delete('raktaros/termekTorles/{id}', [TermekController::class, 'destroy']);
-        Route::delete('raktaros/modellTorles/{id}', [ModellController::class, 'destroy']);
+        Route::post('raktaros/modell-hozzaad', [ModellController::class, 'store']);
+        Route::post('raktaros/termek-hozzaad', [TermekController::class, 'store']);
+        Route::patch('raktaros/modell-modosit', [ModellController::class, 'update']);
+        Route::patch('raktaros/termek-modosit', [TermekController::class, 'update']);
+        Route::delete('raktaros/termek-torles/{id}', [TermekController::class, 'destroy']);
+        Route::delete('raktaros/modell-torles/{id}', [ModellController::class, 'destroy']);
     });

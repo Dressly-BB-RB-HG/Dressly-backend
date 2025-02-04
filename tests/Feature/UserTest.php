@@ -14,7 +14,14 @@ class UserTest extends TestCase
     public function test_example(): void
     {
         $response = $this->get('/api/barna-polok');
-
         $response->assertStatus(200);
     }
+
+    public function testAPostResponse(): void
+    {
+        $response = $this->withoutMiddleware()->post('/api/admin/modell', ['kategoria' => '1', 'tipus' => 'F', 'gyarto' => 'Nike', 'kep' => 'asd']);
+        $response->assertStatus(201);
+    }
+
+    
 }
