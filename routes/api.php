@@ -46,6 +46,7 @@ Route::middleware(['auth:sanctum', Admin::class])
         Route::get('admin/modell/{id}', [ModellController::class, 'show']);
         Route::put('/update-profile', [UserController::class, 'updateProfile']);
         Route::delete('admin/felhasznalo-torles/{id}', [UserController::class, 'destroy']);
+        Route::delete('admin/modellTorles/{id}', [ModellController::class, 'destroy']);
         Route::put('admin/felhasznalok/{id}/role', [UserController::class, 'updateRole']);
 
         
