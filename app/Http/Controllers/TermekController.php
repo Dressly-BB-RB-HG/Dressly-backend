@@ -31,7 +31,7 @@ class TermekController extends Controller
     public function show($termek_id)
     {
         $termek = Termek::where('termek_id', $termek_id)
-        ->get();
+            ->get();
         return $termek[0];
     }
 
@@ -55,50 +55,31 @@ class TermekController extends Controller
     }
 
 
-    public function uniszexPuloverek()
+    public function nemuKategoria(string $nem, string $kategoria)
     {
-        $termekek = Termek::with(['modell.kategoria'])
-            ->whereHas('modell.kategoria', function($query) {
-                $query->where('ruhazat_kat', 'Pulóver');
-            })
-            ->whereHas('modell', function($query) {
-                $query->where('tipus', 'U');
-            })
-            ->get();
-
-        return response()->json($termekek);
-    }
-
-
-    public function noiPuloverek()
-    {
-        $termekek = Termek::with(['modell.kategoria'])
-            ->whereHas('modell.kategoria', function($query) {
-                $query->where('ruhazat_kat', 'Pulóver');
-            })
-            ->whereHas('modell', function($query) {
-                $query->where('tipus', 'N');
-            })
-            ->get();
-
+        $termekek = Termek::join('modells', 'termeks.modell', '=', 'modells.modell_id')
+            ->join('kategorias', 'modells.kategoria', '=', 'kategorias.kategoria_id')
+            ->where('modells.tipus', $nem)
+            ->where('kategorias.ruhazat_kat', $kategoria)
+            ->get(['termeks.*']);
         return response()->json($termekek);
     }
 
     public function szinuRuha(string $szin, string $kategoria)
     {
         $termekek = Termek::join('modells', 'termeks.modell', '=', 'modells.modell_id')
-        ->join('kategorias', 'modells.kategoria', '=', 'kategorias.kategoria_id')
-        ->where('termeks.szin', $szin)
-        ->where('kategorias.ruhazat_kat', $kategoria)
-        ->get(['termeks.*']);
+            ->join('kategorias', 'modells.kategoria', '=', 'kategorias.kategoria_id')
+            ->where('termeks.szin', $szin)
+            ->where('kategorias.ruhazat_kat', $kategoria)
+            ->get(['termeks.*']);
         return response()->json($termekek);
     }
 
     public function szinuMinden(string $szin)
     {
         $termekek = Termek::join('modells', 'termeks.modell', '=', 'modells.modell_id')
-        ->where('termeks.szin', $szin)
-        ->get(['termeks.*']);
+            ->where('termeks.szin', $szin)
+            ->get(['termeks.*']);
         return response()->json($termekek);
     }
 
@@ -127,7 +108,7 @@ class TermekController extends Controller
     public function rovidUjjuPolok()
     {
         $termekek = Termek::with(['modell.kategoria'])
-            ->whereHas('modell.kategoria', function($query) {
+            ->whereHas('modell.kategoria', function ($query) {
                 $query->where('ruhazat_kat', 'Rövid ujjú póló');
             })
             ->get();
@@ -142,5 +123,3 @@ class TermekController extends Controller
         return response()->json($termekek);
     }
 }
-
-

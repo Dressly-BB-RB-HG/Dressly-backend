@@ -17,7 +17,7 @@ Route::get('marka-ruhak/{marka}', [TermekController::class, 'markaRuhak']);
 Route::get('marka-kategoria/{marka}/{kategoria}', [TermekController::class, 'markaKategoria']);
 Route::get('uniszex-puloverek', [TermekController::class, 'uniszexPuloverek']);
 Route::get('rovid-ujju-polok', [TermekController::class, 'rovidUjjuPolok']);
-Route::get('noi-puloverek', [TermekController::class, 'noiPuloverek']);
+Route::get('nemu-kategoria/{nem}/{kategoria}', [TermekController::class, 'nemuKategoria']);
 Route::get('modellek-kategoriaval', [ModellController::class, 'modellekKategoriaval']);
 Route::get('kategoria-ruhak/{kategoria}', [TermekController::class, 'kategoriaRuhak']);
 
