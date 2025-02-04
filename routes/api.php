@@ -39,15 +39,17 @@ Route::middleware(['auth:sanctum', Admin::class])
     ->group(function(){
         Route::get('admin/felhasznalo/{id}', [UserController::class, 'show']);
         Route::get('admin/felhasznalok', [UserController::class, 'index']);
-        Route::get('admin/termekek', [TermekController::class, 'index']);
-        Route::post('admin/modell', [ModellController::class, 'store']);
+        Route::get('admin/termekek/{modell_id}', [TermekController::class, 'index']);
+        Route::post('admin/modell', [ModellController::class, 'store']);;
+        Route::put('admin/termek-modosit/{modell_id}', [TermekController::class, 'update']);
+
 
         
         Route::get('admin/termek/{id}', [TermekController::class, 'show']);
         Route::get('admin/modell/{id}', [ModellController::class, 'show']);
         Route::put('/update-profile', [UserController::class, 'updateProfile']);
         Route::delete('admin/felhasznalo-torles/{id}', [UserController::class, 'destroy']);
-        Route::delete('admin/modellTorles/{id}', [ModellController::class, 'destroy']);
+        Route::delete('admin/modell-torles/{id}', [ModellController::class, 'destroy']);
         Route::put('admin/felhasznalok/{id}/role', [UserController::class, 'updateRole']);
 
         

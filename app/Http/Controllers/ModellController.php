@@ -62,10 +62,16 @@ class ModellController extends Controller
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
-    {
-        Modell::find($id)->delete();
-        return "Modell törölve!";
+{
+    $modell = Modell::find($id); // Keressük a modellt az ID alapján
+    
+    if ($modell) {
+        $modell->delete(); // Ha találunk modellt, töröljük
+        return response()->json(['message' => 'Modell törölve!'], 200);
+    } else {
+        return response()->json(['error' => 'Modell nem található.'], 404);
     }
+}
 
 
     public function modellekKategoriaval()

@@ -10,10 +10,17 @@ class TermekController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        return Termek::all();
+    public function index($modell_id)
+{
+    // A termék keresése a `modell` mező alapján, amely a `modellek` táblában lévő `modell_id`-ra hivatkozik
+    $termek = Termek::where('modell', $modell_id)->first(); // FONTOS: 'modell' mezőt használunk
+    
+    if ($termek) {
+        return response()->json(['termek' => $termek]);
+    } else {
+        return response()->json(['message' => 'Nem található termék az adott modellhez'], 404);
     }
+}
 
     /**
      * Store a newly created resource in storage.
@@ -38,12 +45,30 @@ class TermekController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $termek_id)
-    {
-        $record = $this->show($termek_id);
-        $record->fill($request->all());
-        $record->save();
+    
+     public function update(Request $request, $modell_id)
+{
+    // Megpróbáljuk megkeresni a terméket a modell alapján
+    $termek = Termek::where('modell', $modell_id)->first();
+
+    // Ha nincs még ilyen termék, akkor létrehozzuk
+    if (!$termek) {
+        $termek = new Termek();
+        $termek->modell = $modell_id; // Új termék esetén hozzárendeljük a modellt
     }
+
+    // Frissítjük a termék adatait
+    $termek->szin = $request->szin;
+    $termek->meret = $request->meret;
+    $termek->keszlet = $request->keszlet;
+    $termek->ar = $request->ar;
+
+    // Elmentjük az új vagy frissített terméket
+    $termek->save();
+
+    return response()->json(['message' => 'Termék sikeresen mentve!', 'termek' => $termek]);
+}
+
 
     /**
      * Remove the specified resource from storage.
