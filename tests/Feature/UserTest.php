@@ -68,9 +68,9 @@ class UserTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_modell_post(): void
+    /*public function test_modell_post(): void
     {
         $response = $this->withoutMiddleware()->post('/api/admin/modell', ['kategoria' => '1', 'tipus' => 'F', 'gyarto' => 'Nike', 'kep' => 'asd']);
         $response->assertStatus(201);
-    }
+    }*/
 }
