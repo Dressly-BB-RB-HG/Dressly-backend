@@ -122,4 +122,29 @@ class TermekController extends Controller
 
         return response()->json($termekek);
     }
+
+
+
+    public function meretMarkaTipus(string $meret, string $marka, string $tipus){
+        $termekek = Termek::join('modells', 'termeks.modell', '=', 'modells.modell_id')
+        ->join('kategorias', 'modells.kategoria', '=', 'kategorias.kategoria_id')
+        ->where('termeks.meret', $meret)
+        ->where('modells.gyarto', $marka)
+        ->where('modells.tipus', $tipus)
+        ->get(['termeks.*']);
+
+        return response()->json($termekek);
+    }
+
+    public function meretMarkaTipusKategoria(string $meret, string $marka, string $tipus, string $kategoria){
+        $termekek = Termek::join('modells', 'termeks.modell', '=', 'modells.modell_id')
+        ->join('kategorias', 'modells.kategoria', '=', 'kategorias.kategoria_id')
+        ->where('termeks.meret', $meret)
+        ->where('modells.gyarto', $marka)
+        ->where('modells.tipus', $tipus)
+        ->where('kategorias.ruhazat_kat', $kategoria)
+        ->get(['termeks.*']);
+
+        return response()->json($termekek);
+    }
 }
