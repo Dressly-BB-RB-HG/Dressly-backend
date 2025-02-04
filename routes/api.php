@@ -19,7 +19,7 @@ Route::get('adidas-ruhak', [TermekController::class, 'adidasRuhak']);
 Route::get('puma-ruhak', [TermekController::class, 'pumaRuhak']);
 Route::get('uniszex-puloverek', [TermekController::class, 'uniszexPuloverek']);
 Route::get('rovid-ujju-polok', [TermekController::class, 'rovidUjjuPolok']);
-Route::get('noi-puloverek', [TermekController::class, 'noiPuloverek']);
+Route::get('nemu-kategoria/{nem}/{kategoria}', [TermekController::class, 'nemuKategoria']);
 Route::get('modellek-kategoriaval', [ModellController::class, 'modellekKategoriaval']);
 Route::get('pulcsik', [TermekController::class, 'pulcsik']);
 
