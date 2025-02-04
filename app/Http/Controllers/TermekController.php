@@ -101,18 +101,6 @@ class TermekController extends Controller
 
         return response()->json($termekek);
     }
-
- 
-
-
-    public function rovidUjjuPolok()
-    {
-        $termekek = Termek::with(['modell.kategoria'])
-            ->whereHas('modell.kategoria', function ($query) {
-                $query->where('ruhazat_kat', 'Rövid ujjú póló');
-            })
-            ->get();
-}
     
     public function kategoriaRuhak(string $kategoria){
         $termekek = Termek::join('modells', 'termeks.modell', '=', 'modells.modell_id')
