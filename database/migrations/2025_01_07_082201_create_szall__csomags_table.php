@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Szall_Csomag;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -16,9 +17,25 @@ return new class extends Migration
             $table->foreignId('rendeles')->references('rendeles_szam')->on('rendeles');
             $table->char('szallito', 3);
             $table->string('csomag_allapot', 15);
-            $table->date('szall_datum');
+            $table->date('szall_datum')->nullable();
             $table->timestamps();
         });
+
+        Szall_Csomag::create([
+            'rendeles' => 2,
+            'szallito' => 'GLS',
+            'csomag_allapot' => 'futarnal',
+
+        ]);
+
+        Szall_Csomag::create([
+            'rendeles' => 1,
+            'szallito' => 'MPL',
+            'csomag_allapot' => 'futarnal',
+
+        ]);
+
+
     }
 
     /**

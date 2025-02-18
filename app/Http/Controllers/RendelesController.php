@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Rendeles;
-
+use App\Models\Rendeles_tetel;
+use App\Models\Termek;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -49,7 +50,7 @@ class RendelesController extends Controller
         //
     }
 
-//Mikor rendeltek utoljára? 
+    //Mikor rendeltek utoljára? 
     public function utolsoRendeles()
     {
         $utolsoRendeles = Rendeles::orderBy('rendeles_datum', 'desc')->first();
@@ -66,7 +67,7 @@ class RendelesController extends Controller
     }
 
 
-//Adott Felhasználó összes rendelése. 
+    //Adott Felhasználó összes rendelése. 
     public function osszesRendeles($felhasznaloId)
     {
         $rendelesek = Rendeles::where('felhasznalo', $felhasznaloId)
@@ -77,7 +78,7 @@ class RendelesController extends Controller
     }
 
 
-    
+
     public function utolsoTermekRendeles($termekID)
     {
         $utolsoRendeles = DB::table('rendeles_tetels')
@@ -105,5 +106,40 @@ class RendelesController extends Controller
             ->get();
 
         return response()->json($result);
+    }
+
+
+    public function legtobbRendeles()
+    {
+
+        $legtobbetRendeltTermek = Rendeles_tetel::select('termek', \DB::raw('SUM(mennyiseg) as total_quantity'))
+            ->groupBy('termek')
+            ->orderByDesc('total_quantity')
+            ->first();
+        if ($legtobbetRendeltTermek) {
+            $termek = Termek::find($legtobbetRendeltTermek->termek);
+            return response()->json([
+                'termek_id' => $termek->termek_id,
+                'szin' => $termek->szin,
+                'meret' => $termek->meret,
+                'ar' => $termek->ar,
+                'mennyiseg' => $legtobbetRendeltTermek->total_quantity,
+            ]);
+        }
+
+
+        return response()->json([
+            'uzenet' => 'Nincs rendelés.',
+        ]);
+    }
+
+    //Melyik rendelések várnak még szállításra? 
+    public function kiszallitasraVarakozoRendelesek()
+    {
+        $rendezesek = Rendeles::join('szall__csomags', 'rendeles.rendeles_szam', '=', 'szall__csomags.rendeles')
+            ->whereIn('szall__csomags.csomag_allapot', ['csomagolas_alatt', 'becsomagolva', 'futarnal'])
+            ->get(['rendeles.rendeles_szam', 'rendeles.rendeles_datum', 'szall__csomags.csomag_allapot']);
+
+        return response()->json($rendezesek);
     }
 }

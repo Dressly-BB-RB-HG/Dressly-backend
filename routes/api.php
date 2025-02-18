@@ -28,6 +28,8 @@ Route::get('termek-pillanatnyi-ara/{mikor}/{termek}', [TermekController::class, 
 Route::get('utolso-termek-rendeles/{termek}', [RendelesController::class, 'utolsoTermekRendeles']);
 Route::get('legkedveltebb-modell', [KedvencekController::class, 'legkedveltebbModell']);
 Route::get('leggyakoribb-szin', [RendelesController::class, 'leggyakoribbSzin']);
+Route::get('legtobbet-rendelt-termek', [RendelesController::class, 'legtobbRendeles']);
+Route::get('kiszallitasra_varakozo-rendelesek', [RendelesController::class, 'kiszallitasraVarakozoRendelesek']);
 
 // Felhasználói lekérdezések
 
