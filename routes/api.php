@@ -44,7 +44,7 @@ Route::get('felhasznalo/{id}/rendelesek', [RendelesController::class, 'osszesRen
 
 // bazsi
 Route::get('rendeles/{rendelesSzam}/tetel', [RendelesController::class, 'rendelesTetel']);
-
+  
 // KedvencekController
 Route::get('legkedveltebb-modell', [KedvencekController::class, 'legkedveltebbModell']);
 
