@@ -13,16 +13,16 @@ class TermekController extends Controller
      * Display a listing of the resource.
      */
     public function index($modell_id)
-{
-    // A termék keresése a `modell` mező alapján, amely a `modellek` táblában lévő `modell_id`-ra hivatkozik
-    $termek = Termek::where('modell', $modell_id)->first(); // FONTOS: 'modell' mezőt használunk
-    
-    if ($termek) {
-        return response()->json(['termek' => $termek]);
-    } else {
-        return response()->json(['message' => 'Nem található termék az adott modellhez'], 404);
+    {
+        // A termék keresése a `modell` mező alapján, amely a `modellek` táblában lévő `modell_id`-ra hivatkozik
+        $termek = Termek::where('modell', $modell_id)->first(); // FONTOS: 'modell' mezőt használunk
+
+        if ($termek) {
+            return response()->json(['termek' => $termek]);
+        } else {
+            return response()->json(['message' => 'Nem található termék az adott modellhez'], 404);
+        }
     }
-}
 
     /**
      * Store a newly created resource in storage.
@@ -47,29 +47,29 @@ class TermekController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    
-     public function update(Request $request, $modell_id)
-{
-    // Megpróbáljuk megkeresni a terméket a modell alapján
-    $termek = Termek::where('modell', $modell_id)->first();
 
-    // Ha nincs még ilyen termék, akkor létrehozzuk
-    if (!$termek) {
-        $termek = new Termek();
-        $termek->modell = $modell_id; // Új termék esetén hozzárendeljük a modellt
+    public function update(Request $request, $modell_id)
+    {
+        // Megpróbáljuk megkeresni a terméket a modell alapján
+        $termek = Termek::where('modell', $modell_id)->first();
+
+        // Ha nincs még ilyen termék, akkor létrehozzuk
+        if (!$termek) {
+            $termek = new Termek();
+            $termek->modell = $modell_id; // Új termék esetén hozzárendeljük a modellt
+        }
+
+        // Frissítjük a termék adatait
+        $termek->szin = $request->szin;
+        $termek->meret = $request->meret;
+        $termek->keszlet = $request->keszlet;
+        $termek->ar = $request->ar;
+
+        // Elmentjük az új vagy frissített terméket
+        $termek->save();
+
+        return response()->json(['message' => 'Termék sikeresen mentve!', 'termek' => $termek]);
     }
-
-    // Frissítjük a termék adatait
-    $termek->szin = $request->szin;
-    $termek->meret = $request->meret;
-    $termek->keszlet = $request->keszlet;
-    $termek->ar = $request->ar;
-
-    // Elmentjük az új vagy frissített terméket
-    $termek->save();
-
-    return response()->json(['message' => 'Termék sikeresen mentve!', 'termek' => $termek]);
-}
 
 
     /**
@@ -116,75 +116,80 @@ class TermekController extends Controller
     //Adott márkájú ruha
     public function markaRuhak(string $marka)
     {
-    $termekek = Termek::join('modells', 'termeks.modell', '=', 'modells.modell_id')
-        ->where('modells.gyarto', $marka)
-        ->get(['termeks.*']);
-    
-    return response()->json($termekek);
-    }   
-
-    //Adott márkájú, adott kategóriájú ruha
-    public function markaKategoria(string $marka, string $kategoria){
         $termekek = Termek::join('modells', 'termeks.modell', '=', 'modells.modell_id')
-        ->join('kategorias', 'modells.kategoria', '=', 'kategorias.kategoria_id')
-        ->where('kategorias.ruhazat_kat', $kategoria)
-        ->where('modells.gyarto', $marka) 
-        ->get(['termeks.*']);
+            ->where('modells.gyarto', $marka)
+            ->get(['termeks.*']);
 
         return response()->json($termekek);
     }
-    
-    //Adott kategóriájú ruhák
-    public function kategoriaRuhak(string $kategoria){
+
+    //Adott márkájú, adott kategóriájú ruha
+    public function markaKategoria(string $marka, string $kategoria)
+    {
         $termekek = Termek::join('modells', 'termeks.modell', '=', 'modells.modell_id')
-        ->join('kategorias', 'modells.kategoria', '=', 'kategorias.kategoria_id')
-        ->where('kategorias.ruhazat_kat', $kategoria) 
-        ->get(['termeks.*']);
+            ->join('kategorias', 'modells.kategoria', '=', 'kategorias.kategoria_id')
+            ->where('kategorias.ruhazat_kat', $kategoria)
+            ->where('modells.gyarto', $marka)
+            ->get(['termeks.*']);
+
+        return response()->json($termekek);
+    }
+
+    //Adott kategóriájú ruhák
+    public function kategoriaRuhak(string $kategoria)
+    {
+        $termekek = Termek::join('modells', 'termeks.modell', '=', 'modells.modell_id')
+            ->join('kategorias', 'modells.kategoria', '=', 'kategorias.kategoria_id')
+            ->where('kategorias.ruhazat_kat', $kategoria)
+            ->get(['termeks.*']);
 
         return response()->json($termekek);
     }
 
     //Adott méretű, adott márkájú, adott típusu ruhák
-    public function meretMarkaTipus(string $meret, string $marka, string $tipus){
+    public function meretMarkaTipus(string $meret, string $marka, string $tipus)
+    {
         $termekek = Termek::join('modells', 'termeks.modell', '=', 'modells.modell_id')
-        ->join('kategorias', 'modells.kategoria', '=', 'kategorias.kategoria_id')
-        ->where('termeks.meret', $meret)
-        ->where('modells.gyarto', $marka)
-        ->where('modells.tipus', $tipus)
-        ->get(['termeks.*']);
+            ->join('kategorias', 'modells.kategoria', '=', 'kategorias.kategoria_id')
+            ->where('termeks.meret', $meret)
+            ->where('modells.gyarto', $marka)
+            ->where('modells.tipus', $tipus)
+            ->get(['termeks.*']);
 
         return response()->json($termekek);
     }
 
     //Adott méretű, adott márkájú, adott típusú, adott kategoriájú ruhák
-    public function meretMarkaTipusKategoria(string $meret, string $marka, string $tipus, string $kategoria){
+    public function meretMarkaTipusKategoria(string $meret, string $marka, string $tipus, string $kategoria)
+    {
         $termekek = Termek::join('modells', 'termeks.modell', '=', 'modells.modell_id')
-        ->join('kategorias', 'modells.kategoria', '=', 'kategorias.kategoria_id')
-        ->where('termeks.meret', $meret)
-        ->where('modells.gyarto', $marka)
-        ->where('modells.tipus', $tipus)
-        ->where('kategorias.ruhazat_kat', $kategoria)
-        ->get(['termeks.*']);
+            ->join('kategorias', 'modells.kategoria', '=', 'kategorias.kategoria_id')
+            ->where('termeks.meret', $meret)
+            ->where('modells.gyarto', $marka)
+            ->where('modells.tipus', $tipus)
+            ->where('kategorias.ruhazat_kat', $kategoria)
+            ->get(['termeks.*']);
         return response()->json($termekek);
     }
 
     //Adott méretű ruhák
-    public function meretRuhak(string $meret){
+    public function meretRuhak(string $meret)
+    {
         $termekek = Termek::join('modells', 'termeks.modell', '=', 'modells.modell_id')
-        ->where('termeks.meret', $meret)
-        ->get(['termeks.*']);
+            ->where('termeks.meret', $meret)
+            ->get(['termeks.*']);
         return response()->json($termekek);
     }
 
 
     public function termekAra($ekkor, $termekId)
     {
-        $ekkor = Carbon::parse($ekkor); 
+        $ekkor = Carbon::parse($ekkor);
 
         $ar = DB::table('termek_ars')
             ->where('termek', $termekId)
-            ->where('dtol', '<=', $ekkor) 
-            ->orderBy('dtol', 'desc') 
+            ->where('dtol', '<=', $ekkor)
+            ->orderBy('dtol', 'desc')
             ->value('uj_ar');
 
         if ($ar === null) {
@@ -195,18 +200,24 @@ class TermekController extends Controller
     }
 
 
-    public function mikorValtozottAr($termekID){
+    public function mikorValtozottAr($termekID)
+    {
 
         $legutolsoAr = DB::table('termek_ars')
-                        ->where('termek', $termekID)
-                        ->orderBy('dtol', 'desc')
-                        ->first();
+            ->where('termek', $termekID)
+            ->orderBy('dtol', 'desc')
+            ->first();
 
         if ($legutolsoAr) {
-            echo "Legutolsó ár változás dátuma: " . $legutolsoAr->dtol . ", Új ár: " . $legutolsoAr->uj_ar;
+            return response()->json([
+                'Utolso valtozas' => $legutolsoAr->dtol,
+                'Uj ar' => $legutolsoAr->uj_ar,
+                'TermekID' => $termekID
+            ]);
         } else {
-            echo "Nincs árváltozás a termékhez.";
+            return response()->json([
+                'message' => 'Nincs árváltozás a termékhez.'
+            ]);
         }
-
     }
 }
