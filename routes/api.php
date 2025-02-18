@@ -31,6 +31,7 @@ Route::get('legkedveltebb-modell', [KedvencekController::class, 'legkedveltebbMo
 Route::get('leggyakoribb-szin', [RendelesController::class, 'leggyakoribbSzin']);
 Route::get('legtobbet-rendelt-termek', [RendelesController::class, 'legtobbRendeles']);
 Route::get('kiszallitasra_varakozo-rendelesek', [RendelesController::class, 'kiszallitasraVarakozoRendelesek']);
+Route::get('legsikeresebb-termek-kategoria/{kategoriaId}', [TermekController::class, 'legsikeresebbTermekKategoria']);
 
 // Felhasználói lekérdezések
 

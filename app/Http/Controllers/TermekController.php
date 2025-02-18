@@ -227,4 +227,34 @@ class TermekController extends Controller
             ->get();
             return response()->json(['Ezekből a termékekből nincs készlet' => $nincsKeszleten]);
     }
+
+
+    //Mely kategóriában melyik termék a legsikeresebb? 
+    public function legsikeresebbTermekKategoria($kategoriaID)
+    {
+        $result = DB::table('rendeles_tetels as rt')
+            ->join('termeks as t', 'rt.termek', '=', 't.termek_id')
+            ->join('modells as m', 't.modell', '=', 'm.modell_id')
+            ->join('kategorias as k', 'm.kategoria', '=', 'k.kategoria_id') 
+            ->select(
+                't.termek_id',
+                't.szin',
+                't.meret',
+                't.ar',
+                'k.kategoria_id',
+                'k.ruhazat_kat',
+                DB::raw('SUM(rt.mennyiseg) as ossz_rendeles_mennyiseg')
+            )
+            ->where('k.kategoria_id', '=', $kategoriaID)
+            ->groupBy('t.termek_id', 't.szin', 't.meret', 't.ar', 'k.kategoria_id', 'k.ruhazat_kat')
+            ->orderByDesc('ossz_rendeles_mennyiseg')
+            ->limit(1) 
+            ->first();
+
+        if ($result) {
+            return response()->json($result);
+        } else {
+            return response()->json(['message' => 'Nincs rendelés ebben a kategóriában.'], 404);
+        }
+    }
 }
