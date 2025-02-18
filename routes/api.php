@@ -25,6 +25,7 @@ Route::get('meret-marka-tipus-kategoria/{meret}/{marka}/{tipus}/{kategoria}', [T
 Route::get('utolso-rendeles', [RendelesController::class, 'utolsoRendeles']);
 Route::get('termek-pillanatnyi-ara/{mikor}/{termek}', [TermekController::class, 'termekAra']);
 Route::get('mikor-valtozott-ar/{termek}', [TermekController::class, 'mikorValtozottAr']);
+Route::get('nincs-keszleten', [TermekController::class, 'nincsKeszleten']);
 
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
