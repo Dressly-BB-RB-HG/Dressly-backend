@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Models\Rendeles;
 
 return new class extends Migration
 {
@@ -14,11 +15,24 @@ return new class extends Migration
         Schema::create('rendeles', function (Blueprint $table) {
             $table->id('rendeles_szam');
             $table->foreignId('felhasznalo')->references('id')->on('users');
-            $table->date('rendeles_datum');
+            $table->timestamp('rendeles_datum')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->integer('fizetve_e')->default(0);
             $table->timestamps();
         });
+
+        Rendeles::create([
+            'felhasznalo' => 3, 
+            'fizetve_e' => 0, 
+            ]);
+    
+        Rendeles::create([
+            'felhasznalo' => 3, 
+            'fizetve_e' => 0, 
+        ]);
     }
+
+
+    
 
     /**
      * Reverse the migrations.
@@ -27,4 +41,8 @@ return new class extends Migration
     {
         Schema::dropIfExists('rendeles');
     }
+
+
+
+
 };
