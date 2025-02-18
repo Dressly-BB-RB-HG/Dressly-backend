@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id('rendeles_szam');
             $table->foreignId('felhasznalo')->references('id')->on('users');
             $table->date('rendeles_datum');
-            $table->boolean('fizetve_e');
+            $table->integer('fizetve_e')->default(0);
             $table->timestamps();
         });
     }

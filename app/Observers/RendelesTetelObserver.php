@@ -13,7 +13,6 @@ class RendelesTetelObserver
     public function created(rendeles_Tetel $rendelesTetel): void
     {
         {
-            // Csökkentsd a készletet a rendelés tétel mennyiségével
             $termek = Termek::find($rendelesTetel->termek);
             if ($termek && $termek->keszlet >= $rendelesTetel->mennyiseg) {
                 $termek->keszlet -= $rendelesTetel->mennyiseg;

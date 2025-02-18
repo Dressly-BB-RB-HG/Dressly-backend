@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Termek;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class TermekController extends Controller
 {
@@ -172,5 +174,39 @@ class TermekController extends Controller
         ->where('termeks.meret', $meret)
         ->get(['termeks.*']);
         return response()->json($termekek);
+    }
+
+
+    public function termekAra($ekkor, $termekId)
+    {
+        $ekkor = Carbon::parse($ekkor); 
+
+        $ar = DB::table('termek_ars')
+            ->where('termek', $termekId)
+            ->where('dtol', '<=', $ekkor) 
+            ->orderBy('dtol', 'desc') 
+            ->value('uj_ar');
+
+        if ($ar === null) {
+            $ar = DB::table('termeks')->where('termek_id', $termekId)->value('ar');
+        }
+
+        return response()->json(['ar' => $ar]);
+    }
+
+
+    public function mikorValtozottAr($termekID){
+
+        $legutolsoAr = DB::table('termek_ars')
+                        ->where('termek', $termekID)
+                        ->orderBy('dtol', 'desc')
+                        ->first();
+
+        if ($legutolsoAr) {
+            echo "Legutolsó ár változás dátuma: " . $legutolsoAr->dtol . ", Új ár: " . $legutolsoAr->uj_ar;
+        } else {
+            echo "Nincs árváltozás a termékhez.";
+        }
+
     }
 }

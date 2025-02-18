@@ -21,6 +21,8 @@ Route::get('modellek-kategoriaval', [ModellController::class, 'modellekKategoria
 Route::get('kategoria-ruhak/{kategoria}', [TermekController::class, 'kategoriaRuhak']);
 Route::get('meret-marka-tipus/{meret}/{marka}/{tipus}', [TermekController::class, 'meretMarkaTipus']);
 Route::get('meret-marka-tipus-kategoria/{meret}/{marka}/{tipus}/{kategoria}', [TermekController::class, 'meretMarkaTipusKategoria']);
+Route::get('termek-pillanatnyi-ara/{mikor}/{termek}', [TermekController::class, 'termekAra']);
+
 
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
