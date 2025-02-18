@@ -12,6 +12,5 @@ class Szall_Csomag extends Model
         "rendeles",
         "szallito",
         "csomag_allapot",
-        "szall_datum"
     ];
 }
