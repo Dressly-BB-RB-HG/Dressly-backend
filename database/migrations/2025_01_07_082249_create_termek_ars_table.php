@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Termek_ar;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -19,6 +20,19 @@ return new class extends Migration
             $table->rememberToken();
             $table->timestamps();
         });
+
+
+        Termek_ar::create([
+            'termek' => 1,
+            'dtol' => '2024-01-01',
+            'uj_ar' => 12990,
+        ]);
+
+        Termek_ar::create([
+            'termek' => 2,
+            'dtol' => '2024-02-01',
+            'uj_ar' => 14990,
+        ]);
     }
 
     /**
@@ -28,4 +42,6 @@ return new class extends Migration
     {
         Schema::dropIfExists('termek_ars');
     }
+
+
 };

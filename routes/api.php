@@ -23,6 +23,8 @@ Route::get('kategoria-ruhak/{kategoria}', [TermekController::class, 'kategoriaRu
 Route::get('meret-marka-tipus/{meret}/{marka}/{tipus}', [TermekController::class, 'meretMarkaTipus']);
 Route::get('meret-marka-tipus-kategoria/{meret}/{marka}/{tipus}/{kategoria}', [TermekController::class, 'meretMarkaTipusKategoria']);
 Route::get('utolso-rendeles', [RendelesController::class, 'utolsoRendeles']);
+Route::get('termek-pillanatnyi-ara/{mikor}/{termek}', [TermekController::class, 'termekAra']);
+
 
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
