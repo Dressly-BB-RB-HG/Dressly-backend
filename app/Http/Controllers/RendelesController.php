@@ -65,7 +65,6 @@ class RendelesController extends Controller
         }
     }
 
-<<<<<<< HEAD
 
 //Adott Felhasználó összes rendelése. 
     public function osszesRendeles($felhasznaloId)
@@ -79,7 +78,6 @@ class RendelesController extends Controller
 
 
     
-=======
     public function utolsoTermekRendeles($termekID)
     {
         $utolsoRendeles = DB::table('rendeles_tetels')
@@ -108,5 +106,4 @@ class RendelesController extends Controller
 
         return response()->json($result);
     }
->>>>>>> 64118b407b5138d6fb374cf56ba5e2a4b382e2f8
 }
