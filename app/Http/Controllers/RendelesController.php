@@ -143,7 +143,7 @@ class RendelesController extends Controller
     public function legtobbRendeles()
     {
 
-        $legtobbetRendeltTermek = Rendeles_tetel::select('termek', \DB::raw('SUM(mennyiseg) as total_quantity'))
+        $legtobbetRendeltTermek = Rendeles_tetel::select('termek', DB::raw('SUM(mennyiseg) as total_quantity'))
             ->groupBy('termek')
             ->orderByDesc('total_quantity')
             ->first();
@@ -174,9 +174,7 @@ class RendelesController extends Controller
         return response()->json($rendezesek);
     }
 
-<<<<<<< HEAD
     
-=======
     // bazsi 
     public function rendelesTetel($rendelesSzam)
     {
@@ -202,5 +200,4 @@ class RendelesController extends Controller
         }
     }
 
->>>>>>> 06d1175439507562085467cd5b8e5f9330d6bd6c
 }
