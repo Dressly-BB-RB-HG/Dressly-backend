@@ -23,7 +23,8 @@ class User extends Authenticatable
         'v_nev',
         'email',
         'password',
-        'role'
+        'role',
+        'hirlevel'
     ];
 
     /**

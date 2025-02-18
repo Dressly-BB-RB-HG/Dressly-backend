@@ -23,6 +23,12 @@ Route::get('meret-marka-tipus/{meret}/{marka}/{tipus}', [TermekController::class
 Route::get('meret-marka-tipus-kategoria/{meret}/{marka}/{tipus}/{kategoria}', [TermekController::class, 'meretMarkaTipusKategoria']);
 Route::get('termek-pillanatnyi-ara/{mikor}/{termek}', [TermekController::class, 'termekAra']);
 
+// Felhasználói lekérdezések
+
+Route::get('megrendelok-listazasa', [UserController::class, 'megrendelok']);
+Route::get('hirlevel-feliratkozok', [UserController::class, 'hirlevelFeliratkozok']);
+Route::get('utolso-rendeles-megrendelo/{userId}', [UserController::class, 'utolsoRendelesMegrendelo']);
+Route::get('melyik-megrendelo-a-legtobbet', [UserController::class, 'melyikMegrendeloALegtobbet']);
 
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
