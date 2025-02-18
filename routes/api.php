@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\ModellController;
 use App\Http\Controllers\TermekController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\RendelesController;
 use App\Http\Middleware\Admin;
 use App\Http\Middleware\Raktaros;
 use App\Models\User;
@@ -21,6 +22,7 @@ Route::get('modellek-kategoriaval', [ModellController::class, 'modellekKategoria
 Route::get('kategoria-ruhak/{kategoria}', [TermekController::class, 'kategoriaRuhak']);
 Route::get('meret-marka-tipus/{meret}/{marka}/{tipus}', [TermekController::class, 'meretMarkaTipus']);
 Route::get('meret-marka-tipus-kategoria/{meret}/{marka}/{tipus}/{kategoria}', [TermekController::class, 'meretMarkaTipusKategoria']);
+Route::get('utolso-rendeles', [RendelesController::class, 'utolsoRendeles']);
 
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
