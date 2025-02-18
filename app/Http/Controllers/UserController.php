@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -130,6 +131,56 @@ class UserController extends Controller
     $user->save();
 
     return response()->json(['message' => 'Szerep sikeresen módosítva!'], 200);
-}
 
+    }
+
+    // Megrendelők kilistázása:
+
+    public function megrendelok()
+    {
+        $megrendelok = User::where('role', 0)->get();
+        return response()->json($megrendelok);
+    }
+
+    // Hírlevélre feliratkozott megrendelők. 
+
+    public function hirlevelFeliratkozok()
+    {
+        $feliratkozok = User::where('hirlevel', 1)->where('hirlevel', 1)->get(['id', 'name']);
+        return response()->json($feliratkozok);
+    }
+
+    // Adott megrendelő mikor rendelt utoljára? 
+
+    public function utolsoRendelesMegrendelo(int $userId)
+    {
+        $utolsoRendeles = DB::table('rendeles')
+            ->join('users', 'rendeles.felhasznalo', '=', 'users.id')  
+            ->where('users.id', $userId)
+            ->where('users.role', 2)
+            ->orderBy('rendeles.rendeles_datum', 'desc')  
+            ->value('rendeles.rendeles_datum'); 
+    
+        return response()->json(['utolso_rendeles' => $utolsoRendeles]);
+    }
+
+    // Adott megrendelőnek a legutóbbi rendelésének részletei. 
+
+    public function megrendeloLegutobbiRendeles(){
+
+    }
+
+    // Melyik megrendelő rendelt a legtöbbet? 
+
+    public function melyikMegrendeloALegtobbet(){
+
+            $megrendelo = DB::table('rendeles')
+                ->join('users', 'rendeles.felhasznalo', '=', 'users.id')  
+                ->select('users.id', 'users.name', DB::raw('count(*) as osszes_megrendeles')) 
+                ->groupBy('users.id', 'users.name')  
+                ->orderByDesc('osszes_megrendeles')  
+                ->first();  
+        
+            return response()->json(['megrendelo' => $megrendelo]);
+    }
 }

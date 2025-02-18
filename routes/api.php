@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\KedvencekController;
 use App\Http\Controllers\ModellController;
 use App\Http\Controllers\TermekController;
 use App\Http\Controllers\UserController;
@@ -24,8 +25,19 @@ Route::get('meret-marka-tipus/{meret}/{marka}/{tipus}', [TermekController::class
 Route::get('meret-marka-tipus-kategoria/{meret}/{marka}/{tipus}/{kategoria}', [TermekController::class, 'meretMarkaTipusKategoria']);
 Route::get('utolso-rendeles', [RendelesController::class, 'utolsoRendeles']);
 Route::get('termek-pillanatnyi-ara/{mikor}/{termek}', [TermekController::class, 'termekAra']);
+Route::get('utolso-termek-rendeles/{termek}', [RendelesController::class, 'utolsoTermekRendeles']);
+Route::get('legkedveltebb-modell', [KedvencekController::class, 'legkedveltebbModell']);
+Route::get('leggyakoribb-szin', [RendelesController::class, 'leggyakoribbSzin']);
+
+// Felhasználói lekérdezések
+
+Route::get('megrendelok-listazasa', [UserController::class, 'megrendelok']);
+Route::get('hirlevel-feliratkozok', [UserController::class, 'hirlevelFeliratkozok']);
+Route::get('utolso-rendeles-megrendelo/{userId}', [UserController::class, 'utolsoRendelesMegrendelo']);
+Route::get('melyik-megrendelo-a-legtobbet', [UserController::class, 'melyikMegrendeloALegtobbet']);
 Route::get('mikor-valtozott-ar/{termek}', [TermekController::class, 'mikorValtozottAr']);
 Route::get('felhasznalo/{id}/rendelesek', [RendelesController::class, 'osszesRendeles']);
+Route::get('nincs-keszleten', [TermekController::class, 'nincsKeszleten']);
 
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();

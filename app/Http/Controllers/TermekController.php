@@ -220,4 +220,11 @@ class TermekController extends Controller
             ]);
         }
     }
+
+    public function nincsKeszleten(){
+        $nincsKeszleten = DB::table('termeks')
+            ->where('keszlet', '<', 1)
+            ->get();
+            return response()->json(['Ezekből a termékekből nincs készlet' => $nincsKeszleten]);
+    }
 }

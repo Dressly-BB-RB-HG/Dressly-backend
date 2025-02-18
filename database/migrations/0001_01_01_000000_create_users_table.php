@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('v_nev');
             $table->string('password');
             $table->integer('role')->default(0);
+            $table->integer('hirlevel')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });

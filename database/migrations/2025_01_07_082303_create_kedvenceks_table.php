@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Kedvencek;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,12 +13,23 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('kedvenceks', function (Blueprint $table) {
-            $table->primary(['felhasznalo', 'termek']);
+            $table->primary(['felhasznalo', 'modell']);
             $table->foreignId('felhasznalo')->references('id')->on('users');
-            $table->foreignId('termek')->references('modell_id')->on('modells');
+            $table->foreignId('modell')->references('modell_id')->on('modells');
             $table->rememberToken();
             $table->timestamps();
         });
+
+
+        Kedvencek::create([
+            'felhasznalo' => 1,
+            'modell' => 1,   
+        ]);
+    
+        Kedvencek::create([
+            'felhasznalo' => 3,
+            'modell' => 1,
+        ]);
     }
 
     /**

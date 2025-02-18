@@ -77,6 +77,14 @@ return new class extends Migration
             'keszlet' => 20,
             'ar' => 9999,
         ]);
+
+        Termek::create([
+            'modell' => 7,
+            'szin' => 'Piros',
+            'meret' => 'M',
+            'keszlet' => 0,
+            'ar' => 9999,
+        ]);
         
         
     }
