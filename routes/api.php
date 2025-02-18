@@ -13,39 +13,52 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::get('admin/modellek', [ModellController::class, 'index']);
+// TermekController
 Route::get('szinu-ruha/{szin}/{kategoria}', [TermekController::class, 'szinuRuha']);
 Route::get('szinu-minden/{szin}', [TermekController::class, 'szinuMinden']);
 Route::get('marka-ruhak/{marka}', [TermekController::class, 'markaRuhak']);
 Route::get('meret-ruhak/{meret}', [TermekController::class, 'meretRuhak']);
 Route::get('marka-kategoria/{marka}/{kategoria}', [TermekController::class, 'markaKategoria']);
 Route::get('nemu-kategoria/{nem}/{kategoria}', [TermekController::class, 'nemuKategoria']);
-Route::get('modellek-kategoriaval', [ModellController::class, 'modellekKategoriaval']);
 Route::get('kategoria-ruhak/{kategoria}', [TermekController::class, 'kategoriaRuhak']);
 Route::get('meret-marka-tipus/{meret}/{marka}/{tipus}', [TermekController::class, 'meretMarkaTipus']);
 Route::get('meret-marka-tipus-kategoria/{meret}/{marka}/{tipus}/{kategoria}', [TermekController::class, 'meretMarkaTipusKategoria']);
-Route::get('utolso-rendeles', [RendelesController::class, 'utolsoRendeles']);
 Route::get('termek-pillanatnyi-ara/{mikor}/{termek}', [TermekController::class, 'termekAra']);
+Route::get('mikor-valtozott-ar/{termek}', [TermekController::class, 'mikorValtozottAr']);
+Route::get('nincs-keszleten', [TermekController::class, 'nincsKeszleten']);
+
+// ModellController
+Route::get('admin/modellek', [ModellController::class, 'index']);
+Route::get('modellek-kategoriaval', [ModellController::class, 'modellekKategoriaval']);
+
+// RendelesController
+Route::get('utolso-rendeles', [RendelesController::class, 'utolsoRendeles']);
 Route::get('utolso-termek-rendeles/{termek}', [RendelesController::class, 'utolsoTermekRendeles']);
-Route::get('legkedveltebb-modell', [KedvencekController::class, 'legkedveltebbModell']);
 Route::get('leggyakoribb-szin', [RendelesController::class, 'leggyakoribbSzin']);
+Route::get('leggyakoribb-meret', [RendelesController::class, 'leggyakoribbMeret']);
+Route::get('legsikeresebb-honap', [RendelesController::class, 'legsikeresebbHonap']);
 Route::get('legtobbet-rendelt-termek', [RendelesController::class, 'legtobbRendeles']);
 Route::get('kiszallitasra_varakozo-rendelesek', [RendelesController::class, 'kiszallitasraVarakozoRendelesek']);
 Route::get('legsikeresebb-termek-kategoria/{kategoriaId}', [TermekController::class, 'legsikeresebbTermekKategoria']);
+Route::get('felhasznalo/{id}/rendelesek', [RendelesController::class, 'osszesRendeles']);
 
-// Felhasználói lekérdezések
+// bazsi
+Route::get('rendeles/{rendelesSzam}/tetel', [RendelesController::class, 'rendelesTetel']);
 
+// KedvencekController
+Route::get('legkedveltebb-modell', [KedvencekController::class, 'legkedveltebbModell']);
+
+// UserController
 Route::get('megrendelok-listazasa', [UserController::class, 'megrendelok']);
 Route::get('hirlevel-feliratkozok', [UserController::class, 'hirlevelFeliratkozok']);
 Route::get('utolso-rendeles-megrendelo/{userId}', [UserController::class, 'utolsoRendelesMegrendelo']);
 Route::get('melyik-megrendelo-a-legtobbet', [UserController::class, 'melyikMegrendeloALegtobbet']);
 
-// hirlevél feliratkozás
-
+// HirlevelController
 Route::patch('feliratkozas-hirlevelre', [HirlevelController::class, 'feliratkozas']);
-Route::get('mikor-valtozott-ar/{termek}', [TermekController::class, 'mikorValtozottAr']);
-Route::get('felhasznalo/{id}/rendelesek', [RendelesController::class, 'osszesRendeles']);
-Route::get('nincs-keszleten', [TermekController::class, 'nincsKeszleten']);
+
+
+
 
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
@@ -67,9 +80,6 @@ Route::middleware(['auth:sanctum', Admin::class])
         Route::get('admin/termekek/{modell_id}', [TermekController::class, 'index']);
         Route::post('admin/modell', [ModellController::class, 'store']);
         Route::put('admin/termek-modosit/{modell_id}', [TermekController::class, 'update']);
-
-
-        
         Route::get('admin/termek/{id}', [TermekController::class, 'show']);
         Route::get('admin/modell/{id}', [ModellController::class, 'show']);
         Route::put('/update-profile', [UserController::class, 'updateProfile']);
