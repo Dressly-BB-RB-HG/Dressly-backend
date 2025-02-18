@@ -15,5 +15,19 @@ class Rendeles_tetel extends Model
     ];
 
 
+    public function rendeles()
+    {
+        return $this->belongsTo(Rendeles::class, 'rendeles');
+    }
+
+    public function termek()
+    {
+        return $this->belongsTo(Termek::class, 'termek');
+    }
+
+    public function modell()
+    {
+        return $this->belongsTo(Modell::class, 'modell');
+    }
     
 }

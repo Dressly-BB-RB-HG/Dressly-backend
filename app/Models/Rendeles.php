@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Rendeles_tetel;
 
 class Rendeles extends Model
 {
@@ -13,4 +14,11 @@ class Rendeles extends Model
         "rendeles_datum",
         "fizetve_e"
     ];
+    
+    public function rendelesTetel()
+    {
+        return $this->hasMany(Rendeles_tetel::class, 'rendeles');
+    }
+
+
 }

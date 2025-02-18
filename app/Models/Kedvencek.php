@@ -9,7 +9,7 @@ class Kedvencek extends Model
 
     protected $fillable = [
         'felhasznalo',
-        'termek'
+        'modell'
 
     ];
 }

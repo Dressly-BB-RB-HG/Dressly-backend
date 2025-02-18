@@ -1,9 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Rendeles;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class RendelesController extends Controller
 {
@@ -47,7 +49,7 @@ class RendelesController extends Controller
         //
     }
 
-
+//Mikor rendeltek utoljára? 
     public function utolsoRendeles()
     {
         $utolsoRendeles = Rendeles::orderBy('rendeles_datum', 'desc')->first();
@@ -61,5 +63,47 @@ class RendelesController extends Controller
                 'uzenet' => 'Még nem történt rendelés.'
             ]);
         }
+    }
+
+
+//Adott Felhasználó összes rendelése. 
+    public function osszesRendeles($felhasznaloId)
+    {
+        $rendelesek = Rendeles::where('felhasznalo', $felhasznaloId)
+            ->with('rendelesTetel.termek.modell')
+            ->get();
+
+        return response()->json($rendelesek);
+    }
+
+
+    
+    public function utolsoTermekRendeles($termekID)
+    {
+        $utolsoRendeles = DB::table('rendeles_tetels')
+            ->join('rendeles', 'rendeles_tetels.rendeles', '=', 'rendeles.rendeles_szam')
+            ->where('rendeles_tetels.termek', $termekID)
+            ->orderBy('rendeles.rendeles_datum', 'desc')
+            ->select('rendeles.rendeles_datum')
+            ->first();
+
+        if ($utolsoRendeles) {
+            return response()->json(['Termék utolsó rendelése: ' => $utolsoRendeles->rendeles_datum]);
+        } else {
+            return response()->json(['message' => 'Nincs rendelés ehhez a termékhez.']);
+        }
+    }
+
+    public function leggyakoribbSzin()
+    {
+        $result = DB::table('rendeles_tetels as rt')
+            ->join('termeks as t', 'rt.termek', '=', 't.termek_id')
+            ->select('t.szin', DB::raw('COUNT(*) as rendelesek_szama'))
+            ->groupBy('t.szin')
+            ->orderByDesc(DB::raw('COUNT(*)'))
+            ->limit(1)
+            ->get();
+
+        return response()->json($result);
     }
 }
