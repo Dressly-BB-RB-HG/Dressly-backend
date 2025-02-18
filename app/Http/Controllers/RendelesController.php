@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Rendeles;
 
 use Illuminate\Http\Request;
@@ -47,7 +48,7 @@ class RendelesController extends Controller
         //
     }
 
-
+//Mikor rendeltek utoljára? 
     public function utolsoRendeles()
     {
         $utolsoRendeles = Rendeles::orderBy('rendeles_datum', 'desc')->first();
@@ -62,4 +63,18 @@ class RendelesController extends Controller
             ]);
         }
     }
+
+
+//Adott Felhasználó összes rendelése. 
+    public function osszesRendeles($felhasznaloId)
+    {
+        $rendelesek = Rendeles::where('felhasznalo', $felhasznaloId)
+            ->with('rendelesTetel.termek.modell')
+            ->get();
+
+        return response()->json($rendelesek);
+    }
+
+
+    
 }

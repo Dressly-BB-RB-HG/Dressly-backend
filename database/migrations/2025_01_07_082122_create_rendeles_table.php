@@ -5,6 +5,8 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use App\Models\Rendeles;
 
+use Illuminate\Support\Facades\DB;
+
 return new class extends Migration
 {
     /**
