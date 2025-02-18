@@ -9,6 +9,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\RendelesController;
 use App\Http\Middleware\Admin;
 use App\Http\Middleware\Raktaros;
+use App\Models\Rendeles;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -29,7 +30,8 @@ Route::get('termek-pillanatnyi-ara/{mikor}/{termek}', [TermekController::class, 
 Route::get('utolso-termek-rendeles/{termek}', [RendelesController::class, 'utolsoTermekRendeles']);
 Route::get('legkedveltebb-modell', [KedvencekController::class, 'legkedveltebbModell']);
 Route::get('leggyakoribb-szin', [RendelesController::class, 'leggyakoribbSzin']);
-
+Route::get('leggyakoribb-meret', [RendelesController::class, 'leggyakoribbMeret']);
+Route::get('legsikeresebb-honap', [RendelesController::class, 'legsikeresebbHonap']);
 // Felhasználói lekérdezések
 
 Route::get('megrendelok-listazasa', [UserController::class, 'megrendelok']);

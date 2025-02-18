@@ -32,6 +32,24 @@ return new class extends Migration
             'termek' => 3, 
             'mennyiseg' => 5,
         ]);
+
+        Rendeles_tetel::create([
+            'rendeles' => 2, 
+            'termek' => 3, 
+            'mennyiseg' => 5,
+        ]);
+
+        Rendeles_tetel::create([
+            'rendeles' => 3, 
+            'termek' => 3, 
+            'mennyiseg' => 2,
+        ]);
+
+        Rendeles_tetel::create([
+            'rendeles' => 4, 
+            'termek' => 1, 
+            'mennyiseg' => 15,
+        ]);
     }
 
     /**
