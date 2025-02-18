@@ -41,6 +41,9 @@ Route::get('legtobbet-rendelt-termek', [RendelesController::class, 'legtobbRende
 Route::get('kiszallitasra_varakozo-rendelesek', [RendelesController::class, 'kiszallitasraVarakozoRendelesek']);
 Route::get('felhasznalo/{id}/rendelesek', [RendelesController::class, 'osszesRendeles']);
 
+// bazsi
+Route::get('rendeles/{rendelesSzam}/tetel', [RendelesController::class, 'rendelesTetel']);
+
 // KedvencekController
 Route::get('legkedveltebb-modell', [KedvencekController::class, 'legkedveltebbModell']);
 

@@ -173,4 +173,30 @@ class RendelesController extends Controller
 
         return response()->json($rendezesek);
     }
+
+    // bazsi
+    public function rendelesTetel($rendelesSzam)
+    {
+        // Lekérdezzük a rendelés tételeit és a kapcsolódó termék adatokat
+        $rendelesTetel = DB::table('rendeles_tetels as rt')
+            ->join('termeks as t', 'rt.termek', '=', 't.termek_id') // Join a termeks táblával
+            ->where('rt.rendeles', $rendelesSzam)
+            ->select(
+                'rt.termek',          // Tételhez tartozó termék ID
+                'rt.mennyiseg',       // Rendelés mennyisége
+                't.modell',           // Termék modell
+                't.szin',             // Termék szín
+                't.meret',            // Termék méret
+                't.ar'                // Termék ár
+            )
+            ->get();
+
+        // Ha vannak tételek a rendelésben, visszaadjuk őket
+        if ($rendelesTetel->isNotEmpty()) {
+            return response()->json($rendelesTetel);
+        } else {
+            return response()->json(['message' => 'Nincs tétel a rendelésben.']);
+        }
+    }
+
 }
