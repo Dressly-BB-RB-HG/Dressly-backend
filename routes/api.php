@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\HirlevelController;
 use App\Http\Controllers\KedvencekController;
 use App\Http\Controllers\ModellController;
 use App\Http\Controllers\TermekController;
@@ -37,6 +38,10 @@ Route::get('megrendelok-listazasa', [UserController::class, 'megrendelok']);
 Route::get('hirlevel-feliratkozok', [UserController::class, 'hirlevelFeliratkozok']);
 Route::get('utolso-rendeles-megrendelo/{userId}', [UserController::class, 'utolsoRendelesMegrendelo']);
 Route::get('melyik-megrendelo-a-legtobbet', [UserController::class, 'melyikMegrendeloALegtobbet']);
+
+// hirlevél feliratkozás
+
+Route::patch('feliratkozas-hirlevelre', [HirlevelController::class, 'feliratkozas']);
 Route::get('mikor-valtozott-ar/{termek}', [TermekController::class, 'mikorValtozottAr']);
 Route::get('felhasznalo/{id}/rendelesek', [RendelesController::class, 'osszesRendeles']);
 Route::get('nincs-keszleten', [TermekController::class, 'nincsKeszleten']);
@@ -59,7 +64,7 @@ Route::middleware(['auth:sanctum', Admin::class])
         Route::get('admin/felhasznalo/{id}', [UserController::class, 'show']);
         Route::get('admin/felhasznalok', [UserController::class, 'index']);
         Route::get('admin/termekek/{modell_id}', [TermekController::class, 'index']);
-        Route::post('admin/modell', [ModellController::class, 'store']);;
+        Route::post('admin/modell', [ModellController::class, 'store']);
         Route::put('admin/termek-modosit/{modell_id}', [TermekController::class, 'update']);
 
 
