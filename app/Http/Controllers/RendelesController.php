@@ -177,7 +177,7 @@ class RendelesController extends Controller
 <<<<<<< HEAD
     
 =======
-    // bazsi
+    // bazsi 
     public function rendelesTetel($rendelesSzam)
     {
         // Lekérdezzük a rendelés tételeit és a kapcsolódó termék adatokat
