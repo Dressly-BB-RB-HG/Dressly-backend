@@ -134,13 +134,19 @@ class UserController extends Controller
 
     }
 
-    // Megrendelők kilistázása:
+    // Hány reigsztrált megrendelő van?:
 
     public function megrendelok()
     {
-        $megrendelok = User::where('role', 0)->get();
-        return response()->json($megrendelok);
-    }
+    
+    $megrendelok = User::where('role', 3)->get();
+    $megrendelokSzama = $megrendelok->count(); 
+    return response()->json([
+        'megrendelok' => $megrendelok,
+        'megrendelokSzama' => $megrendelokSzama
+    ]);
+}
+
 
     // Hírlevélre feliratkozott megrendelők. 
 
