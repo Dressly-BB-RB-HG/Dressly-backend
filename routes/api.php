@@ -33,7 +33,7 @@ Route::get('nincs-keszleten', [TermekController::class, 'nincsKeszleten']);
 Route::get('termek-minden-adattal', [TermekController::class, 'termekMindenAdattal']);
 // ModellController
 Route::get('modellek-kategoriaval', [ModellController::class, 'modellekKategoriaval']);
-Route::post('/kosar', [KosarController::class, 'store']);
+Route::post('kosar', [KosarController::class, 'store']);
 
 
 // RendelesController
