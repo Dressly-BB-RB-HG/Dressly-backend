@@ -12,4 +12,14 @@ class Kosar extends Model
         "termek",
         "mennyiseg"
     ];
+
+    public function felhasznalo()
+    {
+        return $this->belongsTo(User::class, 'id');
+    }
+
+    public function termek()
+    {
+        return $this->hasMany(Termek::class, 'termek_id');
+    }
 }
