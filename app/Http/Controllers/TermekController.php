@@ -266,7 +266,7 @@ class TermekController extends Controller
         }
     }
 
-//Termék megjelenítése kategóriával, árral, típussal, stb. adattal
+
     public function termekMindenAdattal()
     {
         $termekek = Termek::with(['modell.kategoria', 'arakMegjelenit'])->get();

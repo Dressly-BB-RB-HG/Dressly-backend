@@ -14,8 +14,8 @@ return new class extends Migration
     {
         Schema::create('kedvenceks', function (Blueprint $table) {
             $table->primary(['felhasznalo', 'modell']);
-            $table->foreignId('felhasznalo')->references('id')->on('users');
-            $table->foreignId('modell')->references('modell_id')->on('modells');
+            $table->foreignId('felhasznalo')->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('modell')->references('modell_id')->on('modells')->onDelete('cascade');
             $table->rememberToken();
             $table->timestamps();
         });

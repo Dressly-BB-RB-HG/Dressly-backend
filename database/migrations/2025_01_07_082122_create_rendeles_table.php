@@ -16,7 +16,7 @@ return new class extends Migration
     {
         Schema::create('rendeles', function (Blueprint $table) {
             $table->id('rendeles_szam');
-            $table->foreignId('felhasznalo')->references('id')->on('users');
+            $table->foreignId('felhasznalo')->references('id')->on('users')->onDelete('cascade');
             $table->timestamp('rendeles_datum')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->integer('fizetve_e')->default(0);
             $table->timestamps();
