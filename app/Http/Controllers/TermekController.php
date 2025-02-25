@@ -81,6 +81,13 @@ class TermekController extends Controller
         return "Termék törölve!";
     }
 
+    // Adott nemű ruhák
+    public function adottNemu(string $nem)
+    {
+        $termekek = Termek::join('modells', 'termeks.modell', '=', 'modells.modell_id')
+            ->where('modells.tipus', $nem)
+            ->get(['termeks.*']);
+    }
 
     //Adott nemű, adott kategóriájú ruha
     public function nemuKategoria(string $nem, string $kategoria)
