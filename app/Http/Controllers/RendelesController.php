@@ -180,15 +180,15 @@ class RendelesController extends Controller
     {
         // Lekérdezzük a rendelés tételeit és a kapcsolódó termék adatokat
         $rendelesTetel = DB::table('rendeles_tetels as rt')
-            ->join('termeks as t', 'rt.termek', '=', 't.termek_id') // Join a termeks táblával
+            ->join('termeks as t', 'rt.termek', '=', 't.termek_id')
             ->where('rt.rendeles', $rendelesSzam)
             ->select(
-                'rt.termek',          // Tételhez tartozó termék ID
-                'rt.mennyiseg',       // Rendelés mennyisége
-                't.modell',           // Termék modell
-                't.szin',             // Termék szín
-                't.meret',            // Termék méret
-                't.ar'                // Termék ár
+                'rt.termek',          
+                'rt.mennyiseg',       
+                't.modell',           
+                't.szin',             
+                't.meret',            
+                't.ar'                
             )
             ->get();
 

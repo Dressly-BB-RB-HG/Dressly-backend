@@ -18,6 +18,7 @@ Route::get('szinu-ruha/{szin}/{kategoria}', [TermekController::class, 'szinuRuha
 Route::get('szinu-minden/{szin}', [TermekController::class, 'szinuMinden']);
 Route::get('marka-ruhak/{marka}', [TermekController::class, 'markaRuhak']);
 Route::get('meret-ruhak/{meret}', [TermekController::class, 'meretRuhak']);
+Route::get('nemu-ruhak/{nem}', [TermekController::class, 'adottNemu']);
 Route::get('marka-kategoria/{marka}/{kategoria}', [TermekController::class, 'markaKategoria']);
 Route::get('nemu-kategoria/{nem}/{kategoria}', [TermekController::class, 'nemuKategoria']);
 Route::get('kategoria-ruhak/{kategoria}', [TermekController::class, 'kategoriaRuhak']);
@@ -28,18 +29,12 @@ Route::get('mikor-valtozott-ar/{termek}', [TermekController::class, 'mikorValtoz
 Route::get('nincs-keszleten', [TermekController::class, 'nincsKeszleten']);
 
 // ModellController
-Route::get('admin/modellek', [ModellController::class, 'index']);
 Route::get('modellek-kategoriaval', [ModellController::class, 'modellekKategoriaval']);
 
 // RendelesController
 Route::get('utolso-rendeles', [RendelesController::class, 'utolsoRendeles']);
 Route::get('utolso-termek-rendeles/{termek}', [RendelesController::class, 'utolsoTermekRendeles']);
-Route::get('leggyakoribb-szin', [RendelesController::class, 'leggyakoribbSzin']);
-Route::get('leggyakoribb-meret', [RendelesController::class, 'leggyakoribbMeret']);
-Route::get('legsikeresebb-honap', [RendelesController::class, 'legsikeresebbHonap']);
-Route::get('legtobbet-rendelt-termek', [RendelesController::class, 'legtobbRendeles']);
 Route::get('kiszallitasra_varakozo-rendelesek', [RendelesController::class, 'kiszallitasraVarakozoRendelesek']);
-Route::get('legsikeresebb-termek-kategoria/{kategoriaId}', [TermekController::class, 'legsikeresebbTermekKategoria']);
 Route::get('felhasznalo/{id}/rendelesek', [RendelesController::class, 'osszesRendeles']);
 
 // bazsi
@@ -49,10 +44,8 @@ Route::get('rendeles/{rendelesSzam}/tetel', [RendelesController::class, 'rendele
 Route::get('legkedveltebb-modell', [KedvencekController::class, 'legkedveltebbModell']);
 
 // UserController
-Route::get('megrendelok-listazasa', [UserController::class, 'megrendelok']);
-Route::get('hirlevel-feliratkozok', [UserController::class, 'hirlevelFeliratkozok']);
 Route::get('utolso-rendeles-megrendelo/{userId}', [UserController::class, 'utolsoRendelesMegrendelo']);
-Route::get('melyik-megrendelo-a-legtobbet', [UserController::class, 'melyikMegrendeloALegtobbet']);
+
 
 // HirlevelController
 Route::patch('feliratkozas-hirlevelre', [HirlevelController::class, 'feliratkozas']);
@@ -85,8 +78,15 @@ Route::middleware(['auth:sanctum', Admin::class])
         Route::delete('admin/felhasznalo-torles/{id}', [UserController::class, 'destroy']);
         Route::delete('admin/modell-torles/{id}', [ModellController::class, 'destroy']);
         Route::put('admin/felhasznalok/{id}/role', [UserController::class, 'updateRole']);
-
-        
+        Route::get('admin/modellek', [ModellController::class, 'index']);
+        Route::get('megrendelok-listazasa', [UserController::class, 'megrendelok']);
+        Route::get('hirlevel-feliratkozok', [UserController::class, 'hirlevelFeliratkozok']);
+        Route::get('melyik-megrendelo-a-legtobbet', [UserController::class, 'melyikMegrendeloALegtobbet']);
+        Route::get('legsikeresebb-termek-kategoria/{kategoriaId}', [TermekController::class, 'legsikeresebbTermekKategoria']);
+        Route::get('leggyakoribb-szin', [RendelesController::class, 'leggyakoribbSzin']);
+        Route::get('leggyakoribb-meret', [RendelesController::class, 'leggyakoribbMeret']);
+        Route::get('legsikeresebb-honap', [RendelesController::class, 'legsikeresebbHonap']);
+        Route::get('legtobbet-rendelt-termek', [RendelesController::class, 'legtobbRendeles']);
     });
     
 
