@@ -73,7 +73,6 @@ Route::middleware(['auth:sanctum', Admin::class])
         Route::put('admin/termek-modosit/{modell_id}', [TermekController::class, 'update']);
         Route::get('admin/termek/{id}', [TermekController::class, 'show']);
         Route::get('admin/modell/{id}', [ModellController::class, 'show']);
-        Route::put('/update-profile', [UserController::class, 'updateProfile']);
         Route::delete('admin/felhasznalo-torles/{id}', [UserController::class, 'destroy']);
         Route::delete('admin/modell-torles/{id}', [ModellController::class, 'destroy']);
         Route::put('admin/felhasznalok/{id}/role', [UserController::class, 'updateRole']);
