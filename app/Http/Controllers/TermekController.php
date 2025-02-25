@@ -264,4 +264,11 @@ class TermekController extends Controller
             return response()->json(['message' => 'Nincs rendelés ebben a kategóriában.'], 404);
         }
     }
+
+//Termék megjelenítése kategóriával, árral, típussal, stb. adattal
+    public function termekMindenAdattal()
+    {
+        $termekek = Termek::with(['modell.kategoria', 'arakMegjelenit'])->get();
+        return response()->json($termekek);
+    }
 }

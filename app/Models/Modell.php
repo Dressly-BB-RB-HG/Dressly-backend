@@ -21,6 +21,16 @@ class Modell extends Model
         return $this->belongsTo(Kategoria::class, 'kategoria');
     }
 
+    public function kategoriaTermekMegjelenit()
+    {
+        return $this->belongsTo(Kategoria::class, 'kategoria', 'kategoria_id');
+    }
+
+    public function termekekTermekMegjelenit()
+    {
+        return $this->hasMany(Termek::class, 'modell', 'modell_id');
+    }
+
     public function modellekKategoriaval()
     {
         return $this->belongsTo(Kategoria::class, 'kategoria_id', 'kategoria_id');

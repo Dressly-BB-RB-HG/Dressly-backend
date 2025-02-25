@@ -21,6 +21,17 @@ class Termek extends Model
     {
         return $this->belongsTo(Modell::class, 'modell');
     }
+
+    public function modellMegjelenit()
+    {
+        return $this->belongsTo(Modell::class, 'modell', 'modell_id');
+    }
+
+    public function arakMegjelenit()
+    {
+        return $this->hasMany(Termek_ar::class, 'termek', 'termek_id');
+    }
+
     
 
 }

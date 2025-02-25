@@ -13,4 +13,10 @@ class Termek_ar extends Model
         'uj_ar'
 
     ];
+
+
+    public function termek()
+    {
+        return $this->belongsTo(Termek::class, 'termek', 'termek_id');
+    }
 }
