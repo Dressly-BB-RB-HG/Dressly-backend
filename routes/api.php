@@ -88,6 +88,11 @@ Route::middleware(['auth:sanctum', Admin::class])
         Route::get('leggyakoribb-meret', [RendelesController::class, 'leggyakoribbMeret']);
         Route::get('legsikeresebb-honap', [RendelesController::class, 'legsikeresebbHonap']);
         Route::get('legtobbet-rendelt-termek', [RendelesController::class, 'legtobbRendeles']);
+        // összes rendelés listázása
+        Route::get('admin/rendelesek-osszes', [RendelesController::class, 'rendelesekOsszes']);
+        // adott rendelés törlése
+        Route::delete('admin/adott-rendeles-torlese/{rendelesSzam}', [RendelesController::class, 'adottRendelesTorlese']);
+
     });
     
 
