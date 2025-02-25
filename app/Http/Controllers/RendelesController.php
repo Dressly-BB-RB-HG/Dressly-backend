@@ -175,7 +175,7 @@ class RendelesController extends Controller
     }
 
     
-    // bazsi 
+    // bazsi - adott felhasználó rendeléshez tartozó termékadatai
     public function rendelesTetel($rendelesSzam)
     {
         // Lekérdezzük a rendelés tételeit és a kapcsolódó termék adatokat
@@ -199,6 +199,41 @@ class RendelesController extends Controller
             return response()->json(['message' => 'Nincs tétel a rendelésben.']);
         }
     }
+    
+    public function rendelesekOsszes()
+    {
+        // Lekérdezzük az összes rendelést a szükséges adatokkal
+        $rendelesek = DB::table('rendeles')
+            ->select('rendeles_szam','felhasznalo', 'rendeles_datum', 'fizetve_e')
+            ->orderBy('rendeles_datum', 'desc') // Legújabb rendelések előre
+            ->get();
 
+        // Ha vannak rendelések, visszaküldjük őket
+        if ($rendelesek->isNotEmpty()) {
+            return response()->json($rendelesek);
+        } else {
+            return response()->json(['message' => 'Nincsenek rendelések az adatbázisban.']);
+        }
+    }
+
+    // adott rendelés törlése
+
+    public function adottRendelesTorlese($rendelesSzam)
+    {
+        // Ellenőrizzük, hogy létezik-e a rendelés
+        $rendeles = DB::table('rendeles')->where('rendeles_szam', $rendelesSzam)->first();
+    
+        if ($rendeles) {
+            // Töröljük a rendeléshez kapcsolódó tételeket a 'rendeles_tetels' táblából
+            DB::table('rendeles_tetels')->where('rendeles', $rendelesSzam)->delete();
+    
+            // Töröljük a rendelést a 'rendeles' táblából
+            DB::table('rendeles')->where('rendeles_szam', $rendelesSzam)->delete();
+    
+            return response()->json(['message' => 'A rendelés és a kapcsolódó tételek sikeresen törölve.']);
+        } else {
+            return response()->json(['message' => 'A rendelés nem található.'], 404);
+        }
+    }
 
 }
