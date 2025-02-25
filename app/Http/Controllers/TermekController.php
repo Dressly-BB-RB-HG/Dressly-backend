@@ -87,6 +87,7 @@ class TermekController extends Controller
         $termekek = Termek::join('modells', 'termeks.modell', '=', 'modells.modell_id')
             ->where('modells.tipus', $nem)
             ->get(['termeks.*']);
+        return response()->json($termekek);
     }
 
     //Adott nemű, adott kategóriájú ruha
