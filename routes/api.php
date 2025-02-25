@@ -33,9 +33,7 @@ Route::get('nincs-keszleten', [TermekController::class, 'nincsKeszleten']);
 Route::get('modellek-kategoriaval', [ModellController::class, 'modellekKategoriaval']);
 
 // RendelesController
-Route::get('utolso-rendeles', [RendelesController::class, 'utolsoRendeles']);
-Route::get('utolso-termek-rendeles/{termek}', [RendelesController::class, 'utolsoTermekRendeles']);
-Route::get('kiszallitasra_varakozo-rendelesek', [RendelesController::class, 'kiszallitasraVarakozoRendelesek']);
+
 Route::get('felhasznalo/{id}/rendelesek', [RendelesController::class, 'osszesRendeles']);
 
 // bazsi
@@ -45,7 +43,7 @@ Route::get('rendeles/{rendelesSzam}/tetel', [RendelesController::class, 'rendele
 Route::get('legkedveltebb-modell', [KedvencekController::class, 'legkedveltebbModell']);
 
 // UserController
-Route::get('utolso-rendeles-megrendelo/{userId}', [UserController::class, 'utolsoRendelesMegrendelo']);
+
 
 
 // HirlevelController
@@ -88,6 +86,7 @@ Route::middleware(['auth:sanctum', Admin::class])
         Route::get('leggyakoribb-meret', [RendelesController::class, 'leggyakoribbMeret']);
         Route::get('legsikeresebb-honap', [RendelesController::class, 'legsikeresebbHonap']);
         Route::get('legtobbet-rendelt-termek', [RendelesController::class, 'legtobbRendeles']);
+        Route::get('utolso-rendeles-megrendelo/{userId}', [UserController::class, 'utolsoRendelesMegrendelo']);
     });
     
 
@@ -103,4 +102,7 @@ Route::middleware(['auth:sanctum', Raktaros::class])
         Route::patch('raktaros/termek-modosit', [TermekController::class, 'update']);
         Route::delete('raktaros/termek-torles/{id}', [TermekController::class, 'destroy']);
         Route::delete('raktaros/modell-torles/{id}', [ModellController::class, 'destroy']);
+        Route::get('utolso-rendeles', [RendelesController::class, 'utolsoRendeles']);
+        Route::get('utolso-termek-rendeles/{termek}', [RendelesController::class, 'utolsoTermekRendeles']);
+        Route::get('kiszallitasra_varakozo-rendelesek', [RendelesController::class, 'kiszallitasraVarakozoRendelesek']);
     });
