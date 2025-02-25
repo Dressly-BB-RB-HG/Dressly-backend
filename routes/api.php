@@ -14,7 +14,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 // TermekController
-Route::get('modellek', [ModellController::class, 'index']);
+// 'MODELLEK' HELYETT 'TERMEK-MINDEN-ADATTAL'
+//Route::get('modellek', [ModellController::class, 'index']);
 Route::get('szinu-ruha/{szin}/{kategoria}', [TermekController::class, 'szinuRuha']);
 Route::get('szinu-minden/{szin}', [TermekController::class, 'szinuMinden']);
 Route::get('marka-ruhak/{marka}', [TermekController::class, 'markaRuhak']);
@@ -28,7 +29,7 @@ Route::get('meret-marka-tipus-kategoria/{meret}/{marka}/{tipus}/{kategoria}', [T
 Route::get('termek-pillanatnyi-ara/{mikor}/{termek}', [TermekController::class, 'termekAra']);
 Route::get('mikor-valtozott-ar/{termek}', [TermekController::class, 'mikorValtozottAr']);
 Route::get('nincs-keszleten', [TermekController::class, 'nincsKeszleten']);
-
+Route::get('termek-minden-adattal', [TermekController::class, 'termekMindenAdattal']);
 // ModellController
 Route::get('modellek-kategoriaval', [ModellController::class, 'modellekKategoriaval']);
 
@@ -86,6 +87,11 @@ Route::middleware(['auth:sanctum', Admin::class])
         Route::get('leggyakoribb-meret', [RendelesController::class, 'leggyakoribbMeret']);
         Route::get('legsikeresebb-honap', [RendelesController::class, 'legsikeresebbHonap']);
         Route::get('legtobbet-rendelt-termek', [RendelesController::class, 'legtobbRendeles']);
+        // összes rendelés listázása
+        Route::get('admin/rendelesek-osszes', [RendelesController::class, 'rendelesekOsszes']);
+        // adott rendelés törlése
+        Route::delete('admin/adott-rendeles-torlese/{rendelesSzam}', [RendelesController::class, 'adottRendelesTorlese']);
+
         Route::get('utolso-rendeles-megrendelo/{userId}', [UserController::class, 'utolsoRendelesMegrendelo']);
     });
     
