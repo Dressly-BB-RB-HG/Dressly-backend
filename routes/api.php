@@ -16,22 +16,13 @@ use Illuminate\Support\Facades\Route;
 // TermekController
 // 'MODELLEK' HELYETT 'TERMEK-MINDEN-ADATTAL'
 //Route::get('modellek', [ModellController::class, 'index']);
-Route::get('szinu-ruha/{szin}/{kategoria}', [TermekController::class, 'szinuRuha']);
-Route::get('szinu-minden/{szin}', [TermekController::class, 'szinuMinden']);
-Route::get('marka-ruhak/{marka}', [TermekController::class, 'markaRuhak']);
-Route::get('meret-ruhak/{meret}', [TermekController::class, 'meretRuhak']);
-Route::get('nemu-ruhak/{nem}', [TermekController::class, 'adottNemu']);
-Route::get('marka-kategoria/{marka}/{kategoria}', [TermekController::class, 'markaKategoria']);
-Route::get('nemu-kategoria/{nem}/{kategoria}', [TermekController::class, 'nemuKategoria']);
-Route::get('kategoria-ruhak/{kategoria}', [TermekController::class, 'kategoriaRuhak']);
-Route::get('meret-marka-tipus/{meret}/{marka}/{tipus}', [TermekController::class, 'meretMarkaTipus']);
-Route::get('meret-marka-tipus-kategoria/{meret}/{marka}/{tipus}/{kategoria}', [TermekController::class, 'meretMarkaTipusKategoria']);
+
 Route::get('termek-pillanatnyi-ara/{mikor}/{termek}', [TermekController::class, 'termekAra']);
 Route::get('mikor-valtozott-ar/{termek}', [TermekController::class, 'mikorValtozottAr']);
 Route::get('nincs-keszleten', [TermekController::class, 'nincsKeszleten']);
-Route::get('termek-minden-adattal', [TermekController::class, 'termekMindenAdattal']);
+
 // ModellController
-Route::get('modellek-kategoriaval', [ModellController::class, 'modellekKategoriaval']);
+
 
 // RendelesController
 
@@ -51,6 +42,19 @@ Route::get('legkedveltebb-modell', [KedvencekController::class, 'legkedveltebbMo
 Route::patch('feliratkozas-hirlevelre', [HirlevelController::class, 'feliratkozas']);
 
 
+//Szűrőfeltételekhez:
+Route::get('szinu-ruha/{szin}/{kategoria}', [TermekController::class, 'szinuRuha']);
+Route::get('szinu-minden/{szin}', [TermekController::class, 'szinuMinden']);
+Route::get('marka-ruhak/{marka}', [TermekController::class, 'markaRuhak']);
+Route::get('meret-ruhak/{meret}', [TermekController::class, 'meretRuhak']);
+Route::get('nemu-ruhak/{nem}', [TermekController::class, 'adottNemu']);
+Route::get('marka-kategoria/{marka}/{kategoria}', [TermekController::class, 'markaKategoria']);
+Route::get('nemu-kategoria/{nem}/{kategoria}', [TermekController::class, 'nemuKategoria']);
+Route::get('kategoria-ruhak/{kategoria}', [TermekController::class, 'kategoriaRuhak']);
+Route::get('meret-marka-tipus/{meret}/{marka}/{tipus}', [TermekController::class, 'meretMarkaTipus']);
+Route::get('meret-marka-tipus-kategoria/{meret}/{marka}/{tipus}/{kategoria}', [TermekController::class, 'meretMarkaTipusKategoria']);
+Route::get('termek-minden-adattal', [TermekController::class, 'termekMindenAdattal']);
+Route::get('modellek-kategoriaval', [ModellController::class, 'modellekKategoriaval']);
 
 
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
