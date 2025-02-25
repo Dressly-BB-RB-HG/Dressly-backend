@@ -14,7 +14,7 @@ return new class extends Migration
     {
         Schema::create('termeks', function (Blueprint $table) {
             $table->id('termek_id');
-            $table->foreignId('modell')->references('modell_id')->on('modells');
+            $table->foreignId('modell')->references('modell_id')->on('modells')->onDelete('cascade');
             $table->string('szin');
             $table->char('meret', 3);
             $table->integer('keszlet');

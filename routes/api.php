@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\HirlevelController;
 use App\Http\Controllers\KedvencekController;
+use App\Http\Controllers\KosarController;
 use App\Http\Controllers\ModellController;
 use App\Http\Controllers\TermekController;
 use App\Http\Controllers\UserController;
@@ -22,6 +23,8 @@ Route::get('mikor-valtozott-ar/{termek}', [TermekController::class, 'mikorValtoz
 Route::get('nincs-keszleten', [TermekController::class, 'nincsKeszleten']);
 
 // ModellController
+Route::get('modellek-kategoriaval', [ModellController::class, 'modellekKategoriaval']);
+Route::post('kosar', [KosarController::class, 'store']);
 
 
 // RendelesController
