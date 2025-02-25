@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 // TermekController
+Route::get('modellek', [ModellController::class, 'index']);
 Route::get('szinu-ruha/{szin}/{kategoria}', [TermekController::class, 'szinuRuha']);
 Route::get('szinu-minden/{szin}', [TermekController::class, 'szinuMinden']);
 Route::get('marka-ruhak/{marka}', [TermekController::class, 'markaRuhak']);
