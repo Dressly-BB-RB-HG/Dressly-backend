@@ -44,6 +44,11 @@ return new class extends Migration
             'rendeles_datum' => '2024-12-20'
         ]);
 
+        Rendeles::create([
+            'felhasznalo' => 3, 
+            'fizetve_e' => 0, 
+        ]);
+
     }
 
 

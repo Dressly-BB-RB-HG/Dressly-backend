@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 // TermekController
+Route::get('modellek', [ModellController::class, 'index']);
 Route::get('szinu-ruha/{szin}/{kategoria}', [TermekController::class, 'szinuRuha']);
 Route::get('szinu-minden/{szin}', [TermekController::class, 'szinuMinden']);
 Route::get('marka-ruhak/{marka}', [TermekController::class, 'markaRuhak']);
@@ -32,9 +33,7 @@ Route::get('nincs-keszleten', [TermekController::class, 'nincsKeszleten']);
 Route::get('modellek-kategoriaval', [ModellController::class, 'modellekKategoriaval']);
 
 // RendelesController
-Route::get('utolso-rendeles', [RendelesController::class, 'utolsoRendeles']);
-Route::get('utolso-termek-rendeles/{termek}', [RendelesController::class, 'utolsoTermekRendeles']);
-Route::get('kiszallitasra_varakozo-rendelesek', [RendelesController::class, 'kiszallitasraVarakozoRendelesek']);
+
 Route::get('felhasznalo/{id}/rendelesek', [RendelesController::class, 'osszesRendeles']);
 
 // bazsi
@@ -44,7 +43,7 @@ Route::get('rendeles/{rendelesSzam}/tetel', [RendelesController::class, 'rendele
 Route::get('legkedveltebb-modell', [KedvencekController::class, 'legkedveltebbModell']);
 
 // UserController
-Route::get('utolso-rendeles-megrendelo/{userId}', [UserController::class, 'utolsoRendelesMegrendelo']);
+
 
 
 // HirlevelController
@@ -75,7 +74,6 @@ Route::middleware(['auth:sanctum', Admin::class])
         Route::put('admin/termek-modosit/{modell_id}', [TermekController::class, 'update']);
         Route::get('admin/termek/{id}', [TermekController::class, 'show']);
         Route::get('admin/modell/{id}', [ModellController::class, 'show']);
-        Route::put('/update-profile', [UserController::class, 'updateProfile']);
         Route::delete('admin/felhasznalo-torles/{id}', [UserController::class, 'destroy']);
         Route::delete('admin/modell-torles/{id}', [ModellController::class, 'destroy']);
         Route::put('admin/felhasznalok/{id}/role', [UserController::class, 'updateRole']);
@@ -93,6 +91,7 @@ Route::middleware(['auth:sanctum', Admin::class])
         // adott rendelés törlése
         Route::delete('admin/adott-rendeles-torlese/{rendelesSzam}', [RendelesController::class, 'adottRendelesTorlese']);
 
+        Route::get('utolso-rendeles-megrendelo/{userId}', [UserController::class, 'utolsoRendelesMegrendelo']);
     });
     
 
@@ -108,4 +107,7 @@ Route::middleware(['auth:sanctum', Raktaros::class])
         Route::patch('raktaros/termek-modosit', [TermekController::class, 'update']);
         Route::delete('raktaros/termek-torles/{id}', [TermekController::class, 'destroy']);
         Route::delete('raktaros/modell-torles/{id}', [ModellController::class, 'destroy']);
+        Route::get('utolso-rendeles', [RendelesController::class, 'utolsoRendeles']);
+        Route::get('utolso-termek-rendeles/{termek}', [RendelesController::class, 'utolsoTermekRendeles']);
+        Route::get('kiszallitasra_varakozo-rendelesek', [RendelesController::class, 'kiszallitasraVarakozoRendelesek']);
     });
