@@ -12,7 +12,7 @@ use App\Http\Middleware\Raktaros;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+ 
 // TermekController
 // 'MODELLEK' HELYETT 'TERMEK-MINDEN-ADATTAL'
 //Route::get('modellek', [ModellController::class, 'index']);
