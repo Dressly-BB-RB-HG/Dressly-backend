@@ -24,7 +24,11 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
-        'hirlevel'
+        'hirlevel',
+        'varos',
+        'kerulet',
+        'utca',
+        'hazszam'
     ];
 
     /**
