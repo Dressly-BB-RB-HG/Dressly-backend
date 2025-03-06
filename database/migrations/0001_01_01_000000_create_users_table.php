@@ -23,6 +23,10 @@ return new class extends Migration
             $table->string('password');
             $table->integer('role')->default(0);
             $table->integer('hirlevel')->default(0);
+            $table->string('varos');
+            $table->integer('kerulet')->default(0);
+            $table->string('utca');
+            $table->integer('hazszam');
             $table->rememberToken();
             $table->timestamps();
         });
@@ -33,7 +37,11 @@ return new class extends Migration
             'v_nev' => 'Admin',
             'email' => 'admin@admin.com',
             'password' => Hash::make('admin12345'),
-            'role' => 1
+            'role' => 1,
+            'varos' => 'Budapest',
+            'kerulet' => 3,
+            'utca' => 'Lajos utca',
+            'hazszam' => 72
         ]);
         
     
@@ -43,7 +51,11 @@ return new class extends Migration
             'v_nev' => 'Raktaros',
             'email' => 'raktaros@raktaros.com',
             'password' => Hash::make('raktaros12345'),
-            'role' => 2
+            'role' => 2,
+            'varos' => 'Budapest',
+            'kerulet' => 1,
+            'utca' => 'Lajos utca',
+            'hazszam' => 71
         ]);
     
         User::create([
@@ -51,7 +63,11 @@ return new class extends Migration
             'k_nev' => 'Felhasznalo',
             'v_nev' => 'Felhasznalo',
             'email' => 'felhasznalo@felhasznalo.com',
-            'password' => Hash::make('felhasznalo12345')
+            'password' => Hash::make('felhasznalo12345'),
+            'varos' => 'Budapest',
+            'kerulet' => 2,
+            'utca' => 'Lajos utca',
+            'hazszam' => 70
         ]);
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
