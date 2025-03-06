@@ -56,10 +56,15 @@ class UserController extends Controller
 {
     $validator = Validator::make($request->all(), [
         'name' => 'required|string|max:255',
-        'email' => 'required|email|unique:users,email,' . Auth::id(), 
-        'old_password' => 'required_with:new_password',
-        'new_password' => 'nullable|min:8|confirmed', 
+        'email' => 'required|email|unique:users,email,' . Auth::id(), // email egyedi validálás
+        'old_password' => 'required_with:new_password', // ha új jelszót adnak meg, akkor a régi is szükséges
+        'new_password' => 'nullable|min:8|confirmed', // új jelszó validálása, ha van
+        'varos' => 'required|string|max:50', // város validálása
+        'kerulet' => 'required|integer|max:1000', // kerület validálása
+        'utca' => 'required|string|max:255', // utca validálása
+        'hazszam' => 'required|integer|max:1000', // házszám validálása
     ]);
+
 
     if ($validator->fails()) {
         return response()->json([
@@ -86,6 +91,19 @@ class UserController extends Controller
     }
     if ($request->has('new_password')) {
         $user->password = Hash::make($request->new_password);
+    }
+
+    if ($request->has('varos')) {
+        $user->varos = $request->input('varos');
+    }
+    if ($request->has('kerulet')) {
+        $user->kerulet = $request->input('kerulet');
+    }
+    if ($request->has('utca')) {
+        $user->utca = $request->input('utca');
+    }
+    if ($request->has('hazszam')) {
+        $user->hazszam = $request->input('hazszam');
     }
 
     $user->save();
