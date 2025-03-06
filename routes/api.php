@@ -25,6 +25,8 @@ Route::get('nincs-keszleten', [TermekController::class, 'nincsKeszleten']);
 // ModellController
 Route::get('modellek-kategoriaval', [ModellController::class, 'modellekKategoriaval']);
 Route::post('kosar', [KosarController::class, 'store']);
+Route::get('kosar-megjelen', [KosarController::class, 'index']);
+Route::delete('kosarTorles/{id}', [KosarController::class, 'destroy']);
 
 
 // RendelesController

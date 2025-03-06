@@ -15,6 +15,6 @@ class Kategoria extends Model
 
     public function modellekKategoriaval()
     {
-        return $this->hasMany(Modell::class, 'kategoria_id', 'kategoria_id');
+        return $this->hasMany(Modell::class, 'kategoria_id', 'kategoria');
     }
 }
