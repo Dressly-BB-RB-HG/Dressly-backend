@@ -100,6 +100,9 @@ Route::middleware(['auth:sanctum', Admin::class])
         Route::delete('admin/adott-rendeles-torlese/{rendelesSzam}', [RendelesController::class, 'adottRendelesTorlese']);
 
         Route::get('utolso-rendeles-megrendelo/{userId}', [UserController::class, 'utolsoRendelesMegrendelo']);
+
+        // EMAIL TESZT
+        Route::post('send-welcome-email', [UserController::class, 'sendWelcomeEmail']);
     });
     
 
