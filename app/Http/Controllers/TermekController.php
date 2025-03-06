@@ -123,13 +123,17 @@ class TermekController extends Controller
 
     //Adott márkájú ruha
     public function markaRuhak(string $marka)
-    {
-        $termekek = Termek::join('modells', 'termeks.modell', '=', 'modells.modell_id')
-            ->where('modells.gyarto', $marka)
-            ->get(['termeks.*']);
+{
+    $termekek = Termek::with(['modell.kategoria', 'arakMegjelenit'])
+        ->whereHas('modell', function ($query) use ($marka) {
+            $query->where('gyarto', $marka);
+        })
+        ->get();
 
-        return response()->json($termekek);
-    }
+    return response()->json($termekek);
+}
+
+    
 
     //Adott márkájú, adott kategóriájú ruha
     public function markaKategoria(string $marka, string $kategoria)
