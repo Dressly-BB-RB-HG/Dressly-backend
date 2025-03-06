@@ -11,31 +11,55 @@ class KosarController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
-        return Kosar::all();
-    }
+{
+    $felhasznaloId = auth()->id();
+
+    $kosar = Kosar::where('felhasznalo', $felhasznaloId)
+                  ->with('termek')
+                  ->get();
+
+    return response()->json($kosar, 200);
+}
+
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
+
+        if (!auth()->check()) {
+            return response()->json(['error' => 'Bejelentkezés szükséges!'], 401);
+        }
+
+
+        $felhasznaloId = auth()->id();
+
         // Validálás
         $request->validate([
-            'termek_id' => 'required|exists:termek,id',
+            'termek_id' => 'required|exists:termeks,termek_id',
             'mennyiseg' => 'required|integer|min:1',
         ]);
 
-        // Kosárba helyezés
-        $kosar = Kosar::create([
-            'felhasznalo_id' => auth()->user()->id,  
-            'termek_id' => $request->termek_id,
+        $kosarElem = Kosar::where('felhasznalo', $felhasznaloId)
+                        ->where('termek', $request->termek_id)
+                        ->first();
+
+        if ($kosarElem) {
+            // Ha már létezik, növeljük a mennyiséget
+            $kosarElem->increment('mennyiseg', $request->mennyiseg);
+            return response()->json($kosarElem, 200);
+        }
+
+        // Új kosár elem létrehozása
+        $ujKosarElem = Kosar::create([
+            'felhasznalo' => $felhasznaloId,
+            'termek' => $request->termek_id,
             'mennyiseg' => $request->mennyiseg,
         ]);
 
-        return response()->json($kosar, 201);
+        return response()->json($ujKosarElem, 201);
     }
-
     /**
      * Display the specified resource.
      */
@@ -55,8 +79,19 @@ class KosarController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
-    {
-        //
+public function destroy($termekId)
+{
+    $kosarElem = Kosar::where('felhasznalo', auth()->id()) 
+                      ->where('termek', $termekId)
+                      ->first();
+
+    if ($kosarElem) {
+        // Töröljük a kosárból
+        $kosarElem->delete();
+        return response()->json(['message' => 'A termék sikeresen törölve lett a kosárból.'], 200);
     }
+
+    return response()->json(['error' => 'A termék nem található a kosárban.'], 404);
+}
+
 }

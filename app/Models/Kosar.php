@@ -20,6 +20,9 @@ class Kosar extends Model
 
     public function termek()
     {
-        return $this->hasMany(Termek::class, 'termek_id');
+        return $this->belongsTo(Termek::class, 'termek');
     }
+
+
+
 }
