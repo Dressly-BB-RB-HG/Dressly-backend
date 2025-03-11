@@ -81,14 +81,8 @@ class TermekController extends Controller
         return "Termék törölve!";
     }
 
-    // Adott nemű ruhák
-    public function adottNemu(string $nem)
-    {
-        $termekek = Termek::join('modells', 'termeks.modell', '=', 'modells.modell_id')
-            ->where('modells.tipus', $nem)
-            ->get(['termeks.*']);
-        return response()->json($termekek);
-    }
+    
+    
 
     //Adott nemű, adott kategóriájú ruha
     public function nemuKategoria(string $nem, string $kategoria)
@@ -120,6 +114,19 @@ class TermekController extends Controller
             ->get(['termeks.*']);
         return response()->json($termekek);
     }
+
+    // Adott nemű ruhák
+    public function adottNemu(string $nem)
+{
+    $termekek = Termek::with(['modell.kategoria', 'arakMegjelenit'])
+        ->whereHas('modell', function ($query) use ($nem) {
+            $query->where('tipus', $nem);
+        })
+        ->get();
+
+    return response()->json($termekek);
+}
+
 
     //Adott márkájú ruha
     public function markaRuhak(string $marka)
