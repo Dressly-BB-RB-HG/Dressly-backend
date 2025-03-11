@@ -11,15 +11,16 @@ class KosarController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-{
-    $felhasznaloId = auth()->id();
-
-    $kosar = Kosar::where('felhasznalo', $felhasznaloId)
-                  ->with('termek')
-                  ->get();
-
-    return response()->json($kosar, 200);
-}
+    {
+        $felhasznaloId = auth()->id();
+    
+        $kosar = Kosar::where('felhasznalo', $felhasznaloId)
+                      ->with('termek', 'termek.modell') // Betöltjük a modell adatokat is
+                      ->get();
+    
+        return response()->json($kosar, 200);
+    }
+    
 
 
     /**
@@ -86,9 +87,7 @@ class KosarController extends Controller
                     ->delete(); 
 
     if ($deleted > 0) { 
-        // Friss kosárlista visszaküldése törlés után
-        $kosar = Kosar::where('felhasznalo', auth()->id())->with('termek')->get();
-        return response()->json($kosar, 200);
+        return response()->json(['message' => 'A termék sikeresen törölve lett a kosárból.'], 200);
     }
 
     return response()->json(['error' => 'A termék nem található a kosárban.'], 404);
