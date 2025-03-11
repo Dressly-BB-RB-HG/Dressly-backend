@@ -53,6 +53,7 @@ Route::get('szinu-minden/{szin}', [TermekController::class, 'szinuMinden']);
 Route::get('marka-ruhak/{marka}', [TermekController::class, 'markaRuhak']);
 Route::get('meret-ruhak/{meret}', [TermekController::class, 'meretRuhak']);
 Route::get('nemu-ruhak/{nem}', [TermekController::class, 'adottNemu']);
+Route::get('termek-rendez-ar-szerint', [TermekController::class, 'rendezTermekekArSzerint']);
 Route::get('marka-kategoria/{marka}/{kategoria}', [TermekController::class, 'markaKategoria']);
 Route::get('nemu-kategoria/{nem}/{kategoria}', [TermekController::class, 'nemuKategoria']);
 Route::get('kategoria-ruhak/{kategoria}', [TermekController::class, 'kategoriaRuhak']);

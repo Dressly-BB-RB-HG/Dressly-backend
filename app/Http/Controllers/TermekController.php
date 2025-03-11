@@ -108,12 +108,15 @@ class TermekController extends Controller
 
     //Adott színű ruha
     public function szinuMinden(string $szin)
-    {
-        $termekek = Termek::join('modells', 'termeks.modell', '=', 'modells.modell_id')
-            ->where('termeks.szin', $szin)
-            ->get(['termeks.*']);
-        return response()->json($termekek);
-    }
+{
+    $termekek = Termek::with(['modell.kategoria', 'arakMegjelenit'])
+        ->whereHas('modell', function ($query) use ($szin) {
+            $query->where('szin', $szin);
+        })
+        ->get();
+
+    return response()->json($termekek);
+}
 
     // Adott nemű ruhák
     public function adottNemu(string $nem)
@@ -127,6 +130,26 @@ class TermekController extends Controller
     return response()->json($termekek);
 }
 
+
+public function rendezTermekekArSzerint(Request $request)
+{
+    // Az irány (növekvő vagy csökkenő) lekérése
+    $irany = $request->query('irany');  // alapértelmezés szerint növekvő
+
+    // Az ár szerint rendezés, és a kapcsolódó modellek betöltése
+    if ($irany == 'csokkeno') {
+        $termekek = Termek::with(['modell.kategoria', 'arakMegjelenit'])
+            ->orderBy('ar', 'desc')
+            ->get();
+    } else {
+        $termekek = Termek::with(['modell.kategoria', 'arakMegjelenit'])
+            ->orderBy('ar', 'asc')
+            ->get();
+    }
+
+    // A termékek visszaadása JSON formátumban
+    return response()->json($termekek);
+}
 
     //Adott márkájú ruha
     public function markaRuhak(string $marka)
@@ -193,12 +216,15 @@ class TermekController extends Controller
 
     //Adott méretű ruhák
     public function meretRuhak(string $meret)
-    {
-        $termekek = Termek::join('modells', 'termeks.modell', '=', 'modells.modell_id')
-            ->where('termeks.meret', $meret)
-            ->get(['termeks.*']);
-        return response()->json($termekek);
-    }
+{
+    $termekek = Termek::with(['modell.kategoria', 'arakMegjelenit'])
+        ->whereHas('modell', function ($query) use ($meret) {
+            $query->where('meret', $meret);
+        })
+        ->get();
+
+    return response()->json($termekek);
+}
 
 
     public function termekAra($ekkor, $termekId)
