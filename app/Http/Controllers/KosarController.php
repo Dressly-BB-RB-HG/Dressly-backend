@@ -79,16 +79,16 @@ class KosarController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-public function destroy($termekId)
+    public function destroy($termekId)
 {
-    $kosarElem = Kosar::where('felhasznalo', auth()->id()) 
-                      ->where('termek', $termekId)
-                      ->first();
+    $deleted = Kosar::where('felhasznalo', auth()->id()) 
+                    ->where('termek', $termekId)
+                    ->delete(); 
 
-    if ($kosarElem) {
-        // Töröljük a kosárból
-        $kosarElem->delete();
-        return response()->json(['message' => 'A termék sikeresen törölve lett a kosárból.'], 200);
+    if ($deleted > 0) { 
+        // Friss kosárlista visszaküldése törlés után
+        $kosar = Kosar::where('felhasznalo', auth()->id())->with('termek')->get();
+        return response()->json($kosar, 200);
     }
 
     return response()->json(['error' => 'A termék nem található a kosárban.'], 404);
