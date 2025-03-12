@@ -207,14 +207,4 @@ class UserController extends Controller
         
             return response()->json(['megrendelo' => $megrendelo]);
     }
-
-    public function sendWelcomeEmail(Request $request)
-    {
-    $user = Auth::user(); // vagy bármely más adat, amit küldeni szeretnél
-
-    // Küldd el az emailt
-    Mail::to($user->email)->send(new WelcomeEmail($user));
-
-    return response()->json(['message' => 'Email sent successfully']);
-    }
 }
