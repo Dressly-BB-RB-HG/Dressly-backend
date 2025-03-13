@@ -13,68 +13,44 @@ class KosarController extends Controller
     public function index()
     {
         $felhasznaloId = auth()->id();
-    
+
         $kosar = Kosar::where('felhasznalo', $felhasznaloId)
-                      ->with('termek', 'termek.modell') // Betöltjük a modell adatokat is
-                      ->get();
-    
+            ->with('termek', 'termek.modell') // Betöltjük a modell adatokat is
+            ->get();
+
         return response()->json($kosar, 200);
     }
-    
-
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-
         if (!auth()->check()) {
             return response()->json(['error' => 'Bejelentkezés szükséges!'], 401);
         }
 
-
         $felhasznaloId = auth()->id();
-
-        // Validálás
-        $request->validate([
-            'termek_id' => 'required|exists:termeks,termek_id',
-            'mennyiseg' => 'required|integer|min:1',
-        ]);
+        $termekId = $request->termek_id;
 
         $kosarElem = Kosar::where('felhasznalo', $felhasznaloId)
-                        ->where('termek', $request->termek_id)
-                        ->first();
+            ->where('termek', $termekId)
+            ->first();
 
+        // Ha már létezik az elem, mennyiség növelés
         if ($kosarElem) {
-            // Ha már létezik, növeljük a mennyiséget
-            $kosarElem->increment('mennyiseg', $request->mennyiseg);
-            return response()->json($kosarElem, 200);
+            Kosar::where('felhasznalo', $felhasznaloId)
+            ->where('termek', $termekId)
+            ->update(['mennyiseg' => $kosarElem->mennyiseg + 1]);
+        } else {
+            // Ha még nem létezik az elem
+            $ujKosarElem = Kosar::create([
+                'felhasznalo' => $felhasznaloId,
+                'termek' => $termekId,
+                'mennyiseg' => 1,
+            ]);
+            return response()->json($ujKosarElem, 201);
         }
-
-        // Új kosár elem létrehozása
-        $ujKosarElem = Kosar::create([
-            'felhasznalo' => $felhasznaloId,
-            'termek' => $request->termek_id,
-            'mennyiseg' => $request->mennyiseg,
-        ]);
-
-        return response()->json($ujKosarElem, 201);
-    }
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
     }
 
     /**
@@ -82,15 +58,26 @@ class KosarController extends Controller
      */
     public function destroy($termekId)
 {
-    $deleted = Kosar::where('felhasznalo', auth()->id()) 
-                    ->where('termek', $termekId)
-                    ->delete(); 
+    $felhasznaloId = auth()->id();
 
-    if ($deleted > 0) { 
-        return response()->json(['message' => 'A termék sikeresen törölve lett a kosárból.'], 200);
+    $kosarElem = Kosar::where('felhasznalo', $felhasznaloId)
+        ->where('termek', $termekId)
+        ->first();
+
+    if (!$kosarElem) {
+        return response()->json(['error' => 'A termék nem található a kosárban.'], 404);
     }
 
-    return response()->json(['error' => 'A termék nem található a kosárban.'], 404);
+    if ($kosarElem->mennyiseg > 1) {
+        // Ha mennyiseg tobb mint 1
+        Kosar::where('felhasznalo', $felhasznaloId)
+            ->where('termek', $termekId)
+            ->update(['mennyiseg' => $kosarElem->mennyiseg - 1]);
+    } else {
+        // Ha már csak 1 volt a mennyiseg, akkor töröljük az elemet
+        Kosar::where('felhasznalo', $felhasznaloId)
+            ->where('termek', $termekId)
+            ->delete();
+    }
 }
-
 }

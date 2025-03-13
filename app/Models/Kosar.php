@@ -13,9 +13,13 @@ class Kosar extends Model
         "mennyiseg"
     ];
 
+    public $incrementing = false; // Laravel ne várja el az `id` mezőt
+    protected $primaryKey = null; // Nem használ elsődleges kulcsot
+
+    
     public function felhasznalo()
     {
-        return $this->belongsTo(User::class, 'id');
+        return $this->belongsTo(User::class, 'felhasznalo');
     }
 
     public function termek()
