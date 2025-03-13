@@ -236,4 +236,32 @@ class RendelesController extends Controller
         }
     }
 
+    //legtobbet rendelt termek
+    public function legkedveltebbModell()
+{
+    // Lekérjük az összes terméket az összes szükséges kapcsolattal
+    $termekek = Termek::with(['modell.kategoria', 'arakMegjelenit'])->get();
+
+    if ($termekek->isEmpty()) {
+        return response()->json(['message' => 'Nincsenek elérhető termékek.'], 404);
+    }
+
+    // Megszámoljuk, melyik modellhez tartozik a legtöbb egyedi felhasználó kedvence
+    $legtobbetRendeltTermek = Rendeles_tetel::select('termek', DB::raw('SUM(mennyiseg) as total_quantity'))
+            ->groupBy('termek')
+            ->orderByDesc('total_quantity')
+            ->first();
+
+    if ($legtobbetRendeltTermek) {
+        // Kiválasztjuk a legkedveltebb terméket a kapcsolódó adatokkal együtt
+        $termek = Termek::with(['modell.kategoria', 'arakMegjelenit'])
+                        ->find($legtobbetRendeltTermek->termek);
+
+        return response()->json([$termek]);
+    }
+
+    // Ha nincs legkedveltebb termék, visszaadjuk az összes terméket a kapcsolódó adatokkal
+    return response()->json($termekek);
+
+}
 }

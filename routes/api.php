@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\EmailController;
 use App\Http\Controllers\HirlevelController;
 use App\Http\Controllers\KedvencekController;
 use App\Http\Controllers\KosarController;
@@ -37,7 +38,7 @@ Route::get('felhasznalo/{id}/rendelesek', [RendelesController::class, 'osszesRen
 Route::get('rendeles/{rendelesSzam}/tetel', [RendelesController::class, 'rendelesTetel']);
   
 // KedvencekController
-Route::get('legkedveltebb-modell', [KedvencekController::class, 'legkedveltebbModell']);
+
 
 // UserController
 
@@ -48,7 +49,7 @@ Route::post('send-email', [EmailController::class, 'sendEmail']);
 Route::patch('feliratkozas-hirlevelre', [HirlevelController::class, 'feliratkozas']);
 
 
-//Szűrőfeltételekhez:
+// Szűrési/rendezési feltételekhez:
 Route::get('szinu-ruha/{szin}/{kategoria}', [TermekController::class, 'szinuRuha']);
 Route::get('szinu-minden/{szin}', [TermekController::class, 'szinuMinden']);
 Route::get('marka-ruhak/{marka}', [TermekController::class, 'markaRuhak']);
@@ -62,6 +63,7 @@ Route::get('meret-marka-tipus/{meret}/{marka}/{tipus}', [TermekController::class
 Route::get('meret-marka-tipus-kategoria/{meret}/{marka}/{tipus}/{kategoria}', [TermekController::class, 'meretMarkaTipusKategoria']);
 Route::get('termek-minden-adattal', [TermekController::class, 'termekMindenAdattal']);
 Route::get('modellek-kategoriaval', [ModellController::class, 'modellekKategoriaval']);
+Route::get('legkedveltebb-modell', [RendelesController::class, 'legkedveltebbModell']);
 
 
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
