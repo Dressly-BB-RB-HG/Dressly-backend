@@ -9,12 +9,14 @@ use App\Http\Controllers\ModellController;
 use App\Http\Controllers\TermekController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RendelesController;
+use App\Http\Controllers\OrderController;
 use App\Http\Middleware\Admin;
 use App\Http\Middleware\Raktaros;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
- 
+use OrderController as GlobalOrderController;
+
 // TermekController
 // 'MODELLEK' HELYETT 'TERMEK-MINDEN-ADATTAL'
 //Route::get('modellek', [ModellController::class, 'index']);
@@ -43,7 +45,7 @@ Route::get('rendeles/{rendelesSzam}/tetel', [RendelesController::class, 'rendele
 // UserController
 
 // EMAIL TESZT
-Route::post('send-email', [EmailController::class, 'sendEmail']);
+Route::post('email-kuldes', [OrderController::class, 'sendOrderConfirmation']);
 
 // HirlevelController
 Route::patch('feliratkozas-hirlevelre', [HirlevelController::class, 'feliratkozas']);
