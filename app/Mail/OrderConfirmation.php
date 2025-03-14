@@ -3,24 +3,32 @@
 namespace App\Mail;
 
 use Illuminate\Mail\Mailable;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class OrderConfirmation extends Mailable
 {
-    public $request; // Request paraméter átadása az emailnek
+    public $user;   // A bejelentkezett felhasználó adatai
+    public $kosar;  // A kosár tartalma
 
-    public function __construct(Request $request)
+    public function __construct()
     {
-        $this->request = $request; // Az emailben szereplő rendelési adatokat itt adhatod át
+        // A bejelentkezett felhasználó adatai
+        $this->user = Auth::user();
+        
+        // A kosár tartalma
+        $this->kosar = \DB::table('kosars')
+                          ->where('felhasznalo', $this->user->id) // A bejelentkezett felhasználó kosara
+                          ->get();
     }
 
     public function build()
     {
-        return $this->view('emails.orderConfirmation') // Válassz egy nézetet, amit megjelenítesz az emailben
+        return $this->view('emails.orderConfirmation') // A Blade sablon
                     ->with([
-                        'orderDetails' => $this->request->all(), // Átadhatod a rendelési adatokat is az emailnek
+                        'user' => $this->user,   // Felhasználó adatai
+                        'kosar' => $this->kosar, // Kosár tartalma
                     ])
-                    ->to($this->request->email) // A bejelentkezett felhasználó email címére küldjük az emailt
+                    ->to($this->user->email) // A bejelentkezett felhasználó email címére küldjük
                     ->subject('Rendelés visszaigazolás');
     }
 }
