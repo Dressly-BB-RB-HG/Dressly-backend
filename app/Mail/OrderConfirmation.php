@@ -20,7 +20,7 @@ class OrderConfirmation extends Mailable
                     ->with([
                         'orderDetails' => $this->request->all(), // Átadhatod a rendelési adatokat is az emailnek
                     ])
+                    ->to($this->request->email) // A bejelentkezett felhasználó email címére küldjük az emailt
                     ->subject('Rendelés visszaigazolás');
     }
-
 }
