@@ -311,7 +311,7 @@ public function rendezTermekekArSzerint(Request $request)
         return response()->json($termekek);
     }
 
-    public function legujabbTermek()
+    public function legujabbModell()
 {
     $termekek = Termek::with(['modell.kategoria', 'arakMegjelenit'])
         ->orderBy('created_at', 'desc') 
@@ -319,4 +319,39 @@ public function rendezTermekekArSzerint(Request $request)
 
     return response()->json($termekek);
 }
+
+
+public function termekSzuressel(Request $request)
+{
+    $query = Termek::with(['modell.kategoria', 'arakMegjelenit']);
+
+    // Dinamikusan hozzáadjuk a szűrőket
+    if ($request->has('marka') && $request->marka !== null) {
+        $query->whereHas('modell', function ($query) use ($request) {
+            $query->where('marka', $request->marka);
+        });
+    }
+    if ($request->has('meret') && $request->meret !== null) {
+        $query->where('meret', $request->meret);
+    }
+    if ($request->has('nem') && $request->nem !== null) {
+        $query->where('nem', $request->nem);
+    }
+    if ($request->has('szin') && $request->szin !== null) {
+        $query->where('szin', $request->szin);
+    }
+
+    // Rendezés, ha szükséges
+    if ($request->has('rendezes') && in_array($request->rendezes, ['novekv', 'csokkeno'])) {
+        $query->orderBy('ar', $request->rendezes == 'novekv' ? 'asc' : 'desc');
+    }
+
+    // A szűrt adatok lekérdezése
+    $termekek = $query->get();
+
+    // Válasz visszaadása
+    return response()->json($termekek);
+}
+
+
 }
