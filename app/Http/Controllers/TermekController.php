@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Termek;
+use App\Models\Modell;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -309,4 +310,13 @@ public function rendezTermekekArSzerint(Request $request)
         $termekek = Termek::with(['modell.kategoria', 'arakMegjelenit'])->get();
         return response()->json($termekek);
     }
+
+    public function legujabbTermek()
+{
+    $termekek = Termek::with(['modell.kategoria', 'arakMegjelenit'])
+        ->orderBy('created_at', 'desc') 
+        ->get();
+
+    return response()->json($termekek);
+}
 }

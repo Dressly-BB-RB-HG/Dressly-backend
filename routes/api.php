@@ -66,6 +66,7 @@ Route::get('meret-marka-tipus-kategoria/{meret}/{marka}/{tipus}/{kategoria}', [T
 Route::get('termek-minden-adattal', [TermekController::class, 'termekMindenAdattal']);
 Route::get('modellek-kategoriaval', [ModellController::class, 'modellekKategoriaval']);
 Route::get('legkedveltebb-modell', [RendelesController::class, 'legkedveltebbModell']);
+Route::get('legujabb-termek', [TermekController::class, 'legujabbTermek']);
 
 
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
