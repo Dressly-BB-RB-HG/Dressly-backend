@@ -241,7 +241,7 @@ class RendelesController extends Controller
     $legkedveltebbModell = Termek::with(['modell.kategoria', 'arakMegjelenit'])
         ->leftJoin('rendeles_tetels', 'termeks.termek_id', '=', 'rendeles_tetels.termek')
         ->select('termeks.*', DB::raw('COALESCE(SUM(rendeles_tetels.mennyiseg), 0) as total_quantity'))
-        ->groupBy('termeks.termek_id')
+        ->groupBy('termeks.termek_id', 'termeks.modell', 'termeks.szin', 'termeks.meret', 'termeks.keszlet', 'termeks.ar')
         ->orderByDesc('total_quantity')
         ->get();
 
