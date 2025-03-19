@@ -10,6 +10,7 @@ use App\Http\Controllers\TermekController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RendelesController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\RegisterController;
 use App\Http\Middleware\Admin;
 use App\Http\Middleware\Raktaros;
 use App\Models\User;
@@ -38,6 +39,7 @@ Route::get('felhasznalo/{id}/rendelesek', [RendelesController::class, 'osszesRen
 
 // bazsi
 Route::get('rendeles/{rendelesSzam}/tetel', [RendelesController::class, 'rendelesTetel']);
+
   
 // KedvencekController
 
@@ -46,6 +48,7 @@ Route::get('rendeles/{rendelesSzam}/tetel', [RendelesController::class, 'rendele
 
 // EMAIL TESZT
 Route::post('email-kuldes', [OrderController::class, 'sendOrderConfirmation']);
+Route::post('regisztracio-email-kuldes', [RegisterController::class, 'sendRegistrationEmail']);
 
 // HirlevelController
 Route::patch('feliratkozas-hirlevelre', [HirlevelController::class, 'feliratkozas']);

@@ -84,13 +84,33 @@
                     <tr>
                         <th>Termék</th>
                         <th>Mennyiség</th>
+                        <th>Szín</th>
+                        <th>Méret</th>
+                        <th>Ár</th>
+                        <th>Összeg</th>
                     </tr>
                 </thead>
                 <tbody>
+                    @php
+                        $totalPrice = 0;
+                    @endphp
                     @foreach ($kosar as $item)
                         <tr>
-                            <td>{{ $item->termek }}</td>
+                            <td>
+                                <img src="{{ $item->kep }}" alt="{{ $item->gyarto }}" style="width: 50px; height: 50px; object-fit: cover;">                              
+                            </td>
                             <td>{{ $item->mennyiseg }}</td>
+                            <td>{{ $item->szin }}</td>
+                            <td>{{ $item->meret }}</td>
+                            <td>{{ $item->ar }} Ft</td>
+                            <td>{{ $item->ar * $item->mennyiseg }} Ft</td>
+                            <td>
+                                @php
+                                    $itemTotal = $item->ar * $item->mennyiseg;
+                                    $totalPrice += $itemTotal;
+                                @endphp
+                                {{ $itemTotal }} Ft
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -99,7 +119,7 @@
 
         <!-- Összesítés -->
         <div class="section">
-            <p class="total">A rendelés teljes összege:  Ft</p>
+            <p class="total">A rendelés teljes összege: {{ $totalPrice }} Ft</p>
         </div>
 
         <div class="footer">
