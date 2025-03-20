@@ -26,7 +26,7 @@ class User extends Authenticatable
         'role',
         'hirlevel',
         'varos',
-        'kerulet',
+        'iranyitoszam',
         'utca',
         'hazszam'
     ];

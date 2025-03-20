@@ -24,7 +24,7 @@ return new class extends Migration
             $table->integer('role')->default(0);
             $table->integer('hirlevel')->default(0);
             $table->string('varos');
-            $table->integer('kerulet')->default(0);
+            $table->integer('iranyitoszam')->default(0);
             $table->string('utca');
             $table->integer('hazszam');
             $table->rememberToken();
@@ -39,7 +39,7 @@ return new class extends Migration
             'password' => Hash::make('admin12345'),
             'role' => 1,
             'varos' => 'Budapest',
-            'kerulet' => 3,
+            'iranyitoszam' => 2030,
             'utca' => 'Lajos utca',
             'hazszam' => 72
         ]);
@@ -53,7 +53,7 @@ return new class extends Migration
             'password' => Hash::make('raktaros12345'),
             'role' => 2,
             'varos' => 'Budapest',
-            'kerulet' => 1,
+            'iranyitoszam' => 2030,
             'utca' => 'Lajos utca',
             'hazszam' => 71
         ]);
@@ -65,7 +65,7 @@ return new class extends Migration
             'email' => 'felhasznalo@felhasznalo.com',
             'password' => Hash::make('felhasznalo12345'),
             'varos' => 'Budapest',
-            'kerulet' => 2,
+            'iranyitoszam' => 2030,
             'utca' => 'Lajos utca',
             'hazszam' => 70
         ]);

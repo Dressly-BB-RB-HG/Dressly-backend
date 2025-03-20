@@ -60,7 +60,7 @@ class UserController extends Controller
         'old_password' => 'required_with:new_password', // ha új jelszót adnak meg, akkor a régi is szükséges
         'new_password' => 'nullable|min:8|confirmed', // új jelszó validálása, ha van
         'varos' => 'required|string|max:50', // város validálása
-        'kerulet' => 'required|integer|max:1000', // kerület validálása
+        'iranyitoszam' => 'required|integer|max:10000', 
         'utca' => 'required|string|max:255', // utca validálása
         'hazszam' => 'required|integer|max:1000', // házszám validálása
     ]);
@@ -96,8 +96,8 @@ class UserController extends Controller
     if ($request->has('varos')) {
         $user->varos = $request->input('varos');
     }
-    if ($request->has('kerulet')) {
-        $user->kerulet = $request->input('kerulet');
+    if ($request->has('iranyitoszam')) {
+        $user->iranyitoszam = $request->input('iranyitoszam');
     }
     if ($request->has('utca')) {
         $user->utca = $request->input('utca');

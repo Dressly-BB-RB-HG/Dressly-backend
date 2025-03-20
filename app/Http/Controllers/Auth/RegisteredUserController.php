@@ -31,7 +31,7 @@ class RegisteredUserController extends Controller
             'varos' => ['required', 'string', 'max:100'],  // Itt meghagyom string típusú validációt
             
             // Kerület validáció
-            'kerulet' => ['required', 'integer', 'max:255'],  // Új mező, kerület
+            'iranyitoszam' => ['required', 'integer', 'max:10000'],  // Új mező, kerület
             
             // Utca validáció
             'utca' => ['required', 'string', 'max:255'],  // Új mező, utca
@@ -47,7 +47,7 @@ class RegisteredUserController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->string('password')),
             'varos' => $request->varos,  // Város mentése
-            'kerulet' => $request->kerulet,  // Kerület mentése
+            'iranyitoszam' => $request->iranyitoszam,  // Kerület mentése
             'utca' => $request->utca,  // Utca mentése
             'hazszam' => $request->hazszam,  // Házszám mentése
         ]);
