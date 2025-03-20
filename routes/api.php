@@ -52,6 +52,8 @@ Route::post('regisztracio-email-kuldes', [RegisterController::class, 'sendRegist
 
 // HirlevelController
 Route::patch('feliratkozas-hirlevelre', [HirlevelController::class, 'feliratkozas']);
+Route::patch('leiratkozas-hirlevelrol', [HirlevelController::class, 'leiratkozas']); // Leiratkozás
+Route::get('feliratkozas-status', [HirlevelController::class, 'feliratkozasStatus']);
 
 
 // Szűrési/rendezési feltételekhez:
