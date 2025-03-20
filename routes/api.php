@@ -6,6 +6,7 @@ use App\Http\Controllers\HirlevelController;
 use App\Http\Controllers\KedvencekController;
 use App\Http\Controllers\KosarController;
 use App\Http\Controllers\ModellController;
+use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\TermekController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RendelesController;
@@ -49,6 +50,9 @@ Route::get('rendeles/{rendelesSzam}/tetel', [RendelesController::class, 'rendele
 // EMAIL TESZT
 Route::post('email-kuldes', [OrderController::class, 'sendOrderConfirmation']);
 Route::post('regisztracio-email-kuldes', [RegisterController::class, 'sendRegistrationEmail']);
+Route::post('send-subscription-email', [NewsletterController::class, 'sendSubscriptionEmail']);
+Route::post('send-unsubscription-email', [NewsletterController::class, 'sendUnsubscriptionEmail']);
+
 
 // HirlevelController
 Route::patch('feliratkozas-hirlevelre', [HirlevelController::class, 'feliratkozas']);
