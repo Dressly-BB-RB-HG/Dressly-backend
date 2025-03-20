@@ -18,7 +18,7 @@ class Modell extends Model
 
     public function kategoria()
     {
-        return $this->belongsTo(Kategoria::class, 'kategoria');
+        return $this->belongsTo(Kategoria::class, 'kategoria', 'kategoria_id');
     }
 
     public function kategoriaTermekMegjelenit()
@@ -35,4 +35,10 @@ class Modell extends Model
     {
         return $this->belongsTo(Kategoria::class, 'kategoria_id', 'kategoria_id');
     }
+
+    public function kedvencek()
+    {
+        return $this->hasMany(Kedvencek::class, 'modell', 'modell_id');
+    }
+
 }

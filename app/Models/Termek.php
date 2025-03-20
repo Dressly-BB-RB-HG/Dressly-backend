@@ -19,7 +19,7 @@ class Termek extends Model
 
     public function modell()
     {
-        return $this->belongsTo(Modell::class, 'modell');
+        return $this->belongsTo(Modell::class, 'modell', 'modell_id');
     }
 
     public function modellMegjelenit()
@@ -29,7 +29,7 @@ class Termek extends Model
 
     public function arakMegjelenit()
     {
-        return $this->hasMany(Termek_ar::class, 'termek', 'termek_id');
+        return $this->hasMany(Termek_ar::class, 'termek', 'termek_id')->orderBy('dtol', 'desc');;
     }
 
     

@@ -12,4 +12,9 @@ class Kedvencek extends Model
         'modell'
 
     ];
+
+    public function modell()
+    {
+        return $this->belongsTo(Modell::class, 'modell', 'modell_id');
+    }
 }

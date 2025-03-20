@@ -42,9 +42,12 @@ Route::get('rendeles/{rendelesSzam}/tetel', [RendelesController::class, 'rendele
 
   
 // KedvencekController
-
-
+Route::get('kedvenc-termek', [KedvencekController::class, 'kedvencTermekek']);
+Route::post('kedvencekhez-ad', [KedvencekController::class, 'kedvencHozzaad']);
+Route::delete('kedvencek-torol/{id}', [KedvencekController::class, 'destroy']);
 // UserController
+
+
 
 // EMAIL TESZT
 Route::post('email-kuldes', [OrderController::class, 'sendOrderConfirmation']);

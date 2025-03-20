@@ -30,6 +30,21 @@ return new class extends Migration
             'felhasznalo' => 3,
             'modell' => 1,
         ]);
+
+        Kedvencek::create([
+            'felhasznalo' => 3,
+            'modell' => 5,
+        ]);
+
+        Kedvencek::create([
+            'felhasznalo' => 3,
+            'modell' => 7,
+        ]);
+
+        Kedvencek::create([
+            'felhasznalo' => 3,
+            'modell' => 3,
+        ]);
     }
 
     /**
