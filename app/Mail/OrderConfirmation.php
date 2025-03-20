@@ -4,35 +4,35 @@ namespace App\Mail;
 
 use Illuminate\Mail\Mailable;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
-class OrderConfirmation extends Mailable
+class RegistrationConfirmation extends Mailable
 {
-    public $user;   // A bejelentkezett felhasználó adatai
-    public $kosar;  // A kosár tartalma
+    public $user;  // A bejelentkezett felhasználó
 
+    /**
+     * Create a new message instance.
+     *
+     * @return void
+     */
     public function __construct()
     {
-        // A bejelentkezett felhasználó adatai
+        // Az Auth::user() segítségével elérheted a bejelentkezett felhasználót
         $this->user = Auth::user();
-        
-        // A kosár tartalma
-        $this->kosar = DB::table('kosars')
-                ->join('termeks', 'kosars.termek', '=', 'termeks.termek_id')
-                ->join('modells', 'termeks.modell', '=', 'modells.modell_id')
-                ->where('kosars.felhasznalo', $this->user->id) // A bejelentkezett felhasználó kosara
-                ->select('kosars.mennyiseg', 'termeks.szin', 'termeks.meret', 'termeks.ar', 'modells.gyarto', 'modells.kep', 'termeks.termek_id')
-                ->get();
     }
 
+    /**
+     * Build the message.
+     *
+     * @return $this
+     */
     public function build()
     {
-        return $this->view('emails.orderConfirmation') // A Blade sablon
+        return $this->view('emails.registrationConfirmation')  // A sablon fájl
                     ->with([
-                        'user' => $this->user,   // Felhasználó adatai
-                        'kosar' => $this->kosar, // Kosár tartalma,
+                        'name' => $this->user->name,  // A felhasználó neve
+                        'email' => $this->user->email,  // A felhasználó email címe
                     ])
                     ->to($this->user->email) // A bejelentkezett felhasználó email címére küldjük
-                    ->subject('Rendelés visszaigazolás');
+                    ->subject('Sikeres Regisztráció');
     }
 }

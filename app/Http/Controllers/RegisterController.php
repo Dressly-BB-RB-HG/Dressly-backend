@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Mail\RegistrationConfirmation;
 use Illuminate\Support\Facades\Mail;
 
-class EmailController extends Controller
+class RegisterController extends Controller
 {
     public function sendRegistrationEmail(Request $request)
     {

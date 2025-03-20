@@ -3,20 +3,36 @@
 namespace App\Mail;
 
 use Illuminate\Mail\Mailable;
+use Illuminate\Support\Facades\Auth;
 
 class RegistrationConfirmation extends Mailable
 {
-    public $email;
+    public $user;  // A bejelentkezett felhasználó
 
-    public function __construct($email)
+    /**
+     * Create a new message instance.
+     *
+     * @return void
+     */
+    public function __construct()
     {
-        $this->email = $email;
+        // Az Auth::user() segítségével elérheted a bejelentkezett felhasználót
+        $this->user = Auth::user();
     }
 
+    /**
+     * Build the message.
+     *
+     * @return $this
+     */
     public function build()
     {
-        return $this->view('emails.registrationConfirmation')
-                    ->with(['email' => $this->email])
+        // Az email sablon, amelyet ki kell cserélni a megfelelő email sablonra
+        return $this->view('emails.registrationConfirmation')  // A sablon fájl
+                    ->with([
+                        'name' => $this->user->name,  // A felhasználó neve
+                        'email' => $this->user->email,  // A felhasználó email címe
+                    ])
                     ->subject('Sikeres Regisztráció');
     }
 }
