@@ -71,6 +71,73 @@ return new class extends Migration
             'gyarto' => 'The North Face',
             'kep' => 'https://img2.ans-media.com/i/840x1260/AW24-BUD05F-99X_F1.jpg@webp?v=1721193971',
         ]);
+
+        Modell::create([
+            'kategoria' => 1,
+            'tipus' => 'F',
+            'gyarto' => 'Ralph Lauren',
+            'kep' => 'https://img01.ztat.net/article/spp-media-p1/f7c4b084ab704316ad0654eb892e20a7/bbb7c8e0a2144c5599435ab76c609879.jpg?imwidth=762',
+        ]);
+
+        Modell::create([
+            'kategoria' => 3,
+            'tipus' => 'N',
+            'gyarto' => 'Ralph Lauren',
+            'kep' => 'https://img01.ztat.net/article/spp-media-p1/32d5c535f8bb41f7a089acfa8f2722f4/2c8bd3ab05b0476fbc09e45d55a89be5.jpg?imwidth=762',
+        ]);
+
+        Modell::create([
+            'kategoria' => 1,
+            'tipus' => 'N',
+            'gyarto' => 'Boss',
+            'kep' => ' https://img01.ztat.net/article/spp-media-p1/47f1e006ca934f62a976bc37f2adeb16/18f012cc3db746f0b97e8a792f5cce7d.jpg?imwidth=1800',
+        ]);
+
+        Modell::create([
+            'kategoria' => 9,
+            'tipus' => 'N',
+            'gyarto' => 'Boss',
+            'kep' => ' https://img01.ztat.net/article/spp-media-p1/e00da3e84079427ebd6acd135c4557b7/2b859b5c821b4c2ba04db8897357d3a1.jpg?imwidth=1800',
+        ]);
+
+        Modell::create([
+            'kategoria' => 11,
+            'tipus' => 'F',
+            'gyarto' => 'Boss',
+            'kep' => ' https://img01.ztat.net/article/spp-media-p1/6f8dbc76dc3a433c9e53b621234e8db7/3d635fbb6b4b481ea19208e44662f98c.jpg?imwidth=1800',
+        ]);
+
+        Modell::create([
+            'kategoria' => 13,
+            'tipus' => 'U',
+            'gyarto' => 'Puma',
+            'kep' => 'https://img01.ztat.net/article/spp-media-p1/14d265ca7b9d4e668c62363df1b371be/6833c58b40894a35a7e078520e8c55e8.jpg?imwidth=762&filter=packshot',
+        ]);
+
+
+        Modell::create([
+            'kategoria' => 5,
+            'tipus' => 'F',
+            'gyarto' => 'Tommy Jeans',
+            'kep' => ' https://img01.ztat.net/article/spp-media-p1/8fdb15e9ed3744f088d1b3a454ae58a5/dc79eedb2f0a4904aafa2dad86fce4be.jpg?imwidth=1800',
+        ]);
+        
+
+        Modell::create([
+            'kategoria' => 9,
+            'tipus' => 'F',
+            'gyarto' => 'Tommy Jeans',
+            'kep' => ' https://img01.ztat.net/article/spp-media-p1/f2e91e5868114ad0992568b05a51ad4c/31b12ba5ef5f4d73a162949a03489f06.jpg?imwidth=1800',
+        ]);
+
+        Modell::create([
+            'kategoria' => 10,
+            'tipus' => 'N',
+            'gyarto' => 'Adidas',
+            'kep' => ' https://img01.ztat.net/article/spp-media-p1/a0fb4aea792e4f52a6e1b1c39d1fa209/d3d91a16e4a9477ca631720bb18953fe.jpg?imwidth=1800',
+        ]);
+
+        
     }
 
     /**

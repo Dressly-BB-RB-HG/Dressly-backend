@@ -51,7 +51,25 @@ return new class extends Migration
             'ruhazat_kat' => 'Mezek'
         ]);
 
-        
+        Kategoria::create([
+            'ruhazat_kat' => 'Farmernadrág'
+        ]);
+
+        Kategoria::create([
+            'ruhazat_kat' => 'Szabadidőnadrág'
+        ]);
+
+        Kategoria::create([
+            'ruhazat_kat' => 'Rövidnadrág'
+        ]);
+
+        Kategoria::create([
+            'ruhazat_kat' => 'Nadrág'
+        ]);
+
+        Kategoria::create([
+            'ruhazat_kat' => 'Sapka'
+        ]);
     }
 
 

@@ -87,7 +87,7 @@ Route::get('modellek-kategoriaval', [ModellController::class, 'modellekKategoria
 Route::get('legkedveltebb-modell', [RendelesController::class, 'legkedveltebbModell']);
 Route::get('legujabb-modell', [TermekController::class, 'legujabbModell']);
 Route::get('termek-szures', [TermekController::class, 'termekSzuressel']);
-
+Route::get('admin/modellek', [ModellController::class, 'index']);
 
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
@@ -114,7 +114,7 @@ Route::middleware(['auth:sanctum', Admin::class])
         Route::delete('admin/felhasznalo-torles/{id}', [UserController::class, 'destroy']);
         Route::delete('admin/modell-torles/{id}', [ModellController::class, 'destroy']);
         Route::put('admin/felhasznalok/{id}/role', [UserController::class, 'updateRole']);
-        Route::get('admin/modellek', [ModellController::class, 'index']);
+       
         Route::get('megrendelok-listazasa', [UserController::class, 'megrendelok']);
         Route::get('hirlevel-feliratkozok', [UserController::class, 'hirlevelFeliratkozok']);
         Route::get('melyik-megrendelo-a-legtobbet', [UserController::class, 'melyikMegrendeloALegtobbet']);
