@@ -199,6 +199,25 @@ class RendelesController extends Controller
             return response()->json(['message' => 'Nincs tétel a rendelésben.']);
         }
     }
+
+    public function atvettem($rendelesSzam)
+    {
+        $rendeles = Rendeles::where('rendeles_szam', $rendelesSzam)->first();
+
+        if (!$rendeles) {
+            return response()->json(['message' => 'Rendelés nem található.'], 404);
+        }
+
+        // Ha a rendelés már át van véve, akkor nem módosítjuk
+        if ($rendeles->fizetve_e) {
+            return response()->json(['message' => 'A rendelés már át lett véve.'], 400);
+        }
+
+        $rendeles->fizetve_e = 1;
+        $rendeles->save();
+
+        return response()->json(['message' => 'A rendelést sikeresen átvettem.'], 200);
+    }
     
     public function rendelesekOsszes()
     {
