@@ -85,8 +85,78 @@ return new class extends Migration
             'keszlet' => 0,
             'ar' => 9999,
         ]);
+
+        Termek::create([
+            'modell' => 8,
+            'szin' => 'Beige',
+            'meret' => 'L',
+            'keszlet' => 21,
+            'ar' => 39990,
+        ]);
+
+        Termek::create([
+            'modell' => 9,
+            'szin' => 'Beige',
+            'meret' => 'S',
+            'keszlet' => 21,
+            'ar' => 49990,
+        ]);
+
+        Termek::create([
+            'modell' => 10,
+            'szin' => 'Fehér',
+            'meret' => 'S',
+            'keszlet' => 25,
+            'ar' => 29990,
+        ]);
         
-        
+        Termek::create([
+            'modell' => 11,
+            'szin' => 'Kék',
+            'meret' => 'M',
+            'keszlet' => 25,
+            'ar' => 27990,
+        ]);
+
+        Termek::create([
+            'modell' => 12,
+            'szin' => 'Beige',
+            'meret' => 'M',
+            'keszlet' => 25,
+            'ar' => 19990,
+        ]);
+
+        Termek::create([
+            'modell' => 13,
+            'szin' => 'Lila',
+            'meret' => 'M',
+            'keszlet' => 25,
+            'ar' => 9990,
+        ]);
+
+        Termek::create([
+            'modell' => 14,
+            'szin' => 'Barna',
+            'meret' => 'L',
+            'keszlet' => 25,
+            'ar' => 59990,
+        ]);
+    
+        Termek::create([
+            'modell' => 15,
+            'szin' => 'Kék',
+            'meret' => 'S',
+            'keszlet' => 25,
+            'ar' => 29990,
+        ]);
+
+        Termek::create([
+            'modell' => 16,
+            'szin' => 'Fekete',
+            'meret' => 'S',
+            'keszlet' => 25,
+            'ar' => 19990,
+        ]);
     }
 
 
