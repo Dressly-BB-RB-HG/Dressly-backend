@@ -12,6 +12,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\RendelesController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\SzallCsomagController;
 use App\Http\Middleware\Admin;
 use App\Http\Middleware\Raktaros;
 use App\Models\User;
@@ -33,6 +34,11 @@ Route::post('kosar', [KosarController::class, 'store']);
 Route::get('kosar-megjelen', [KosarController::class, 'index']);
 Route::delete('kosarTorles/{id}', [KosarController::class, 'destroy']);
 
+// API route a csomagok lekérésére
+Route::get('/szall-csomags', [SzallCsomagController::class, 'index']);
+
+// API route a csomag állapotának frissítésére
+Route::put('/szall-csomags/{csomagId}/allapot', [SzallCsomagController::class, 'updateAllapot']);
 
 // RendelesController
 
