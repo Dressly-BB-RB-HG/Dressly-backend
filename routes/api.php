@@ -33,7 +33,7 @@ Route::get('modellek-kategoriaval', [ModellController::class, 'modellekKategoria
 Route::post('kosar', [KosarController::class, 'store']);
 Route::get('kosar-megjelen', [KosarController::class, 'index']);
 Route::delete('kosarTorles/{id}', [KosarController::class, 'destroy']);
-
+Route::get('/elerhetoMeretek/{id}', [TermekController::class, 'elerhetoMeretek']);
 // API route a csomagok lekérésére
 Route::get('/szall-csomags', [SzallCsomagController::class, 'index']);
 

@@ -279,7 +279,14 @@ public function rendezTermekekArSzerint(Request $request)
         return response()->json($termekek);
     }
 
+    public function elerhetoMeretek($modell_id)
+{
+    $meretek = Termek::where('modell', $modell_id)
+                     ->distinct()
+                     ->pluck('meret'); // Az összes egyedi méret lekérése
 
+    return response()->json($meretek);
+}
 
 
 }
