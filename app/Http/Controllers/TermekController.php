@@ -235,7 +235,15 @@ class TermekController extends Controller
         return response()->json($termekek);
     }
 
-
+    public function elerhetoMeretek($modell_id)
+    {
+        $meretek = Termek::where('modell', $modell_id)
+                         ->where('keszlet', '>', 0) // Csak a készleten lévő termékek
+                         ->distinct()
+                         ->pluck('meret');
+    
+        return response()->json($meretek);
+    }
 
 
 }

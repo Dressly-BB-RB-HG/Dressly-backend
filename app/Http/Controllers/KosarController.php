@@ -25,33 +25,32 @@ class KosarController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        if (!auth()->check()) {
-            return response()->json(['error' => 'Bejelentkezés szükséges!'], 401);
-        }
-
-        $felhasznaloId = auth()->id();
-        $termekId = $request->termek_id;
-
-        $kosarElem = Kosar::where('felhasznalo', $felhasznaloId)
-            ->where('termek', $termekId)
-            ->first();
-
-        // Ha már létezik az elem, mennyiség növelés
-        if ($kosarElem) {
-            Kosar::where('felhasznalo', $felhasznaloId)
-            ->where('termek', $termekId)
-            ->update(['mennyiseg' => $kosarElem->mennyiseg + 1]);
-        } else {
-            // Ha még nem létezik az elem
-            $ujKosarElem = Kosar::create([
-                'felhasznalo' => $felhasznaloId,
-                'termek' => $termekId,
-                'mennyiseg' => 1,
-            ]);
-            return response()->json($ujKosarElem, 201);
-        }
+{
+    if (!auth()->check()) {
+        return response()->json(['error' => 'Bejelentkezés szükséges!'], 401);
     }
+    $termekId = $request->input('termek_id');
+
+    $felhasznaloId = auth()->id();
+    $kosarElem = Kosar::where('felhasznalo', $felhasznaloId)
+        ->where('termek', $termekId)
+        ->first();
+
+    // Ha már létezik az elem, mennyiség növelés
+    if ($kosarElem) {
+        Kosar::where('felhasznalo', $felhasznaloId)
+        ->where('termek', $termekId)
+        ->update(['mennyiseg' => $kosarElem->mennyiseg + 1]);
+    } else {
+        // Ha még nem létezik az elem
+        $ujKosarElem = Kosar::create([
+            'felhasznalo' => $felhasznaloId,
+            'termek' => $termekId,
+            'mennyiseg' => 1,
+        ]);
+        return response()->json($ujKosarElem, 201);
+    }
+}
 
     /**
      * Remove the specified resource from storage.
