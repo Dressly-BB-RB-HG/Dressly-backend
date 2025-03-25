@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Modell;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
 
 class ModellController extends Controller
 {
@@ -82,6 +84,104 @@ class ModellController extends Controller
     return response()->json($modellek);
 }
 
-    
+public function modellMindenAdattal()
+    {
+        $modellek = Modell::with(['kategoria', 'termekek.arakMegjelenit'])->get();
+        return response()->json($modellek);
+    }
+
+    public function legujabbModell()
+{
+    $modellek = Modell::with(['kategoria', 'termekek.arakMegjelenit'])
+        ->orderBy('created_at', 'desc') 
+        ->get();
+
+    return response()->json($modellek);
 }
 
+
+    public function modellSzuressel(Request $request)
+    {
+        $query = Modell::with(['kategoria', 'termekek.arakMegjelenit']);
+
+        
+        if ($request->has('marka') && $request->marka !== null) {
+            $query->whereHas('modell', function ($query) use ($request) {
+                $query->where('marka', $request->marka);
+            });
+        }
+        if ($request->has('meret') && $request->meret !== null) {
+            $query->where('meret', $request->meret);
+        }
+        if ($request->has('nem') && $request->nem !== null) {
+            $query->where('nem', $request->nem);
+        }
+        if ($request->has('szin') && $request->szin !== null) {
+            $query->where('szin', $request->szin);
+        }
+
+        
+        if ($request->has('rendezes') && in_array($request->rendezes, ['novekv', 'csokkeno'])) {
+            $query->orderBy('ar', $request->rendezes == 'novekv' ? 'asc' : 'desc');
+        }
+
+        
+        $termekek = $query->get();
+        return response()->json($termekek);
+    }
+
+    public function meretRuhak(string $meret)
+    {
+        $termekek = Modell::with(['kategoria', 'termekek.arakMegjelenit'])
+            ->whereHas('termekek.modell', function ($query) use ($meret) {
+                $query->where('meret', $meret);
+            })
+            ->get();
+
+        return response()->json($termekek);
+    }
+
+
+    public function kategoriaRuhak(string $kategoria)
+        {
+            $termekek = Modell::join('termeks', 'termeks.modell', '=', 'modells.modell_id')
+                ->join('kategorias', 'modells.kategoria', '=', 'kategorias.kategoria_id')
+                ->where('kategorias.ruhazat_kat', $kategoria)
+                ->get(['modells.*']);
+
+            return response()->json($termekek);
+        }
+
+
+        public function markaRuhak(string $marka)
+        {
+            $termekek = Modell::with(['kategoria', 'termekek.arakMegjelenit'])
+                ->whereHas('termekek.modell', function ($query) use ($marka) {
+                    $query->where('gyarto', $marka);
+                })
+                ->get();
+        
+            return response()->json($termekek);
+        }
+
+    public function rendezTermekekArSzerint(Request $request)
+{
+    // Az irány (növekvő vagy csökkenő) lekérése
+    $irany = $request->query('irany');  // alapértelmezés szerint növekvő
+
+    // Az ár szerint rendezés, és a kapcsolódó modellek betöltése
+    if ($irany == 'csokkeno') {
+        $termekek = Modell::with(['kategoria', 'termekek.arakMegjelenit'])
+            ->orderBy('ar', 'desc')
+            ->get();
+    } else {
+        $termekek = Modell::with(['kategoria', 'termekek.arakMegjelenit'])
+            ->orderBy('ar', 'asc')
+            ->get();
+    }
+
+    // A termékek visszaadása JSON formátumban
+    return response()->json($termekek);
+}
+
+}

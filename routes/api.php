@@ -73,20 +73,20 @@ Route::get('feliratkozas-status', [HirlevelController::class, 'feliratkozasStatu
 // Szűrési/rendezési feltételekhez:
 Route::get('szinu-ruha/{szin}/{kategoria}', [TermekController::class, 'szinuRuha']);
 Route::get('szinu-minden/{szin}', [TermekController::class, 'szinuMinden']);
-Route::get('marka-ruhak/{marka}', [TermekController::class, 'markaRuhak']);
-Route::get('meret-ruhak/{meret}', [TermekController::class, 'meretRuhak']);
+Route::get('marka-ruhak/{marka}', [ModellController::class, 'markaRuhak']);
+Route::get('meret-ruhak/{meret}', [ModellController::class, 'meretRuhak']);
 Route::get('nemu-ruhak/{nem}', [TermekController::class, 'adottNemu']);
-Route::get('termek-rendez-ar-szerint', [TermekController::class, 'rendezTermekekArSzerint']);
+Route::get('termek-rendez-ar-szerint', [ModellController::class, 'rendezTermekekArSzerint']);
 Route::get('marka-kategoria/{marka}/{kategoria}', [TermekController::class, 'markaKategoria']);
 Route::get('nemu-kategoria/{nem}/{kategoria}', [TermekController::class, 'nemuKategoria']);
-Route::get('kategoria-ruhak/{kategoria}', [TermekController::class, 'kategoriaRuhak']);
+Route::get('kategoria-ruhak/{kategoria}', [ModellController::class, 'kategoriaRuhak']);
 Route::get('meret-marka-tipus/{meret}/{marka}/{tipus}', [TermekController::class, 'meretMarkaTipus']);
 Route::get('meret-marka-tipus-kategoria/{meret}/{marka}/{tipus}/{kategoria}', [TermekController::class, 'meretMarkaTipusKategoria']);
-Route::get('termek-minden-adattal', [TermekController::class, 'termekMindenAdattal']);
+Route::get('modell-minden-adattal', [ModellController::class, 'modellMindenAdattal']);
 Route::get('modellek-kategoriaval', [ModellController::class, 'modellekKategoriaval']);
 Route::get('legkedveltebb-modell', [RendelesController::class, 'legkedveltebbModell']);
-Route::get('legujabb-modell', [TermekController::class, 'legujabbModell']);
-Route::get('termek-szures', [TermekController::class, 'termekSzuressel']);
+Route::get('legujabb-modell', [ModellController::class, 'legujabbModell']);
+Route::get('termek-szures', [ModellController::class, 'modellSzuressel']);
 Route::get('admin/modellek', [ModellController::class, 'index']);
 
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {

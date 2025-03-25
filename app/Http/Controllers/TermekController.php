@@ -152,17 +152,7 @@ public function rendezTermekekArSzerint(Request $request)
     return response()->json($termekek);
 }
 
-    //Adott márkájú ruha
-    public function markaRuhak(string $marka)
-{
-    $termekek = Termek::with(['modell.kategoria', 'arakMegjelenit'])
-        ->whereHas('modell', function ($query) use ($marka) {
-            $query->where('gyarto', $marka);
-        })
-        ->get();
 
-    return response()->json($termekek);
-}
 
     
 
@@ -178,16 +168,6 @@ public function rendezTermekekArSzerint(Request $request)
         return response()->json($termekek);
     }
 
-    //Adott kategóriájú ruhák
-    public function kategoriaRuhak(string $kategoria)
-    {
-        $termekek = Termek::join('modells', 'termeks.modell', '=', 'modells.modell_id')
-            ->join('kategorias', 'modells.kategoria', '=', 'kategorias.kategoria_id')
-            ->where('kategorias.ruhazat_kat', $kategoria)
-            ->get(['termeks.*']);
-
-        return response()->json($termekek);
-    }
 
     //Adott méretű, adott márkájú, adott típusu ruhák
     public function meretMarkaTipus(string $meret, string $marka, string $tipus)
@@ -214,18 +194,6 @@ public function rendezTermekekArSzerint(Request $request)
             ->get(['termeks.*']);
         return response()->json($termekek);
     }
-
-    //Adott méretű ruhák
-    public function meretRuhak(string $meret)
-{
-    $termekek = Termek::with(['modell.kategoria', 'arakMegjelenit'])
-        ->whereHas('modell', function ($query) use ($meret) {
-            $query->where('meret', $meret);
-        })
-        ->get();
-
-    return response()->json($termekek);
-}
 
 
     public function termekAra($ekkor, $termekId)
@@ -311,47 +279,7 @@ public function rendezTermekekArSzerint(Request $request)
         return response()->json($termekek);
     }
 
-    public function legujabbModell()
-{
-    $termekek = Termek::with(['modell.kategoria', 'arakMegjelenit'])
-        ->orderBy('created_at', 'desc') 
-        ->get();
 
-    return response()->json($termekek);
-}
-
-
-public function termekSzuressel(Request $request)
-{
-    $query = Termek::with(['modell.kategoria', 'arakMegjelenit']);
-
-    // Dinamikusan hozzáadjuk a szűrőket
-    if ($request->has('marka') && $request->marka !== null) {
-        $query->whereHas('modell', function ($query) use ($request) {
-            $query->where('marka', $request->marka);
-        });
-    }
-    if ($request->has('meret') && $request->meret !== null) {
-        $query->where('meret', $request->meret);
-    }
-    if ($request->has('nem') && $request->nem !== null) {
-        $query->where('nem', $request->nem);
-    }
-    if ($request->has('szin') && $request->szin !== null) {
-        $query->where('szin', $request->szin);
-    }
-
-    // Rendezés, ha szükséges
-    if ($request->has('rendezes') && in_array($request->rendezes, ['novekv', 'csokkeno'])) {
-        $query->orderBy('ar', $request->rendezes == 'novekv' ? 'asc' : 'desc');
-    }
-
-    // A szűrt adatok lekérdezése
-    $termekek = $query->get();
-
-    // Válasz visszaadása
-    return response()->json($termekek);
-}
 
 
 }

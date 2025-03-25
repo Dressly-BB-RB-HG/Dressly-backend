@@ -26,7 +26,7 @@ class Modell extends Model
         return $this->belongsTo(Kategoria::class, 'kategoria', 'kategoria_id');
     }
 
-    public function termekekTermekMegjelenit()
+    public function termekek()
     {
         return $this->hasMany(Termek::class, 'modell', 'modell_id');
     }
