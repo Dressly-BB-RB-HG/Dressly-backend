@@ -80,9 +80,9 @@ return new class extends Migration
 
         Termek::create([
             'modell' => 7,
-            'szin' => 'Piros',
+            'szin' => 'Fekete',
             'meret' => 'M',
-            'keszlet' => 0,
+            'keszlet' => 25,
             'ar' => 9999,
         ]);
 
