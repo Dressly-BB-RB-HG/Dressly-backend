@@ -72,10 +72,10 @@ Route::get('feliratkozas-status', [HirlevelController::class, 'feliratkozasStatu
 
 // Szűrési/rendezési feltételekhez:
 Route::get('szinu-ruha/{szin}/{kategoria}', [TermekController::class, 'szinuRuha']);
-Route::get('szinu-minden/{szin}', [TermekController::class, 'szinuMinden']);
+Route::get('szinu-minden/{szin}', [ModellController::class, 'szinuMinden']);
 Route::get('marka-ruhak/{marka}', [ModellController::class, 'markaRuhak']);
 Route::get('meret-ruhak/{meret}', [ModellController::class, 'meretRuhak']);
-Route::get('nemu-ruhak/{nem}', [TermekController::class, 'adottNemu']);
+Route::get('nemu-ruhak/{nem}', [ModellController::class, 'adottNemu']);
 Route::get('termek-rendez-ar-szerint', [ModellController::class, 'rendezTermekekArSzerint']);
 Route::get('marka-kategoria/{marka}/{kategoria}', [TermekController::class, 'markaKategoria']);
 Route::get('nemu-kategoria/{nem}/{kategoria}', [TermekController::class, 'nemuKategoria']);

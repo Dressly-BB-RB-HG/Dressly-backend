@@ -108,51 +108,7 @@ class TermekController extends Controller
     }
 
     //Adott színű ruha
-    public function szinuMinden(string $szin)
-{
-    $termekek = Termek::with(['modell.kategoria', 'arakMegjelenit'])
-        ->whereHas('modell', function ($query) use ($szin) {
-            $query->where('szin', $szin);
-        })
-        ->get();
-
-    return response()->json($termekek);
-}
-
-    // Adott nemű ruhák
-    public function adottNemu(string $nem)
-{
-    $termekek = Termek::with(['modell.kategoria', 'arakMegjelenit'])
-        ->whereHas('modell', function ($query) use ($nem) {
-            $query->where('tipus', $nem);
-        })
-        ->get();
-
-    return response()->json($termekek);
-}
-
-
-public function rendezTermekekArSzerint(Request $request)
-{
-    // Az irány (növekvő vagy csökkenő) lekérése
-    $irany = $request->query('irany');  // alapértelmezés szerint növekvő
-
-    // Az ár szerint rendezés, és a kapcsolódó modellek betöltése
-    if ($irany == 'csokkeno') {
-        $termekek = Termek::with(['modell.kategoria', 'arakMegjelenit'])
-            ->orderBy('ar', 'desc')
-            ->get();
-    } else {
-        $termekek = Termek::with(['modell.kategoria', 'arakMegjelenit'])
-            ->orderBy('ar', 'asc')
-            ->get();
-    }
-
-    // A termékek visszaadása JSON formátumban
-    return response()->json($termekek);
-}
-
-
+    
 
     
 

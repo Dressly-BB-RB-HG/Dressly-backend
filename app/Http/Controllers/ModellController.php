@@ -166,21 +166,46 @@ public function modellMindenAdattal()
 
     public function rendezTermekekArSzerint(Request $request)
 {
-    // Az irány (növekvő vagy csökkenő) lekérése
-    $irany = $request->query('irany');  // alapértelmezés szerint növekvő
-
-    // Az ár szerint rendezés, és a kapcsolódó modellek betöltése
-    if ($irany == 'csokkeno') {
-        $termekek = Modell::with(['kategoria', 'termekek.arakMegjelenit'])
-            ->orderBy('ar', 'desc')
-            ->get();
-    } else {
-        $termekek = Modell::with(['kategoria', 'termekek.arakMegjelenit'])
-            ->orderBy('ar', 'asc')
-            ->get();
-    }
+    $irany = $request->query('irany');
+    
+    $termekek = Modell::with(['kategoria', 'termekek.arakMegjelenit'])
+        ->join('termeks', 'modells.modell_id', '=', 'termeks.modell')
+        ->selectRaw('modells.*, MIN(
+            COALESCE(
+                (SELECT uj_ar FROM termek_ars WHERE termek_ars.termek = termeks.termek_id ORDER BY dtol DESC LIMIT 1),
+                termeks.ar
+            )
+        ) as min_ar')
+        ->groupBy('modells.modell_id') // Minden modell csak egyszer jelenjen meg
+        ->orderBy('min_ar', $irany === 'csokkeno' ? 'desc' : 'asc')
+        ->get();
 
     // A termékek visszaadása JSON formátumban
+    return response()->json($termekek);
+}
+
+
+    // Adott nemű ruhák
+    public function adottNemu(string $nem)
+{
+    $termekek = Modell::with(['kategoria', 'termekek.arakMegjelenit'])
+        ->whereHas('termekek.modell', function ($query) use ($nem) {
+            $query->where('tipus', $nem);
+        })
+        ->get();
+
+    return response()->json($termekek);
+}
+
+
+public function szinuMinden(string $szin)
+{
+    $termekek = Modell::with(['kategoria', 'termekek.arakMegjelenit'])
+        ->whereHas('termekek.modell', function ($query) use ($szin) {
+            $query->where('szin', $szin);
+        })
+        ->get();
+
     return response()->json($termekek);
 }
 

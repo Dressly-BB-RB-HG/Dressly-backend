@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Rendeles;
 use App\Models\Rendeles_tetel;
 use App\Models\Termek;
+use App\Models\Modell;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -257,11 +258,12 @@ class RendelesController extends Controller
 
     public function legkedveltebbModell()
 {
-    $legkedveltebbModell = Termek::with(['modell.kategoria', 'arakMegjelenit'])
-        ->leftJoin('rendeles_tetels', 'termeks.termek_id', '=', 'rendeles_tetels.termek')
-        ->select('termeks.termek_id', 'termeks.modell', 'termeks.szin', 'termeks.meret', 'termeks.keszlet', 'termeks.ar', DB::raw('COALESCE(SUM(rendeles_tetels.mennyiseg), 0) as total_quantity'))
-        ->groupBy('termeks.termek_id', 'termeks.modell', 'termeks.szin', 'termeks.meret', 'termeks.keszlet', 'termeks.ar')
-        ->orderByDesc('total_quantity')
+    $legkedveltebbModell = Modell::with(['kategoria', 'termekek.arakMegjelenit'])
+        ->join('termeks', 'modells.modell_id', '=', 'termeks.modell') // Összekapcsolás a termeks táblával
+        ->leftJoin('rendeles_tetels', 'termeks.termek_id', '=', 'rendeles_tetels.termek') // Összekapcsolás a rendelések tételeivel
+        ->select('modells.*', DB::raw('COALESCE(SUM(rendeles_tetels.mennyiseg), 0) as total_quantity'))
+        ->groupBy('modells.modell_id') // Csak a modelleket csoportosítjuk
+        ->orderByDesc('total_quantity') // A legnépszerűbb modell előre kerüljön
         ->get();
 
     return response()->json($legkedveltebbModell);

@@ -118,7 +118,7 @@ return new class extends Migration
         Modell::create([
             'kategoria' => 5,
             'tipus' => 'F',
-            'gyarto' => 'Tommy Jeans',
+            'gyarto' => 'Tommy Hilfiger',
             'kep' => ' https://img01.ztat.net/article/spp-media-p1/8fdb15e9ed3744f088d1b3a454ae58a5/dc79eedb2f0a4904aafa2dad86fce4be.jpg?imwidth=1800',
         ]);
         
@@ -126,7 +126,7 @@ return new class extends Migration
         Modell::create([
             'kategoria' => 9,
             'tipus' => 'F',
-            'gyarto' => 'Tommy Jeans',
+            'gyarto' => 'Tommy Hilfiger',
             'kep' => ' https://img01.ztat.net/article/spp-media-p1/f2e91e5868114ad0992568b05a51ad4c/31b12ba5ef5f4d73a162949a03489f06.jpg?imwidth=1800',
         ]);
 

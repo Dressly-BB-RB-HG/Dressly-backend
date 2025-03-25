@@ -65,12 +65,12 @@ class KedvencekController extends Controller
 
     public function kedvencTermekek()
 {
-    $termekek = Termek::whereHas('modell', function ($query) {
+    $termekek = Modell::whereHas('termekek.modell', function ($query) {
             $query->whereHas('kedvencek', function ($subQuery) {
                 $subQuery->where('felhasznalo', auth()->id());
             });
         })
-        ->with(['modell.kategoria', 'arakMegjelenit'])
+        ->with(['kategoria', 'termekek.arakMegjelenit'])
         ->get();
 
     return response()->json($termekek);
@@ -83,7 +83,7 @@ public function kedvencHozzaad(Request $request)
         'modell' => 'required|integer',
     ]);
 
-    // Ha a termék még nincs a kedvencek között, hozzáadjuk
+    // Megnézzük, hogy létezik-e már a kedvencek között
     $existing = Kedvencek::where('felhasznalo', $validated['felhasznalo'])
                          ->where('modell', $validated['modell'])
                          ->first();
@@ -103,6 +103,18 @@ public function kedvencHozzaad(Request $request)
 // Termék eltávolítása a kedvencek közül
 public function kedvencTorol(Request $request)
 {
-    
+    $validated = $request->validate([
+        'felhasznalo' => 'required|integer',
+        'modell' => 'required|integer',
+    ]);
+
+    // Töröljük az adott felhasználó adott modell kedvencét
+    Kedvencek::where('felhasznalo', $validated['felhasznalo'])
+             ->where('modell', $validated['modell'])
+             ->delete();
+
+    return response()->json(['message' => 'Termék eltávolítva a kedvencek közül.'], 200);
 }
 }
+
+
