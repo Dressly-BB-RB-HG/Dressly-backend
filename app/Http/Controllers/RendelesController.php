@@ -289,5 +289,6 @@ class RendelesController extends Controller
 
     return response()->json($legkedveltebbModell);
 }
+
 }
  
