@@ -55,7 +55,7 @@ class User extends Authenticatable
     }
 
     public function isFelhasznalo(){
-        return $this->role === 0;
+        return $this->role === 3;
     }
 
     public function isAdmin(){
