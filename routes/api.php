@@ -1,7 +1,4 @@
 <?php
-
-use App\Http\Controllers\Auth\AuthenticatedSessionController;
-use App\Http\Controllers\EmailController;
 use App\Http\Controllers\HirlevelController;
 use App\Http\Controllers\KedvencekController;
 use App\Http\Controllers\KosarController;
@@ -15,59 +12,19 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\SzallCsomagController;
 use App\Http\Middleware\Admin;
 use App\Http\Middleware\Raktaros;
-use App\Models\User;
+use App\Http\Middleware\UserMiddleware;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use OrderController as GlobalOrderController;
 
-// TermekController
-// 'MODELLEK' HELYETT 'TERMEK-MINDEN-ADATTAL'
-//Route::get('modellek', [ModellController::class, 'index']);
 
-Route::get('termek-pillanatnyi-ara/{mikor}/{termek}', [TermekController::class, 'termekAra']);
-Route::get('mikor-valtozott-ar/{termek}', [TermekController::class, 'mikorValtozottAr']);
-Route::get('nincs-keszleten', [TermekController::class, 'nincsKeszleten']);
 
-// ModellController
+// vendég által is elérhető:
 Route::get('modellek-kategoriaval', [ModellController::class, 'modellekKategoriaval']);
-Route::post('kosar', [KosarController::class, 'store']);
-Route::get('kosar-megjelen', [KosarController::class, 'index']);
-Route::delete('kosarTorles/{id}', [KosarController::class, 'destroy']);
-Route::get('/elerhetoMeretek/{id}', [TermekController::class, 'elerhetoMeretek']);
-// API route a csomagok lekérésére
-Route::get('/szall-csomags', [SzallCsomagController::class, 'index']);
-
-// API route a csomag állapotának frissítésére
-Route::put('/szall-csomags/{csomagId}/allapot', [SzallCsomagController::class, 'updateAllapot']);
-
-// RendelesController
-
-Route::get('felhasznalo/{id}/rendelesek', [RendelesController::class, 'osszesRendeles']);
-
-// bazsi
-Route::get('rendeles/{rendelesSzam}/tetel', [RendelesController::class, 'rendelesTetel']);
-Route::put('rendeles/{rendelesSzam}/atvettem', [RendelesController::class, 'atvettem']);
-
-  
-// KedvencekController
-Route::get('kedvenc-termek', [KedvencekController::class, 'kedvencTermekek']);
-Route::post('kedvencekhez-ad', [KedvencekController::class, 'kedvencHozzaad']);
-Route::delete('kedvencek-torol/{id}', [KedvencekController::class, 'destroy']);
-// UserController
-
-
-
-// EMAIL TESZT
+Route::get('elerhetoMeretek/{id}', [TermekController::class, 'elerhetoMeretek']);
 Route::post('email-kuldes', [OrderController::class, 'sendOrderConfirmation']);
 Route::post('regisztracio-email-kuldes', [RegisterController::class, 'sendRegistrationEmail']);
 Route::post('send-subscription-email', [NewsletterController::class, 'sendSubscriptionEmail']);
 Route::post('send-unsubscription-email', [NewsletterController::class, 'sendUnsubscriptionEmail']);
-
-
-// HirlevelController
-Route::patch('feliratkozas-hirlevelre', [HirlevelController::class, 'feliratkozas']);
-Route::patch('leiratkozas-hirlevelrol', [HirlevelController::class, 'leiratkozas']); // Leiratkozás
-Route::get('feliratkozas-status', [HirlevelController::class, 'feliratkozasStatus']);
 
 
 // Szűrési/rendezési feltételekhez:
@@ -93,12 +50,22 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::put('update-profile', [UserController::class, 'updateProfile']);
 
-
-Route::middleware(['auth:sanctum', User::class])
+Route::middleware(['auth:sanctum', UserMiddleware::class])
     ->group(function(){
-        
+        Route::post('kosar', [KosarController::class, 'store']);
+        Route::get('kosar-megjelen', [KosarController::class, 'index']);
+        Route::delete('kosarTorles/{id}', [KosarController::class, 'destroy']);
+        Route::get('kedvenc-termek', [KedvencekController::class, 'kedvencTermekek']);
+        Route::post('kedvencekhez-ad', [KedvencekController::class, 'kedvencHozzaad']);
+        Route::delete('kedvencek-torol/{id}', [KedvencekController::class, 'destroy']);
+        Route::get('felhasznalo/{id}/rendelesek', [RendelesController::class, 'osszesRendeles']);
+        Route::get('rendeles/{rendelesSzam}/tetel', [RendelesController::class, 'rendelesTetel']);
+        Route::put('rendeles/{rendelesSzam}/atvettem', [RendelesController::class, 'atvettem']);
+        Route::patch('feliratkozas-hirlevelre', [HirlevelController::class, 'feliratkozas']);
+        Route::patch('leiratkozas-hirlevelrol', [HirlevelController::class, 'leiratkozas']);
+        Route::get('feliratkozas-status', [HirlevelController::class, 'feliratkozasStatus']);
+        Route::put('update-profile', [UserController::class, 'updateProfile']);
     });
 
 
@@ -114,7 +81,7 @@ Route::middleware(['auth:sanctum', Admin::class])
         Route::delete('admin/felhasznalo-torles/{id}', [UserController::class, 'destroy']);
         Route::delete('admin/modell-torles/{id}', [ModellController::class, 'destroy']);
         Route::put('admin/felhasznalok/{id}/role', [UserController::class, 'updateRole']);
-       
+        Route::get('szall-csomags', [SzallCsomagController::class, 'index']);
         Route::get('megrendelok-listazasa', [UserController::class, 'megrendelok']);
         Route::get('hirlevel-feliratkozok', [UserController::class, 'hirlevelFeliratkozok']);
         Route::get('melyik-megrendelo-a-legtobbet', [UserController::class, 'melyikMegrendeloALegtobbet']);
@@ -123,13 +90,22 @@ Route::middleware(['auth:sanctum', Admin::class])
         Route::get('leggyakoribb-meret', [RendelesController::class, 'leggyakoribbMeret']);
         Route::get('legsikeresebb-honap', [RendelesController::class, 'legsikeresebbHonap']);
         Route::get('legtobbet-rendelt-termek', [RendelesController::class, 'legtobbRendeles']);
-        // összes rendelés listázása
+        Route::get('felhasznalo/{id}/rendelesek', [RendelesController::class, 'osszesRendeles']);
         Route::get('admin/rendelesek-osszes', [RendelesController::class, 'rendelesekOsszes']);
         // adott rendelés törlése
         Route::delete('admin/adott-rendeles-torlese/{rendelesSzam}', [RendelesController::class, 'adottRendelesTorlese']);
-
         Route::get('utolso-rendeles-megrendelo/{userId}', [UserController::class, 'utolsoRendelesMegrendelo']);
-        
+        Route::put('/szall-csomags/{csomagId}/allapot', [SzallCsomagController::class, 'updateAllapot']);
+        Route::get('rendeles/{rendelesSzam}/tetel', [RendelesController::class, 'rendelesTetel']);
+        Route::put('rendeles/{rendelesSzam}/atvettem', [RendelesController::class, 'atvettem']);
+        Route::patch('feliratkozas-hirlevelre', [HirlevelController::class, 'feliratkozas']);
+        Route::patch('leiratkozas-hirlevelrol', [HirlevelController::class, 'leiratkozas']);
+        Route::get('feliratkozas-status', [HirlevelController::class, 'feliratkozasStatus']);
+        Route::put('update-profile', [UserController::class, 'updateProfile']);
+        //hasznos lekérdezések
+        Route::get('termek-pillanatnyi-ara/{mikor}/{termek}', [TermekController::class, 'termekAra']);
+        Route::get('mikor-valtozott-ar/{termek}', [TermekController::class, 'mikorValtozottAr']);
+        Route::get('nincs-keszleten', [TermekController::class, 'nincsKeszleten']);
 
     });
     
@@ -149,4 +125,17 @@ Route::middleware(['auth:sanctum', Raktaros::class])
         Route::get('utolso-rendeles', [RendelesController::class, 'utolsoRendeles']);
         Route::get('utolso-termek-rendeles/{termek}', [RendelesController::class, 'utolsoTermekRendeles']);
         Route::get('kiszallitasra_varakozo-rendelesek', [RendelesController::class, 'kiszallitasraVarakozoRendelesek']);
+        Route::put('/szall-csomags/{csomagId}/allapot', [SzallCsomagController::class, 'updateAllapot']);
+        Route::get('felhasznalo/{id}/rendelesek', [RendelesController::class, 'osszesRendeles']);
+        Route::get('rendeles/{rendelesSzam}/tetel', [RendelesController::class, 'rendelesTetel']);
+        Route::put('rendeles/{rendelesSzam}/atvettem', [RendelesController::class, 'atvettem']);
+        Route::patch('feliratkozas-hirlevelre', [HirlevelController::class, 'feliratkozas']);
+        Route::patch('leiratkozas-hirlevelrol', [HirlevelController::class, 'leiratkozas']);
+        Route::get('feliratkozas-status', [HirlevelController::class, 'feliratkozasStatus']);
+        Route::put('update-profile', [UserController::class, 'updateProfile']);
+        //hasznos lekérdezések
+        Route::get('termek-pillanatnyi-ara/{mikor}/{termek}', [TermekController::class, 'termekAra']);
+        Route::get('mikor-valtozott-ar/{termek}', [TermekController::class, 'mikorValtozottAr']);
+        Route::get('nincs-keszleten', [TermekController::class, 'nincsKeszleten']);
+        Route::get('szall-csomags', [SzallCsomagController::class, 'index']);
     });
