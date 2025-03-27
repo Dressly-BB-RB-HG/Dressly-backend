@@ -48,6 +48,7 @@ Route::get('felhasznalo/{id}/rendelesek', [RendelesController::class, 'osszesRen
 Route::get('rendeles/{rendelesSzam}/tetel', [RendelesController::class, 'rendelesTetel']);
 Route::put('rendeles/{rendelesSzam}/atvettem', [RendelesController::class, 'atvettem']);
 
+
   
 // KedvencekController
 Route::get('kedvenc-termek', [KedvencekController::class, 'kedvencTermekek']);

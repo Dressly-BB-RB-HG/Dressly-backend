@@ -6,6 +6,7 @@ use App\Models\Rendeles;
 use App\Models\Rendeles_tetel;
 use App\Models\Termek;
 use App\Models\Modell;
+use App\Models\Szall_Csomag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -70,15 +71,15 @@ class RendelesController extends Controller
 
     //Adott Felhasználó összes rendelése. 
     public function osszesRendeles($felhasznaloId)
-    {
-        $rendelesek = Rendeles::where('felhasznalo', $felhasznaloId)
-            ->with('rendelesTetel.termek.modell')
-            ->get();
+{
+    // A rendeléshez tartozó szall_csomags adatokat is beolvassuk
+    $rendelesek = Rendeles::where('felhasznalo', $felhasznaloId)
+        ->with(['szallCsomag'])  // Ezt a kapcsolatot feltételezve hozzuk be a szall_csomag adatokat
+        ->get();
 
-        return response()->json($rendelesek);
-    }
-
-
+    return response()->json($rendelesek);
+}
+    
 
     public function utolsoTermekRendeles($termekID)
     {
@@ -203,22 +204,42 @@ class RendelesController extends Controller
 
     public function atvettem($rendelesSzam)
     {
+        // Keresd meg a rendelést a rendelés szám alapján
         $rendeles = Rendeles::where('rendeles_szam', $rendelesSzam)->first();
-
+    
         if (!$rendeles) {
             return response()->json(['message' => 'Rendelés nem található.'], 404);
         }
-
-        // Ha a rendelés már át van véve, akkor nem módosítjuk
+    
+        // Keresd meg a rendeléshez tartozó csomagot
+        $csomag = Szall_Csomag::where('rendeles', $rendeles->rendeles_szam)->first();
+    
+        if (!$csomag) {
+            return response()->json(['message' => 'A rendeléshez nem található csomag.'], 404);
+        }
+    
+        // Ellenőrizzük, hogy a csomag állapota 'Futárnál'-e
+        if ($csomag->csomag_allapot !== 'Futárnál') {
+            return response()->json(['message' => 'A rendelés még csomagolás alatt van, nem vehető át.'], 400);
+        }
+    
+        // Ha a rendelés már át van véve (fizetve_e = 1), nem lehet újra átvenni
         if ($rendeles->fizetve_e) {
             return response()->json(['message' => 'A rendelés már át lett véve.'], 400);
         }
-
+    
+        // Módosítsuk a rendelés státuszát: átvevő státusz
         $rendeles->fizetve_e = 1;
         $rendeles->save();
-
-        return response()->json(['message' => 'A rendelést sikeresen átvettem.'], 200);
+    
+        // A csomag állapotát 'Kézbesítve'-re módosítjuk
+        $csomag->csomag_allapot = 'Kézbesítve';
+        $csomag->save();
+    
+        return response()->json(['message' => 'A rendelést sikeresen átvettem, és a csomag állapota Kézbesítve lett.'], 200);
     }
+    
+    
     
     public function rendelesekOsszes()
     {

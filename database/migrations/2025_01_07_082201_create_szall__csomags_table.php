@@ -24,14 +24,14 @@ return new class extends Migration
         Szall_Csomag::create([
             'rendeles' => 2,
             'szallito' => 'GLS',
-            'csomag_allapot' => 'futarnal',
+            'csomag_allapot' => 'Csomagolás',
 
         ]);
 
         Szall_Csomag::create([
             'rendeles' => 1,
             'szallito' => 'MPL',
-            'csomag_allapot' => 'futarnal',
+            'csomag_allapot' => 'Csomagolás',
 
         ]);
 
