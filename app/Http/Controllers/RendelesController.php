@@ -261,8 +261,8 @@ class RendelesController extends Controller
     $legkedveltebbModell = Modell::with(['kategoria', 'termekek.arakMegjelenit'])
         ->join('termeks', 'modells.modell_id', '=', 'termeks.modell') // Összekapcsolás a termeks táblával
         ->leftJoin('rendeles_tetels', 'termeks.termek_id', '=', 'rendeles_tetels.termek') // Összekapcsolás a rendelések tételeivel
-        ->select('modells.*', DB::raw('COALESCE(SUM(rendeles_tetels.mennyiseg), 0) as total_quantity'))
-        ->groupBy('modells.modell_id') // Csak a modelleket csoportosítjuk
+        ->select('modells.modell_id','modells.kategoria','modells.tipus','modells.gyarto','modells.kep', DB::raw('COALESCE(SUM(rendeles_tetels.mennyiseg), 0) as total_quantity'))
+        ->groupBy('modells.modell_id', 'modells.kategoria','modells.tipus','modells.gyarto','modells.kep') // Csak a modelleket csoportosítjuk
         ->orderByDesc('total_quantity') // A legnépszerűbb modell előre kerüljön
         ->get();
 
