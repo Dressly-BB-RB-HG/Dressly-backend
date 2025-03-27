@@ -13,4 +13,11 @@ class Szall_Csomag extends Model
         "szallito",
         "csomag_allapot",
     ];
+
+    // Szall_Csomag.php modell
+public function rendeles()
+{
+    return $this->belongsTo(Rendeles::class, 'rendeles', 'rendeles_szam');
+}
+
 }

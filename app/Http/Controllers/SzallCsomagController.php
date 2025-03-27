@@ -39,4 +39,5 @@ class SzallCsomagController extends Controller
 
         return response()->json(['message' => 'A csomag állapota sikeresen frissítve lett.']);
     }
+
 }

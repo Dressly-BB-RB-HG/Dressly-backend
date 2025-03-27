@@ -21,4 +21,13 @@ class Rendeles extends Model
     }
 
 
+    // Rendeles.php modell
+   // Rendeles model
+public function szallCsomag()
+{
+    return $this->hasOne(Szall_Csomag::class, 'rendeles', 'rendeles_szam'); // Kapcsolat a szall_csomag táblához
+}
+
+
+
 }
