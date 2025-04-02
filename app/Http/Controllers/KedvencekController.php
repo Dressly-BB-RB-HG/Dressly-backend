@@ -100,7 +100,7 @@ public function kedvencHozzaad(Request $request)
     }
 }
 
-// Termék eltávolítása a kedvencek közül
+
 public function kedvencTorol(Request $request)
 {
     $validated = $request->validate([
