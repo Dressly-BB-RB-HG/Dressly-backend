@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Rendeles;
 use App\Models\Szall_Csomag;
 use Illuminate\Http\Request;
 
@@ -38,6 +39,32 @@ class SzallCsomagController extends Controller
         $csomag->save();  // Elmentjük az adatbázisba
 
         return response()->json(['message' => 'A csomag állapota sikeresen frissítve lett.']);
+    }
+
+
+    public function leadCsomag(Request $request)
+    {
+        $validated = $request->validate([
+            'rendeles' => 'required|exists:rendeles,rendeles_szam', // Itt kell javítani!
+            'szallito' => 'required|string|max:255',
+            'szall_datum' => 'required|date',
+        ]);
+    
+        // Ellenőrizzük, hogy a rendelés létezik-e
+        $rendeles = Rendeles::where('rendeles_szam', $validated['rendeles'])->first();
+        if (!$rendeles) {
+            return response()->json(['error' => 'A rendelés nem található.'], 404);
+        }
+    
+        // Új csomag létrehozása
+        $csomag = Szall_Csomag::create([
+            'rendeles' => $validated['rendeles'], // Ez is jó így!
+            'szallito' => $validated['szallito'],
+            'csomag_allapot' => 'Csomagolás alatt', // Alapértelmezett állapot
+            'szall_datum' => $validated['szall_datum'],
+        ]);
+    
+        return response()->json(['message' => 'Csomag sikeresen mentve!', 'csomag' => $csomag], 201);
     }
 
 }

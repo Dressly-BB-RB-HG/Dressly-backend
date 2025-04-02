@@ -25,7 +25,36 @@ class RendelesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'felhasznalo_id' => 'required|exists:users,id',
+            'szallitas_mod' => 'required|string',
+            'rendeles_tetels' => 'required|array',
+            'rendeles_tetels.*.termek_id' => 'required|exists:termeks,termek_id',
+            'rendeles_tetels.*.mennyiseg' => 'required|integer|min:1',
+        ]);
+    
+        DB::beginTransaction();
+        try {
+            $rendeles = Rendeles::create([
+                'felhasznalo' => $validated['felhasznalo_id'],
+                'rendeles_datum' => now(),
+                'fizetve_e' => 0,
+            ]);
+    
+            foreach ($validated['rendeles_tetels'] as $tetel) {
+                Rendeles_tetel::create([
+                    'rendeles' => $rendeles->rendeles_szam,
+                    'termek' => $tetel['termek_id'],
+                    'mennyiseg' => $tetel['mennyiseg'],
+                ]);
+            }
+    
+            DB::commit();
+            return response()->json(['success' => true, 'message' => 'Rendelés sikeresen leadva']);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['success' => false, 'message' => 'Hiba a rendelés mentésekor'], 500);
+        }
     }
 
     /**
