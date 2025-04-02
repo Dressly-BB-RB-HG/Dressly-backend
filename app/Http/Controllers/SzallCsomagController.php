@@ -42,29 +42,24 @@ class SzallCsomagController extends Controller
     }
 
 
-    public function leadCsomag(Request $request)
+    /* public function leadCsomag(Request $request)
     {
+        // VALIDÁCIÓ
         $validated = $request->validate([
-            'rendeles' => 'required|exists:rendeles,rendeles_szam', // Itt kell javítani!
-            'szallito' => 'required|string|max:255',
-            'szall_datum' => 'required|date',
+            'rendeles' => 'required|exists:rendeles,rendeles_szam',
+            'szallito' => 'required|string|max:255',  
+            'szall_datum' => 'required|date', 
         ]);
     
-        // Ellenőrizzük, hogy a rendelés létezik-e
-        $rendeles = Rendeles::where('rendeles_szam', $validated['rendeles'])->first();
-        if (!$rendeles) {
-            return response()->json(['error' => 'A rendelés nem található.'], 404);
-        }
-    
-        // Új csomag létrehozása
+        // Csomag létrehozása
         $csomag = Szall_Csomag::create([
-            'rendeles' => $validated['rendeles'], // Ez is jó így!
+            'rendeles' => $validated['rendeles'],
             'szallito' => $validated['szallito'],
-            'csomag_allapot' => 'Csomagolás alatt', // Alapértelmezett állapot
+            'csomag_allapot' => 'Csomagolás alatt', 
             'szall_datum' => $validated['szall_datum'],
         ]);
     
         return response()->json(['message' => 'Csomag sikeresen mentve!', 'csomag' => $csomag], 201);
-    }
+    } */
 
 }

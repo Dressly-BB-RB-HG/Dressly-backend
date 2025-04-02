@@ -67,7 +67,7 @@ Route::middleware(['auth:sanctum', UserMiddleware::class])
         Route::put('rendeles/{rendelesSzam}/atvettem', [RendelesController::class, 'atvettem']);
         Route::put('update-profile', [UserController::class, 'updateProfile']);
         Route::post('rendeles-leadas', [RendelesController::class, 'store']);
-        Route::post('csomag-leadas', [SzallCsomagController::class, 'leadCsomag']);
+        /* Route::post('csomag-leadas', [SzallCsomagController::class, 'leadCsomag']); */
     });
 
 
