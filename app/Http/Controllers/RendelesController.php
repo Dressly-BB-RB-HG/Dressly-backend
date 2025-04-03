@@ -24,9 +24,57 @@ class RendelesController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        //
+{
+    $validated = $request->validate([
+        'felhasznalo_id' => 'required|exists:users,id',
+        'szallitas_mod' => 'required|string',
+        'rendeles_tetels' => 'required|array|min:1',
+        'rendeles_tetels.*.termek_id' => 'required|exists:termeks,termek_id',
+        'rendeles_tetels.*.mennyiseg' => 'required|integer|min:1',
+    ]);
+
+    DB::beginTransaction();
+    try {
+        // 🔹 Rendelés létrehozása
+        $rendeles = Rendeles::create([
+            'felhasznalo' => $validated['felhasznalo_id'],
+            'rendeles_datum' => now(),
+            'fizetve_e' => 0,
+        ]);
+
+        // 🔹 Rendelés tételeinek mentése
+        foreach ($validated['rendeles_tetels'] as $tetel) {
+            Rendeles_tetel::create([
+                'rendeles' => $rendeles->rendeles_szam,
+                'termek' => $tetel['termek_id'],
+                'mennyiseg' => $tetel['mennyiseg'],
+            ]);
+        }
+
+        // 🔹 Csomag mentése a szall_csomags táblába
+        Szall_Csomag::create([
+            'rendeles' => $rendeles->rendeles_szam, // 🔥 A rendelés ID-ját használjuk
+            'szallito' => $validated['szallitas_mod'],
+            'csomag_allapot' => 'Csomagolás', // Alapértelmezett állapot
+            'szall_datum' => now(), // Aktuális dátum
+        ]);
+
+        DB::commit();
+        return response()->json([
+            'success' => true, 
+            'message' => 'Rendelés és csomag sikeresen mentve!',
+            'rendeles_szam' => $rendeles->rendeles_szam
+        ]);
+    } catch (\Exception $e) {
+        DB::rollBack();
+        return response()->json([
+            'success' => false, 
+            'message' => 'Hiba a rendelés mentésekor', 
+            'error' => $e->getMessage()
+        ], 500);
     }
+}
+
 
     /**
      * Display the specified resource.

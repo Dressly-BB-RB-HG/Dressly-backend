@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Rendeles;
 use App\Models\Szall_Csomag;
 use Illuminate\Http\Request;
 
@@ -39,5 +40,26 @@ class SzallCsomagController extends Controller
 
         return response()->json(['message' => 'A csomag állapota sikeresen frissítve lett.']);
     }
+
+
+    /* public function leadCsomag(Request $request)
+    {
+        // VALIDÁCIÓ
+        $validated = $request->validate([
+            'rendeles' => 'required|exists:rendeles,rendeles_szam',
+            'szallito' => 'required|string|max:255',  
+            'szall_datum' => 'required|date', 
+        ]);
+    
+        // Csomag létrehozása
+        $csomag = Szall_Csomag::create([
+            'rendeles' => $validated['rendeles'],
+            'szallito' => $validated['szallito'],
+            'csomag_allapot' => 'Csomagolás alatt', 
+            'szall_datum' => $validated['szall_datum'],
+        ]);
+    
+        return response()->json(['message' => 'Csomag sikeresen mentve!', 'csomag' => $csomag], 201);
+    } */
 
 }
