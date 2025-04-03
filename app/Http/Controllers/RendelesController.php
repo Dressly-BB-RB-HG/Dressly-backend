@@ -240,7 +240,6 @@ class RendelesController extends Controller
     }
     
     
-    
     public function rendelesekOsszes()
     {
         // Lekérdezzük az összes rendelést a szükséges adatokkal

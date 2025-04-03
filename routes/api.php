@@ -46,6 +46,8 @@ Route::get('legujabb-modell', [ModellController::class, 'legujabbModell']);
 Route::get('termek-szures', [ModellController::class, 'modellSzuressel']);
 Route::get('admin/modellek', [ModellController::class, 'index']);
 
+
+
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
 });
